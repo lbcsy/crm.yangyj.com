@@ -1,0 +1,21 @@
+{
+  "name": "oa.yangyj.com",
+  "description": "OA 管理系统，React练手项目",
+  "repository": "https://github.com/smithyj/oa.yangyj.com",
+  "license": "MIT",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "umi dev",
+    "build": "umi build"
+  },
+  "dependencies": {
+    "antd": "^3.3.0",
+    "autobind": "^1.0.3",
+    "enquire-js": "^0.1.2",
+    "lodash-decorators": "^4.5.0",
+    "rc-drawer-menu": "^0.5.5",
+    "react-container-query": "^0.11.0",
+    "umi": "^1.0.6",
+    "umi-plugin-dva": "^0.3.0"
+  }
+}
