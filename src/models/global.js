@@ -32,7 +32,7 @@ export default {
         * fetchCurrentUser(action, { call, put, select }) {
             yield call(delay, 3000);
             // 登录失败代码
-            yield put({type: 'changeLoginStatus', payload: false});
+            // yield put({type: 'changeLoginStatus', payload: false});
             // 自动登录成功代码
             yield put({type: 'changeLoginStatus', payload: true});
             yield put({type: 'fetchCurrentUser__', payload: {

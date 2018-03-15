@@ -22,7 +22,7 @@ export default class GlobalHeader extends PureComponent {
         window.dispatchEvent(event);
     }
     render() {
-        const { collapsed, isMobile, currentUser } = this.props;
+        const { collapsed, isMobile, currentUser, logo } = this.props;
         const menu = (
             <Menu className={styles.menu}>
                 <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
@@ -38,7 +38,7 @@ export default class GlobalHeader extends PureComponent {
                     [
                         (
                             <Link to="/" className={styles.logo} key="logo">
-                                LOGO
+                                <img alt="logo" src={logo} width="32" />
                             </Link>
                         ),
                         <Divider type="vertical" key="line" />,
