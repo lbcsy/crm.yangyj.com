@@ -1,11 +1,19 @@
 import { PureComponent } from 'react';
 import Link from 'umi/link';
-import { Card, List, Icon, Button, Pagination } from 'antd';
+import { connect } from 'dva';
+import { Card, List, Icon, Button, Avatar, Divider, Popconfirm} from 'antd';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 import Ellipsis from '../../../components/Ellipsis';
+import IconText from '../../../components/IconText';
 import styles from './page.less';
 
-export default class list extends PureComponent {
+@connect()
+export default class page extends PureComponent {
+
+    componentDidMount() {
+        // load data
+    }
+
     render() {
         const breadcrumbList = [{
             title: '首页',
@@ -16,90 +24,77 @@ export default class list extends PureComponent {
             title: '文章列表',
         }];
 
-        const list = [
-            {
-                id: 1,
-                title: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 2,
-                title: '111',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 3,
-                title: '111',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 4,
-                title: '111',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 5,
-                title: '111',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 6,
-                title: '111',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 7,
-                title: '111',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 8,
-                title: '111',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-            {
-                id: 9,
-                title: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-                description: '描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描述内容描'
-            },
-        ]
+        const listData = [];
+        for (let i = 1; i < 25; i++) {
+            listData.push({
+                id: i,
+                title: `ant design part ${i}`,
+                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                description: 'applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.applications, is refined by Ant UED Team.',
+            });
+        }
+
+        const pagination = {
+            pageSize: 10,
+            current: 1,
+            total: listData.length,
+            onChange: (() => {
+                console.log('分页');
+            }),
+        };
 
         return (
             <PageHeaderLayout breadcrumbList={breadcrumbList} linkElement={Link}>
                 <Card bordered={false}>
-                    <Button type="dashed" className={styles.addButton}><Icon type="plus"/>添加</Button>
+                    <Link to={`/blog/detail?action=add`}>
+                        <Button type="dashed"
+                                className={styles.addButton}
+                        >
+                                <Icon type="plus"/>
+                                添加
+                        </Button>
+                    </Link>
                     <List
-                        rowKey="id"
-                        grid={{ gutter: 24, lg: 3, md: 2, sm: 1, xs: 1 }}
-                        dataSource={[...list]}
+                        itemLayout="vertical"
+                        size="large"
+                        pagination={pagination}
+                        dataSource={listData}
                         renderItem={item => (
-                            <List.Item key={item.id}>
-                                <Card
-                                    hoverable
-                                    title={item.title}
-                                    className={styles.card}
-                                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-                                >
-                                    <Ellipsis className={styles.item} lines={3}>{item.description}</Ellipsis>
-                                    <p>
-                                        <span>阅读：123</span>
-                                        <span>评论：666</span>
-                                    </p>
-                                </Card>
+                            <List.Item
+                                key={item.title}
+                                className={styles.item}
+                                extra={<img alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+                            >
+                                <List.Item.Meta
+                                    avatar={<Avatar src={item.avatar} />}
+                                    title={<Link to={`/blog/detail?action=view&id=${item.id}`}>{item.title}</Link>}
+                                    description={<Ellipsis lines={3}>{item.description}</Ellipsis>}
+                                />
+                                <div>
+                                    <span className="pull-left">
+                                        <IconText type="star-o" text="156" />
+                                        <Divider type="vertical" />
+                                        <IconText type="like-o" text="156" />
+                                        <Divider type="vertical" />
+                                        <IconText type="message" text="2" />
+                                    </span>
+                                    <span className="pull-right">
+                                        <Link to={`/blog/detail?action=edit&id=${item.id}`}>
+                                            <IconText type="edit" text="编辑" />
+                                        </Link>
+                                        <Divider type="vertical" />
+                                        <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
+                                            // 删除操作
+                                        }}>
+                                            <IconText type="delete" text="删除" style={{ color: 'red' }} />
+                                        </Popconfirm>
+                                        <Divider type="vertical" />
+                                        <IconText type="setting" text="更多" />
+                                    </span>
+                                </div>
                             </List.Item>
                         )}
                     />
-                    <Pagination defaultCurrent={1} total={500} />
                 </Card>
             </PageHeaderLayout>
         )

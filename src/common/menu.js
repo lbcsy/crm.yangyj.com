@@ -9,10 +9,6 @@ const menuData = [{
             name: '文章列表',
             path: 'list',
         },
-        {
-            name: '评论列表',
-            path: 'comment',
-        }
     ]
 }];
 
