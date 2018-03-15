@@ -99,24 +99,36 @@ export default class MainLayout extends PureComponent {
                     <Footer>
                         <GlobalFooter
                             links={[{
-                                key: 'Umi 首页',
-                                title: 'Umi 首页',
+                                key: 'UMI',
+                                title: 'UMI',
                                 href: 'http://umijs.org',
                                 blankTarget: true,
-                            }, {
-                                key: 'github',
-                                title: <Icon type="github" />,
-                                href: 'https://github.com/umijs/umi',
+                            },{
+                                key: 'Dva',
+                                title: 'Dva',
+                                href: 'http://github.com/dvajs/dva',
                                 blankTarget: true,
                             }, {
+                                key: 'Github',
+                                title: <Icon type="github" />,
+                                href: 'https://github.com/smithyj/oa.yangyj.com',
+                                blankTarget: true,
+                            },  {
                                 key: 'Ant Design',
                                 title: 'Ant Design',
                                 href: 'http://ant.design',
                                 blankTarget: true,
+                            }, {
+                                key: 'Ant Design Pro',
+                                title: 'Ant Design Pro',
+                                href: 'http://pro.ant.design',
+                                blankTarget: true,
                             }]}
                             copyright={
                                 <Fragment>
-                                    Copyright <Icon type="copyright" /> 2018 杨圆建 React 案例
+                                    Copyright <Icon type="copyright" /> 2018 杨圆建 五米后台管理系统
+                                    <br />
+                                    本系统采用 umi + antd，借鉴 ant-design-pro @致谢 <a href="http://github.com/sorrycc">sorrycc</a> 大神
                                 </Fragment>
                             }
                         />
