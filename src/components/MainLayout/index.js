@@ -66,10 +66,10 @@ export default class MainLayout extends PureComponent {
     }
 
     render() {
-        const { children, collapsed, location, loginStatus, currentUser } = this.props;
+        const { children, collapsed, location, loginStatus, currentUser, logo } = this.props;
 
         if(typeof loginStatus === 'undefined') {
-            return <Spin size="large" className="globalSpin"/>
+            return <Spin size="large" className="globalSpin" tip="资源加载中..." />
         }
 
         return (
@@ -79,6 +79,7 @@ export default class MainLayout extends PureComponent {
                     isMobile={this.state.isMobile}
                     location={location}
                     collapsed={collapsed}
+                    logo={logo}
                     menuData={getMenuData()}
                     onCollapse={this.handleMenuCollapse}
                 />
@@ -88,6 +89,7 @@ export default class MainLayout extends PureComponent {
                             collapsed={collapsed}
                             isMobile={this.state.isMobile}
                             onCollapse={this.handleMenuCollapse}
+                            logo={logo}
                             currentUser={currentUser}
                         />
                     </Header>

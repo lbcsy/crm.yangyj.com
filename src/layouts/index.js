@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import MainLayout from '../components/MainLayout';
 import LoginLayout from '../components/LoginLayout';
+import logo from '../assets/logo.svg';
 
 
 
@@ -35,13 +36,18 @@ export default class Layout extends PureComponent {
     render() {
         const { location } = this.props;
 
+        const newProps = {
+            ...this.props,
+            logo,
+        };
+
         return (
             <ContainerQuery query={query}>
                 {params => (
                     <div className={classNames(params)}>
                         <LocaleProvider locale={zhCN}>
                             <div>
-                                {location.pathname === '/login' ? <LoginLayout {...this.props} /> : <MainLayout {...this.props} />}
+                                {location.pathname === '/login' ? <LoginLayout {...newProps} /> : <MainLayout {...newProps} />}
                             </div>
                         </LocaleProvider>
                     </div>
