@@ -1,6 +1,6 @@
 import { PureComponent } from 'react';
 import autobind from 'autobind';
-import { Menu, Icon, Spin, Dropdown, Avatar, Divider } from 'antd';
+import { Menu, Icon, Dropdown, Avatar, Divider } from 'antd';
 import Debounce from 'lodash-decorators/debounce';
 import Link from 'umi/link';
 import styles from './index.less';
@@ -22,9 +22,9 @@ export default class GlobalHeader extends PureComponent {
         window.dispatchEvent(event);
     }
     render() {
-        const { collapsed, isMobile } = this.props;
+        const { collapsed, isMobile, currentUser } = this.props;
         const menu = (
-            <Menu className={styles.menu} selectedKeys={[]}>
+            <Menu className={styles.menu}>
                 <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
                 <Menu.Item disabled><Icon type="setting" />设置</Menu.Item>
                 <Menu.Item key="triggerError"><Icon type="close-circle" />触发报错</Menu.Item>
@@ -50,14 +50,12 @@ export default class GlobalHeader extends PureComponent {
                     onClick={this.handleToggle}
                 />
                 <div className={styles.right}>
-                    {'管理员' ? (
-                        <Dropdown overlay={menu}>
-                            <span className={`${styles.action} ${styles.account}`}>
-                                <Avatar size="small" className={styles.avatar} src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" />
-                                <span className={styles.name}>管理员</span>
-                            </span>
-                        </Dropdown>
-                    ) : <Spin size="small" style={{ marginLeft: 8 }} />}
+                    <Dropdown overlay={menu}>
+                        <span className={`${styles.action} ${styles.account}`}>
+                            <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
+                            <span className={styles.name}>{currentUser.name}</span>
+                        </span>
+                    </Dropdown>
                 </div>
             </div>
         );

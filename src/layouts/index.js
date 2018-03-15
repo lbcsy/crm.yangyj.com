@@ -1,18 +1,13 @@
-import { PureComponent, Fragment } from 'react';
+import { PureComponent } from 'react';
 import withRouter from 'umi/withRouter';
-import { LocaleProvider, Layout, Icon, BackTop } from 'antd';
-import { enquireScreen } from 'enquire-js';
+import { LocaleProvider } from 'antd';
 import { ContainerQuery } from 'react-container-query';
-import { connect } from 'dva';
 import classNames from 'classnames';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
-import SiderMenu from '../components/SiderMenu';
-import GlobalHeader from '../components/GlobalHeader';
-import GlobalFooter from '../components/GlobalFooter';
-import { getMenuData } from '../common/menu';
+import MainLayout from '../components/MainLayout';
+import LoginLayout from '../components/LoginLayout';
 
 
-const { Header, Content, Footer } = Layout;
 
 const query = {
     'screen-xs': {
@@ -35,98 +30,22 @@ const query = {
     },
 };
 
-
-let isMobile;
-enquireScreen((b) => {
-    isMobile = b;
-});
-
 @withRouter
-@connect((state) => {
-    return {
-        collapsed: state.global.collapsed,
-    }
-})
-export default class index extends PureComponent {
-    state = {
-        isMobile,
-    };
-    componentDidMount() {
-        enquireScreen((mobile) => {
-            this.setState({
-                isMobile: mobile,
-            });
-        });
-    }
-
-    handleMenuCollapse = (collapsed) => {
-        this.props.dispatch({
-            type: 'global/changeLayoutCollapsed',
-            payload: collapsed,
-        });
-    }
+export default class Layout extends PureComponent {
     render() {
-        const { children, collapsed, location } = this.props;
-        const layout = (
-            <LocaleProvider locale={zhCN}>
-                <Layout>
-                    {
-                        /**
-                         * 返回顶部
-                         */
-                    }
-                    <BackTop />
-                    <SiderMenu
-                        isMobile={this.state.isMobile}
-                        location={location}
-                        collapsed={collapsed}
-                        menuData={getMenuData()}
-                        onCollapse={this.handleMenuCollapse}
-                    />
-                    <Layout style={{ minHeight: '100%' }}>
-                        <Header style={{ padding: 0 }}>
-                            <GlobalHeader
-                                collapsed={collapsed}
-                                isMobile={this.state.isMobile}
-                                onCollapse={this.handleMenuCollapse}
-                            />
-                        </Header>
-                        <Content style={{ margin: '24px 24px 0' }}>
-                            {children}
-                        </Content>
-                        <Footer>
-                            <GlobalFooter
-                                links={[{
-                                    key: 'Umi 首页',
-                                    title: 'Umi 首页',
-                                    href: 'http://umijs.org',
-                                    blankTarget: true,
-                                }, {
-                                    key: 'github',
-                                    title: <Icon type="github" />,
-                                    href: 'https://github.com/umijs/umi',
-                                    blankTarget: true,
-                                }, {
-                                    key: 'Ant Design',
-                                    title: 'Ant Design',
-                                    href: 'http://ant.design',
-                                    blankTarget: true,
-                                }]}
-                                copyright={
-                                    <Fragment>
-                                        Copyright <Icon type="copyright" /> 2018 杨圆建 React 案例
-                                    </Fragment>
-                                }
-                            />
-                        </Footer>
-                    </Layout>
-                </Layout>
-            </LocaleProvider>
-        );
+        const { location } = this.props;
 
         return (
             <ContainerQuery query={query}>
-                {params => <div className={classNames(params)}>{layout}</div>}
+                {params => (
+                    <div className={classNames(params)}>
+                        <LocaleProvider locale={zhCN}>
+                            <div>
+                                {location.pathname === '/login' ? <LoginLayout {...this.props} /> : <MainLayout {...this.props} />}
+                            </div>
+                        </LocaleProvider>
+                    </div>
+                )}
             </ContainerQuery>
         );
     }
