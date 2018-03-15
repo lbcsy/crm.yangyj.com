@@ -1,6 +1,6 @@
 import { PureComponent, Fragment } from 'react';
 import withRouter from 'umi/withRouter';
-import { LocaleProvider, Layout, Icon } from 'antd';
+import { LocaleProvider, Layout, Icon, BackTop } from 'antd';
 import { enquireScreen } from 'enquire-js';
 import { ContainerQuery } from 'react-container-query';
 import { connect } from 'dva';
@@ -70,6 +70,12 @@ export default class index extends PureComponent {
         const layout = (
             <LocaleProvider locale={zhCN}>
                 <Layout>
+                    {
+                        /**
+                         * 返回顶部
+                         */
+                    }
+                    <BackTop />
                     <SiderMenu
                         isMobile={this.state.isMobile}
                         location={location}
@@ -77,7 +83,7 @@ export default class index extends PureComponent {
                         menuData={getMenuData()}
                         onCollapse={this.handleMenuCollapse}
                     />
-                    <Layout>
+                    <Layout style={{ minHeight: '100%' }}>
                         <Header style={{ padding: 0 }}>
                             <GlobalHeader
                                 collapsed={collapsed}
@@ -85,7 +91,7 @@ export default class index extends PureComponent {
                                 onCollapse={this.handleMenuCollapse}
                             />
                         </Header>
-                        <Content style={{ margin: '24px 24px 0', height: '100%' }}>
+                        <Content style={{ margin: '24px 24px 0' }}>
                             {children}
                         </Content>
                         <Footer>
