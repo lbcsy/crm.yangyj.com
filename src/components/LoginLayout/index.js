@@ -60,7 +60,7 @@ export default class LoginLayout extends PureComponent {
                                     <Checkbox>Remember me</Checkbox>
                                 )}
                                 <Button size="large" type="primary" htmlType="submit" className={styles.submit}>
-                                    Log in
+                                    立 即 登 录
                                 </Button>
                             </FormItem>
                         </Form>
