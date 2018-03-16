@@ -1,3 +1,7 @@
+import { Button } from 'antd';
+import Link from 'umi/link';
+import Exception from 'components/Exception';
+
 export default (props) => {
     switch (props.location.query.action) {
         case 'add':
@@ -19,10 +23,11 @@ export default (props) => {
                 </div>
             );
         default:
-            return (
+            const actions = (
                 <div>
-                    页面丢失
+                    <Link to="/blog/list"><Button type="primary">返回列表页</Button></Link>
                 </div>
             );
+            return <Exception type="404" actions={actions} title="Oops" desc="抱歉，未知的操作，请按规范操作！" />
     }
 }

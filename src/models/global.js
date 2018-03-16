@@ -52,9 +52,10 @@ export default {
                 yield put({type: 'fetchCurrentUser__', payload: res.dataset});
             }
         },
-        * fetchLogin(action, { call, put, select }) {
-            const res = yield call(fetchLogin);
+        * fetchLogin({ payload }, { call, put, select }) {
+            const res = yield call(fetchLogin, payload);
             if(!res.code) {
+                message.success(res.message);
                 yield put({ type: 'changeLoginStatus__', payload: true });
                 const selfURLParams = new URL(window.location.href);
                 let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));

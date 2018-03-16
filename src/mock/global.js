@@ -1,6 +1,4 @@
-export default {
-    // 如果动态变更 global 的 Mock 代码，不会实时刷新
-    // ...require('./src/mock/global'),
+module.exports = {
     'POST /api/admin/logout': (req, res) => {
         res.send({
             code: 0,
@@ -8,7 +6,7 @@ export default {
         })
     },
     'POST /api/admin/login': (req, res) => {
-        if(req.body.username !== 'admin' || req.body.password !== '123456') {
+        if(req.body.username !== 'admin' && req.body.password !== '123456') {
             res.send({
                 code: -1,
                 message: '账号密码错误',
@@ -30,5 +28,6 @@ export default {
                 avatar: 'https://avatars0.githubusercontent.com/u/9820142?s=40&v=4',
             }
         });
+
     },
-};
+}

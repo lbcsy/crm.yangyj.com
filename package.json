@@ -19,8 +19,5 @@
     "umi": "^1.0.7",
     "umi-plugin-dva": "^0.3.3",
     "url-polyfill": "^1.0.11"
-  },
-  "devDependencies": {
-    "roadhog-api-doc": "^1.0.0"
   }
 }

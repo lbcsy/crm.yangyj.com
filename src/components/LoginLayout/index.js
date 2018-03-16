@@ -20,7 +20,7 @@ export default class LoginLayout extends PureComponent {
 
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                dispatch({ type: 'global/fetchLogin' });
+                dispatch({ type: 'global/fetchLogin', payload: values });
             }
         });
     };

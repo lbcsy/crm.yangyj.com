@@ -63,6 +63,7 @@ export default class MainLayout extends PureComponent {
     render() {
         const { children, collapsed, location, loginStatus, currentUser, logo } = this.props;
 
+        // 未登录状态
         if(typeof loginStatus === 'undefined') {
             return <Spin size="large" className="globalSpin" tip="Loading..." />
         }
