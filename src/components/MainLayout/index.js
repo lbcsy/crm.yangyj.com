@@ -48,6 +48,18 @@ export default class MainLayout extends PureComponent {
         });
     }
 
+    handleMenuClick = ({ key }) => {
+        if (key === 'editPassword') {
+            // todo: 修改密码 Model
+            return;
+        }
+        if (key === 'logout') {
+            this.props.dispatch({
+                type: 'global/fetchLogout',
+            });
+        }
+    }
+
     render() {
         const { children, collapsed, location, loginStatus, currentUser, logo } = this.props;
 
@@ -74,6 +86,7 @@ export default class MainLayout extends PureComponent {
                             onCollapse={this.handleMenuCollapse}
                             logo={logo}
                             currentUser={currentUser}
+                            onMenuClick={this.handleMenuClick}
                         />
                     </Header>
                     <Content style={{ margin: '24px 24px 0' }}>

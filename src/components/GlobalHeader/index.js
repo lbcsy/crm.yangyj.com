@@ -22,12 +22,10 @@ export default class GlobalHeader extends PureComponent {
         window.dispatchEvent(event);
     }
     render() {
-        const { collapsed, isMobile, currentUser, logo } = this.props;
+        const { collapsed, isMobile, currentUser, logo, onMenuClick } = this.props;
         const menu = (
-            <Menu className={styles.menu}>
-                <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
-                <Menu.Item disabled><Icon type="setting" />设置</Menu.Item>
-                <Menu.Item key="triggerError"><Icon type="close-circle" />触发报错</Menu.Item>
+            <Menu className={styles.menu} onClick={onMenuClick}>
+                <Menu.Item key="editPassword"><Icon type="edit" />修改密码</Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="logout"><Icon type="logout" />退出登录</Menu.Item>
             </Menu>

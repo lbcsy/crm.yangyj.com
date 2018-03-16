@@ -10,27 +10,34 @@ const proxy = {
     [`${apiPrefix}/admin/logout`](req, res) {
         res.send({
             code: 0,
-            message: '注销成功',
+            message: '成功',
         })
     },
-    [`${apiPrefix}/admin/currentUser`](req, res) {
+    [`${apiPrefix}/admin/login`](req, res) {
         const status = Math.round((Math.random()));
         if(status) {
             res.send({
                 code: 0,
-                message: '已登录',
-                dataset: {
-                    id: 1,
-                    name: '杨圆建',
-                    avatar: 'https://avatars0.githubusercontent.com/u/9820142?s=40&v=4',
-                }
+                message: '成功',
             })
         } else {
-            res.status(401).send({
+            res.send({
                 code: -1,
-                message: '未登录',
+                message: '登录失败',
             })
         }
+    },
+    [`${apiPrefix}/admin/currentUser`](req, res) {
+        // const status = Math.round((Math.random()));
+        res.send({
+            code: 0,
+            message: '成功',
+            dataset: {
+                id: 1,
+                name: '杨圆建',
+                avatar: 'https://avatars0.githubusercontent.com/u/9820142?s=40&v=4',
+            }
+        })
     },
 };
 

@@ -1,5 +1,6 @@
 import router from 'umi/router';
-import { fetchLogout, fetchCurrentUser } from '../services/global';
+import { message } from 'antd';
+import { fetchLogout, fetchCurrentUser, fetchLogin } from '../services/global';
 
 export default {
     namespace: 'global',
@@ -30,8 +31,6 @@ export default {
     },
     effects: {
         * fetchLogout(action, { call, put, select }) {
-            // 退出登录
-            yield call(fetchLogout);
             // 注销登录状态
             yield put({ type: 'changeLoginStatus__', payload: false });
             yield put({ type: 'fetchCurrentUser__', payload: {} });
@@ -43,12 +42,34 @@ export default {
                 pathname: '/login',
                 query,
             });
+            // 退出登录
+            yield call(fetchLogout);
         },
         * fetchCurrentUser(action, { call, put, select }) {
             const res = yield call(fetchCurrentUser);
             if(!res.code) {
                 yield put({ type: 'changeLoginStatus__', payload: true });
                 yield put({type: 'fetchCurrentUser__', payload: res.dataset});
+            }
+        },
+        * fetchLogin(action, { call, put, select }) {
+            const res = yield call(fetchLogin);
+            if(!res.code) {
+                yield put({ type: 'changeLoginStatus__', payload: true });
+                const selfURLParams = new URL(window.location.href);
+                let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));
+                if(redirectURL) {
+                    const redirectURLParams = new URL(redirectURL);
+                    if(selfURLParams.host === redirectURLParams.host) {
+                        router.push(`${redirectURLParams.pathname}${redirectURLParams.search}`);
+                    } else {
+                        window.location.href = redirectURL;
+                    }
+                } else {
+                    router.push('/');
+                }
+            } else {
+                message.error(res.message);
             }
         }
     }

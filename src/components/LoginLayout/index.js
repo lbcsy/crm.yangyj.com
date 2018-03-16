@@ -1,22 +1,26 @@
 import { PureComponent, Fragment } from 'react';
-import Link from 'umi/link';
-import { Icon, Form, Input, Checkbox, Button } from 'antd';
+import { Icon, Form, Input, Button } from 'antd';
 import autobind from 'autobind';
+import { connect } from 'dva';
 import GlobalFooter from '../../components/GlobalFooter';
 import styles from './index.less';
 import logo from '../../assets/logo.svg';
 
 const FormItem = Form.Item;
 
+@connect()
 @Form.create()
 @autobind
 export default class LoginLayout extends PureComponent {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+
+        const { dispatch } = this.props;
+
+        this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                dispatch({ type: 'global/fetchLogin' });
             }
         });
     };
@@ -27,38 +31,27 @@ export default class LoginLayout extends PureComponent {
         return (
             <div className={styles.container}>
                 <div className={styles.content}>
-                    <div className={styles.top}>
-                        <div className={styles.header}>
-                            <Link to="/">
-                                <img alt="logo" className={styles.logo} src={logo} />
-                                <span className={styles.title}>五米后台管理系统</span>
-                            </Link>
-                        </div>
-                        <div className={styles.desc}>五米后台管理系统是基于阿里大神的 UMI 工具库 以及结合 Dva & Ant Design & Ant Design Pro 开发的系统 </div>
+                    <div className={styles.header}>
+                        <img alt="logo" className={styles.logo} src={logo} />
+                        <span className={styles.title}>五米后台管理系统</span>
                     </div>
                     <div className={styles.login}>
                         <Form onSubmit={this.handleSubmit}>
                             <FormItem>
-                                {getFieldDecorator('userName', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                {getFieldDecorator('username', {
+                                    rules: [{ required: true, message: '请输入您的账号' }],
                                 })(
-                                    <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+                                    <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="账号" />
                                 )}
                             </FormItem>
                             <FormItem>
                                 {getFieldDecorator('password', {
-                                    rules: [{ required: true, message: 'Please input your Password!' }],
+                                    rules: [{ required: true, message: '请输入您的密码' }],
                                 })(
-                                    <Input size="large" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+                                    <Input size="large" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
                                 )}
                             </FormItem>
                             <FormItem>
-                                {getFieldDecorator('remember', {
-                                    valuePropName: 'checked',
-                                    initialValue: true,
-                                })(
-                                    <Checkbox>Remember me</Checkbox>
-                                )}
                                 <Button size="large" type="primary" htmlType="submit" className={styles.submit}>
                                     立 即 登 录
                                 </Button>
