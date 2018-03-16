@@ -1,5 +1,5 @@
-
-const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout));
+import router from 'umi/router';
+import { fetchLogout, fetchCurrentUser } from '../services/global';
 
 export default {
     namespace: 'global',
@@ -15,7 +15,7 @@ export default {
                 collapsed: payload,
             }
         },
-        changeLoginStatus(state, { payload }) {
+        changeLoginStatus__(state, { payload }) {
             return {
                 ...state,
                 loginStatus: payload,
@@ -29,17 +29,27 @@ export default {
         }
     },
     effects: {
+        * fetchLogout(action, { call, put, select }) {
+            // 退出登录
+            yield call(fetchLogout);
+            // 注销登录状态
+            yield put({ type: 'changeLoginStatus__', payload: false });
+            yield put({ type: 'fetchCurrentUser__', payload: {} });
+            let query = {};
+            if(window.location.pathname !== '/') {
+                query.redirectURL = encodeURIComponent(window.location.href);
+            }
+            router.push({
+                pathname: '/login',
+                query,
+            });
+        },
         * fetchCurrentUser(action, { call, put, select }) {
-            yield call(delay, 3000);
-            // 登录失败代码
-            // yield put({type: 'changeLoginStatus', payload: false});
-            // 自动登录成功代码
-            yield put({type: 'changeLoginStatus', payload: true});
-            yield put({type: 'fetchCurrentUser__', payload: {
-                    id: 1,
-                    name: '杨圆建',
-                    avatar: 'https://avatars0.githubusercontent.com/u/9820142?s=40&v=4'
-                }});
+            const res = yield call(fetchCurrentUser);
+            if(!res.code) {
+                yield put({ type: 'changeLoginStatus__', payload: true });
+                yield put({type: 'fetchCurrentUser__', payload: res.dataset});
+            }
         }
     }
 }

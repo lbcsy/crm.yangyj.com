@@ -1,7 +1,7 @@
 import { PureComponent, Fragment } from 'react';
-import router from 'umi/router';
 import { Layout, Icon, BackTop, Spin } from 'antd';
 import { enquireScreen } from 'enquire-js';
+import autobind from 'autobind';
 import { connect } from 'dva';
 import SiderMenu from '../SiderMenu';
 import GlobalHeader from '../GlobalHeader';
@@ -23,24 +23,11 @@ enquireScreen((b) => {
         loginStatus: state.global.loginStatus,
     }
 })
+@autobind
 export default class MainLayout extends PureComponent {
     state = {
         isMobile,
     };
-
-    componentWillReceiveProps(nextProps) {
-        const { loginStatus } = nextProps;
-        if(!loginStatus) {
-            let query = {};
-            if(this.props.location.pathname !== '/') {
-                query.redirectURL = encodeURIComponent(window.location.href);
-            }
-            router.push({
-                pathname: '/login',
-                query,
-            });
-        }
-    }
 
     componentDidMount() {
         enquireScreen((mobile) => {
@@ -49,16 +36,12 @@ export default class MainLayout extends PureComponent {
             });
         });
 
-        const { loginStatus } = this.props;
-
-        if(typeof loginStatus === 'undefined') {
-            this.props.dispatch({
-                type: 'global/fetchCurrentUser',
-            });
-        }
+        this.props.dispatch({
+            type: 'global/fetchCurrentUser',
+        });
     }
 
-    handleMenuCollapse = (collapsed) => {
+    handleMenuCollapse(collapsed) {
         this.props.dispatch({
             type: 'global/changeCollapsed__',
             payload: collapsed,
@@ -69,7 +52,7 @@ export default class MainLayout extends PureComponent {
         const { children, collapsed, location, loginStatus, currentUser, logo } = this.props;
 
         if(typeof loginStatus === 'undefined') {
-            return <Spin size="large" className="globalSpin" tip="资源加载中..." />
+            return <Spin size="large" className="globalSpin" tip="Loading..." />
         }
 
         return (
