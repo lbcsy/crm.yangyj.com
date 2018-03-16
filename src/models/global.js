@@ -31,7 +31,7 @@ export default {
     },
     effects: {
         * fetchLogout(action, { call, put, select }) {
-            // 注销登录状态
+            // 前端退出登录
             yield put({ type: 'changeLoginStatus__', payload: false });
             yield put({ type: 'fetchCurrentUser__', payload: {} });
             let query = {};
@@ -42,7 +42,7 @@ export default {
                 pathname: '/login',
                 query,
             });
-            // 退出登录
+            // 服务端退出登录
             yield call(fetchLogout);
         },
         * fetchCurrentUser(action, { call, put, select }) {
