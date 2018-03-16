@@ -59,7 +59,8 @@ export default {
                 yield put({ type: 'changeLoginStatus__', payload: true });
                 const selfURLParams = new URL(window.location.href);
                 let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));
-                if(redirectURL) {
+                if(redirectURL && redirectURL !== 'null') {
+                    console.log(redirectURL);
                     const redirectURLParams = new URL(redirectURL);
                     if(selfURLParams.host === redirectURLParams.host) {
                         router.push(`${redirectURLParams.pathname}${redirectURLParams.search}`);
