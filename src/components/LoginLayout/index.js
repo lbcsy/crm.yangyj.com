@@ -59,7 +59,6 @@ export default class LoginLayout extends PureComponent {
                                 })(
                                     <Checkbox>Remember me</Checkbox>
                                 )}
-                                <a className="login-form-forgot" href="">Forgot password</a>
                                 <Button size="large" type="primary" htmlType="submit" className={styles.submit}>
                                     Log in
                                 </Button>
