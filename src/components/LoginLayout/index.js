@@ -8,7 +8,11 @@ import logo from '../../assets/logo.svg';
 
 const FormItem = Form.Item;
 
-@connect()
+@connect(state =>  {
+    return {
+        loading:  state.loading.effects['global/fetchLogin']
+    }
+})
 @Form.create()
 @autobind
 export default class LoginLayout extends PureComponent {
@@ -26,7 +30,8 @@ export default class LoginLayout extends PureComponent {
     };
 
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { loading, form } = this.props;
+        const { getFieldDecorator } = form;
 
         return (
             <div className={styles.container}>
@@ -52,7 +57,7 @@ export default class LoginLayout extends PureComponent {
                                 )}
                             </FormItem>
                             <FormItem>
-                                <Button size="large" type="primary" htmlType="submit" className={styles.submit}>
+                                <Button loading={loading} size="large" type="primary" htmlType="submit" className={styles.submit}>
                                     立 即 登 录
                                 </Button>
                             </FormItem>
