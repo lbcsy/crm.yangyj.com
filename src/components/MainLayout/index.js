@@ -1,12 +1,12 @@
-import { PureComponent, Fragment } from 'react';
+import { PureComponent } from 'react';
 import { Layout, Icon, BackTop, Spin } from 'antd';
 import { enquireScreen } from 'enquire-js';
 import autobind from 'autobind';
 import { connect } from 'dva';
-import SiderMenu from '../SiderMenu';
-import GlobalHeader from '../GlobalHeader';
-import GlobalFooter from '../GlobalFooter';
-import { getMenuData } from '../../common/menu';
+import SiderMenu from 'components/SiderMenu';
+import GlobalHeader from 'components/GlobalHeader';
+import GlobalFooter from 'components/GlobalFooter';
+import { getMenuData } from 'common/menu';
 
 const { Header, Content, Footer } = Layout;
 
@@ -122,13 +122,13 @@ export default class MainLayout extends PureComponent {
                                 blankTarget: true,
                             }]}
                             copyright={
-                                <Fragment>
+                                <div>
                                     Copyright <Icon type="copyright" /> 2018 杨圆建 五米后台管理系统
                                     <br />
                                     本系统采用 umi + antd，借鉴 ant-design-pro
                                     <br />
                                     @致谢 <a href="http://github.com/sorrycc">sorrycc</a> 大神
-                                </Fragment>
+                                </div>
                             }
                         />
                     </Footer>

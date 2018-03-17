@@ -1,33 +1,27 @@
 import { Button } from 'antd';
 import Link from 'umi/link';
 import Exception from 'components/Exception';
+import DetailForm from './components/DetailForm';
+import DetailView from './components/DetailView';
 
 export default (props) => {
+    const newProps = {
+        ...props,
+    };
+
     switch (props.location.query.action) {
         case 'add':
-            return (
-                <div>
-                    添加详情
-                </div>
-            );
+            return <DetailForm {...newProps}/>;
         case 'edit':
-            return (
-                <div>
-                    编辑详情
-                </div>
-            );
+            return <DetailForm {...newProps}/>;
         case 'view':
-            return (
-                <div>
-                    查看详情
-                </div>
-            );
+            return <DetailView {...newProps}/>;
         default:
             const actions = (
                 <div>
-                    <Link to="/blog/list"><Button type="primary">返回列表页</Button></Link>
+                    <Link to="/blog/list"><Button type="primary">返回列表</Button></Link>
                 </div>
             );
-            return <Exception type="404" actions={actions} title="Oops" desc="抱歉，未知的操作，请按规范操作！" />
+            return <Exception type="404" actions={actions} title="Oops" />
     }
 }

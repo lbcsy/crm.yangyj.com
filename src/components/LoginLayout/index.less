@@ -3,7 +3,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+  background-image: url('assets/login-bg.svg');
   background-repeat: no-repeat;
   background-position: center 110px;
   background-size: 100%;
@@ -11,8 +11,14 @@
 }
 
 .content {
-  padding: 32px 16px 0;
+  padding: 180px 16px 0;
   flex: 1;
+}
+
+@media screen and (max-width: 374px) {
+  .content {
+    padding: 32px 16px 0;
+  }
 }
 
 .header {
@@ -36,12 +42,3 @@
   }
 }
 
-.login {
-  max-width: 368px;
-  margin: 0px auto;
-
-  .submit {
-    width: 100%;
-    margin-top: 15px;
-  }
-}

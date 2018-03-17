@@ -1,6 +1,6 @@
 import router from 'umi/router';
 import { message } from 'antd';
-import { fetchLogout, fetchCurrentUser, fetchLogin } from '../services/global';
+import { fetchLogout, fetchCurrentUser, fetchLogin } from 'services/global';
 
 export default {
     namespace: 'global',

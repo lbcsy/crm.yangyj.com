@@ -3,6 +3,7 @@ import { resolve } from 'path';
 export default {
     alias: {
         src: resolve(__dirname, 'src'),
+        assets: resolve(__dirname, 'src/assets'),
         common: resolve(__dirname, 'src/common'),
         components: resolve(__dirname, 'src/components'),
         layouts: resolve(__dirname, 'src/layouts'),

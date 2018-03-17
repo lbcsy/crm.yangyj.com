@@ -1,4 +1,4 @@
-import Exception from '../components/Exception';
+import Exception from 'components/Exception';
 
 export default () => {
     return (

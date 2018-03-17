@@ -2,9 +2,9 @@ import { PureComponent } from 'react';
 import Link from 'umi/link';
 import { connect } from 'dva';
 import { Card, List, Icon, Button, Avatar, Divider, Popconfirm } from 'antd';
-import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
-import Ellipsis from '../../../components/Ellipsis';
-import IconText from '../../../components/IconText';
+import PageHeaderLayout from 'layouts/PageHeaderLayout';
+import Ellipsis from 'components/Ellipsis';
+import IconText from 'components/IconText';
 import styles from './page.less';
 
 @connect()

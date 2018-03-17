@@ -4,11 +4,9 @@ import { LocaleProvider } from 'antd';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
-import MainLayout from '../components/MainLayout';
-import LoginLayout from '../components/LoginLayout';
-import logo from '../assets/logo.svg';
-
-
+import MainLayout from 'components/MainLayout';
+import LoginLayout from 'components/LoginLayout';
+import logo from 'assets/logo.svg';
 
 const query = {
     'screen-xs': {

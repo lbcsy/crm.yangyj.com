@@ -4,7 +4,7 @@ import pathToRegexp from 'path-to-regexp';
 import { Breadcrumb, Tabs } from 'antd';
 import classNames from 'classnames';
 import styles from './index.less';
-import { urlToList } from '../../utils/utils';
+import { urlToList } from 'utils/utils';
 
 const { TabPane } = Tabs;
 export function getBreadcrumb(breadcrumbNameMap, url) {
