@@ -1,56 +1,57 @@
 import { PureComponent } from 'react';
-import { Form, Input, Button, Radio } from 'antd';
+import { Form, Input, Button, Upload, Icon } from 'antd';
+
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 export default class FormLayoutDemo extends PureComponent {
-    constructor() {
-        super();
-        this.state = {
-            formLayout: 'horizontal',
-        };
-    }
-    handleFormLayoutChange = (e) => {
-        this.setState({ formLayout: e.target.value });
-    }
     render() {
-        const { formLayout } = this.state;
-        const formItemLayout = formLayout === 'horizontal' ? {
+        const formItemLayout = {
             labelCol: {
-                xs: {span: 24},
-                sm: {span: 4},
+                xs: { span: 24 },
+                sm: { span: 3 },
             },
             wrapperCol: {
-                xs: {span: 24},
-                sm: {span: 18},
+                xs: { span: 24 },
+                sm: { span: 19 },
             },
-        } : null;
-        const buttonItemLayout = formLayout === 'horizontal' ? {
+        };
+        const buttonItemLayout = {
             wrapperCol: { span: 14, offset: 4 },
-        } : null;
+        };
         return (
             <div>
-                <Form layout={formLayout}>
+                <Form layout="horizontal">
                     <FormItem
-                        label="Form Layout"
+                        label="标题"
                         {...formItemLayout}
                     >
-                        <Radio.Group defaultValue="horizontal" onChange={this.handleFormLayoutChange}>
-                            <Radio.Button value="horizontal">Horizontal</Radio.Button>
-                            <Radio.Button value="vertical">Vertical</Radio.Button>
-                            <Radio.Button value="inline">Inline</Radio.Button>
-                        </Radio.Group>
+                        <Input placeholder="文章标题" />
                     </FormItem>
                     <FormItem
-                        label="Field A"
+                        label="缩略图"
                         {...formItemLayout}
                     >
-                        <Input placeholder="input placeholder" />
+                        <Upload
+                            name="avatar"
+                            action="//jsonplaceholder.typicode.com/posts/"
+                        >
+                            <Button>
+                                <Icon type="plus" /> 上传
+                            </Button>
+                        </Upload>
                     </FormItem>
                     <FormItem
-                        label="Field B"
+                        label="摘要"
                         {...formItemLayout}
                     >
-                        <Input placeholder="input placeholder" />
+                        <TextArea placeholder="简要描述" />
+                    </FormItem>
+                    <FormItem
+                        label="正文"
+                        {...formItemLayout}
+                    >
+                        <TextArea placeholder="考虑采用 react-lzc-editor 实现" />
                     </FormItem>
                     <FormItem {...buttonItemLayout}>
                         <Button type="primary">Submit</Button>
