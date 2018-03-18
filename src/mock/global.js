@@ -18,17 +18,17 @@ module.exports = {
 
     },
     'POST /api/admin/login': (req, res) => {
-        if(req.body.username !== 'admin' && req.body.password !== '123456') {
+        if(req.body.username === 'admin' && req.body.password === '123456') {
+            res.send({
+                code: 0,
+                message: '成功',
+            });
+        } else {
             res.send({
                 code: -1,
                 message: '账号密码错误',
             });
-            return;
         }
-        res.send({
-            code: 0,
-            message: '成功',
-        });
     },
     'POST /api/admin/editPassword': (req, res) => {
         if(req.body.password !== '123456') {
