@@ -6,6 +6,7 @@ import { connect } from 'dva';
 import SiderMenu from 'components/SiderMenu';
 import GlobalHeader from 'components/GlobalHeader';
 import GlobalFooter from 'components/GlobalFooter';
+import EditPassword from 'components/EditPassword';
 import { getMenuData } from 'common/menu';
 
 const { Header, Content, Footer } = Layout;
@@ -21,6 +22,7 @@ enquireScreen((b) => {
         collapsed: state.global.collapsed,
         currentUser: state.global.currentUser,
         loginStatus: state.global.loginStatus,
+        visible: state.global.editPasswordModalVisible,
     }
 })
 @autobind
@@ -48,9 +50,12 @@ export default class MainLayout extends PureComponent {
         });
     }
 
-    handleMenuClick = ({ key }) => {
+    handleMenuClick({ key }) {
         if (key === 'editPassword') {
-            // todo: 修改密码 Model
+            this.props.dispatch({
+                type: 'global/changeEditPasswordModalVisible__',
+                payload: true,
+            });
             return;
         }
         if (key === 'logout') {
@@ -61,7 +66,7 @@ export default class MainLayout extends PureComponent {
     }
 
     render() {
-        const { children, collapsed, location, loginStatus, currentUser, logo } = this.props;
+        const { children, collapsed, location, loginStatus, currentUser, logo, visible } = this.props;
 
         // 未登录状态
         if(typeof loginStatus === 'undefined') {
@@ -70,6 +75,7 @@ export default class MainLayout extends PureComponent {
 
         return (
             <Layout>
+                { visible && <EditPassword />}
                 <BackTop />
                 <SiderMenu
                     isMobile={this.state.isMobile}
@@ -93,7 +99,7 @@ export default class MainLayout extends PureComponent {
                     <Content style={{ margin: '24px 24px 0' }}>
                         {children}
                     </Content>
-                    <Footer>
+                    <Footer style={{ padding: 0 }}>
                         <GlobalFooter
                             links={[{
                                 key: 'UMI',

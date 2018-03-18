@@ -1,6 +1,6 @@
 import router from 'umi/router';
 import { message } from 'antd';
-import { fetchLogout, fetchCurrentUser, fetchLogin } from 'services/global';
+import { fetchLogout, fetchCurrentUser, fetchLogin, fetchEditPassword } from 'services/global';
 
 export default {
     namespace: 'global',
@@ -8,6 +8,7 @@ export default {
         collapsed: false,
         loginStatus: undefined,
         currentUser: {},
+        editPasswordModalVisible: false,
     },
     reducers: {
         changeCollapsed__(state, { payload }) {
@@ -27,10 +28,16 @@ export default {
                 ...state,
                 currentUser: payload,
             }
-        }
+        },
+        changeEditPasswordModalVisible__(state, { payload }) {
+            return {
+                ...state,
+                editPasswordModalVisible: payload,
+            }
+        },
     },
     effects: {
-        * fetchLogout(action, { call, put, select }) {
+        * fetchLogout(action, { call, put }) {
             // 前端退出登录
             yield put({ type: 'changeLoginStatus__', payload: false });
             yield put({ type: 'fetchCurrentUser__', payload: {} });
@@ -45,14 +52,14 @@ export default {
             // 服务端退出登录
             yield call(fetchLogout);
         },
-        * fetchCurrentUser(action, { call, put, select }) {
+        * fetchCurrentUser(action, { call, put }) {
             const res = yield call(fetchCurrentUser);
             if(!res.code) {
                 yield put({ type: 'changeLoginStatus__', payload: true });
                 yield put({type: 'fetchCurrentUser__', payload: res.dataset});
             }
         },
-        * fetchLogin({ payload }, { call, put, select }) {
+        * fetchLogin({ payload }, { call, put }) {
             const res = yield call(fetchLogin, payload);
             if(!res.code) {
                 message.success(res.message);
@@ -70,6 +77,15 @@ export default {
                 } else {
                     router.push('/');
                 }
+            } else {
+                message.error(res.message);
+            }
+        },
+        * fetchEditPassword({ payload }, { call, put }) {
+            const res = yield call(fetchEditPassword, payload);
+            if(!res.code) {
+                message.success(res.message);
+                yield put({ type: 'changeEditPasswordModalVisible__', payload: false });
             } else {
                 message.error(res.message);
             }

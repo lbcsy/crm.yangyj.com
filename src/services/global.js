@@ -20,3 +20,12 @@ export async function fetchLogin(params) {
         },
     });
 }
+
+export async function fetchEditPassword(params) {
+    return request('/api/admin/editPassword', {
+        method: 'POST',
+        body: {
+            ...params
+        },
+    });
+}

@@ -5,8 +5,13 @@ import DetailForm from './components/DetailForm';
 import DetailView from './components/DetailView';
 
 export default (props) => {
+    const { location } = props;
+    const { query } = location;
+    const { action } = query;
+
     const newProps = {
         ...props,
+        action
     };
 
     switch (props.location.query.action) {
