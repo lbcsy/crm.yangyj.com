@@ -40,7 +40,6 @@ export default class EditPassword extends PureComponent {
         return (
             <Modal
                 title="修改密码"
-                width={400}
                 visible={visible}
                 confirmLoading={confirmLoading}
                 onCancel={this.handleCancel}
