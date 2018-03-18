@@ -1,4 +1,5 @@
 export default {
-    // 如果动态变更 global 的 Mock 代码，不会实时刷新
+    // fixed mock bug, not dynamic load model
+    // https://github.com/umijs/umi/issues/230
     ...require('./src/mock/global'),
 };
