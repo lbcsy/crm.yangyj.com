@@ -16,8 +16,8 @@
     "qs": "^6.5.1",
     "rc-drawer-menu": "^0.5.5",
     "react-container-query": "^0.11.0",
-    "umi": "^1.0.7",
-    "umi-plugin-dva": "^0.3.3",
+    "umi": "^1.0.8",
+    "umi-plugin-dva": "^0.3.4",
     "url-polyfill": "^1.0.11"
   }
 }
