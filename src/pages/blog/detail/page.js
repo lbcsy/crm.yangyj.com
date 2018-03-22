@@ -1,6 +1,6 @@
-import { Button } from 'antd';
-import Link from 'umi/link';
-import Exception from 'components/Exception';
+import { Card } from 'antd';
+import PageHeaderLayout from 'layouts/PageHeaderLayout';
+
 import DetailForm from './components/DetailForm';
 import DetailView from './components/DetailView';
 
@@ -14,19 +14,42 @@ export default (props) => {
         action
     };
 
+    let DetailDom = () => <Card bordered={false}>参数错误</Card>;
+
+    let breadcrumbList = [{
+        title: '首页',
+        href: '/',
+    }, {
+        title: '博客管理',
+        href: '/blog/list',
+    }, {
+        title: '文章列表',
+        href: '/blog/list',
+    }];
+
     switch (props.location.query.action) {
         case 'add':
-            return <DetailForm {...newProps}/>;
+            breadcrumbList.push({ title: '添加文章' });
+            DetailDom = () => <DetailForm {...newProps}/>;
+            break;
         case 'edit':
-            return <DetailForm {...newProps}/>;
+            breadcrumbList.push({ title: '编辑文章' });
+            DetailDom = () => <DetailForm {...newProps}/>;
+            break;
         case 'view':
-            return <DetailView {...newProps}/>;
+            breadcrumbList.push({ title: '查看文章' });
+            DetailDom = () => <DetailView {...newProps}/>;
+            break;
         default:
-            const actions = (
-                <div>
-                    <Link to="/blog/list"><Button type="primary">返回列表</Button></Link>
-                </div>
-            );
-            return <Exception type="404" actions={actions} title="Oops" />
+            breadcrumbList.push({ title: '查看文章' });
+            break;
     }
+
+    return (
+        <PageHeaderLayout
+            breadcrumbList={breadcrumbList}
+        >
+            <DetailDom />
+        </PageHeaderLayout>
+    );
 }

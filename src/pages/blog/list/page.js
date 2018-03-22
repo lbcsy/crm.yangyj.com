@@ -20,8 +20,10 @@ export default class page extends PureComponent {
             href: '/',
         }, {
             title: '博客管理',
+            href: '/blog/list',
         }, {
             title: '文章列表',
+            href: '/blog/list',
         }];
 
         const listData = [];
@@ -44,7 +46,7 @@ export default class page extends PureComponent {
         };
 
         return (
-            <PageHeaderLayout breadcrumbList={breadcrumbList} linkElement={Link}>
+            <PageHeaderLayout breadcrumbList={breadcrumbList}>
                 <Card bordered={false}>
                     <Link to={`/blog/detail?action=add`}>
                         <Button type="dashed"
