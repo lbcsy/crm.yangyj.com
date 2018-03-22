@@ -9,7 +9,7 @@
     "build": "umi build"
   },
   "dependencies": {
-    "antd": "^3.3.0",
+    "antd": "^3.3.1",
     "autobind": "^1.0.3",
     "enquire-js": "^0.1.2",
     "lodash-decorators": "^4.5.0",
