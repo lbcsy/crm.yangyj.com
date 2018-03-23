@@ -5,8 +5,6 @@ export default props => {
 
     const { type, editProps = {} } = props;
 
-    console.log(editProps);
-
     switch (type) {
         case 'lz-editor':
             EditorDom = () => <LzEditor editProps={editProps} />;
