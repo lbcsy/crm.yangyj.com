@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { Card, Form, Input, Button } from 'antd';
 import CustomUpload from "components/CustomUpload";
+import CustomEditor from "components/CustomEditor";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -28,7 +29,15 @@ export default class FormLayoutDemo extends PureComponent {
                     <FormItem
                         label="正文"
                     >
-                        <TextArea placeholder="考虑采用 react-lzc-editor 实现" />
+                        <CustomEditor
+                            type="lz-editor"
+                            editProps={{
+                                active: true,
+                                cbReceiver: (content) => {
+                                    console.log(content);
+                                }
+                            }}
+                        />
                     </FormItem>
                     <FormItem>
                         <Button type="primary">Submit</Button>

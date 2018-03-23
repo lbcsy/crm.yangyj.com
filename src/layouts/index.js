@@ -9,6 +9,10 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import MainLayout from 'components/MainLayout';
 import LoginLayout from 'components/LoginLayout';
 import logo from 'assets/logo.svg';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
 
 const query = {
     'screen-xs': {
