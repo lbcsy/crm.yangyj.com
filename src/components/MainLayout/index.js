@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { Layout, Icon, BackTop, Spin } from 'antd';
+import { Layout, Icon, BackTop } from 'antd';
 import { enquireScreen } from 'enquire-js';
 import autobind from 'autobind';
 import { connect } from 'dva';
@@ -70,7 +70,7 @@ export default class MainLayout extends PureComponent {
 
         // 未登录状态
         if(typeof loginStatus === 'undefined') {
-            return <Spin size="large" className="globalSpin" tip="Loading..." />
+            return null;
         }
 
         return (

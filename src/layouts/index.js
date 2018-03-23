@@ -1,8 +1,10 @@
 import { PureComponent } from 'react';
+import { connect } from 'dva';
 import withRouter from 'umi/withRouter';
 import { LocaleProvider } from 'antd';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
+import NProgress from 'nprogress'
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import MainLayout from 'components/MainLayout';
 import LoginLayout from 'components/LoginLayout';
@@ -30,14 +32,24 @@ const query = {
 };
 
 @withRouter
+@connect(state => {
+    return {
+        loading: state.loading,
+    }
+})
 export default class Layout extends PureComponent {
     render() {
-        const { location } = this.props;
+        const { location, loading } = this.props;
 
         const newProps = {
             ...this.props,
             logo,
         };
+
+        NProgress.start();
+        if (!loading.global) {
+            NProgress.done();
+        }
 
         return (
             <ContainerQuery query={query}>
