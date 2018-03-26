@@ -10,10 +10,14 @@ import IconText from 'components/IconText';
 import styles from './page.less';
 
 @connect(state => {
+    const { blog, loading } = state;
+    const { effects } = loading;
     return {
-        paging: state.blog.paging,
-        data: state.blog.data,
-        loading: state.loading.effects['blog/fetchList'],
+        page: blog.page,
+        size: blog.size,
+        total: blog.total,
+        data: blog.data,
+        loading: effects['blog/fetchList'],
     }
 })
 export default class page extends PureComponent {
@@ -24,16 +28,16 @@ export default class page extends PureComponent {
         const urlParams = `${stringify(location.query)}${location.hash}`;
         const nextUrlParams = `${stringify(nextLocation.query)}${nextLocation.hash}`;
         if(urlParams !== nextUrlParams) {
-            // 路由参数有变化，重新 reload
-            this.props.dispatch({
-                type: 'blog/fetchList',
-                payload: nextLocation.query,
-            });
+            this.fetchList(nextLocation.query);
         }
     }
 
     componentDidMount() {
         const { query } = this.props.location;
+        this.fetchList(query);
+    }
+
+    fetchList(query) {
         this.props.dispatch({
             type: 'blog/fetchList',
             payload: query,
@@ -41,7 +45,7 @@ export default class page extends PureComponent {
     }
 
     render() {
-        const { data, paging, loading, location } = this.props;
+        const { data, page, size, total, loading, location } = this.props;
 
         const breadcrumbList = [{
             title: '首页',
@@ -54,10 +58,10 @@ export default class page extends PureComponent {
             href: '/blog/list',
         }];
 
-        const params = {
-            pageSize: paging.size,
-            current: paging.page,
-            total: paging.total,
+        const pagination = {
+            pageSize: size,
+            current: page,
+            total: total,
             onChange: (page => {
                 router.push({
                     pathname: location.pathname,
@@ -83,7 +87,7 @@ export default class page extends PureComponent {
                         itemLayout="vertical"
                         size="large"
                         loading={loading}
-                        pagination={params}
+                        pagination={pagination}
                         dataSource={data}
                         renderItem={item => (
                             <List.Item

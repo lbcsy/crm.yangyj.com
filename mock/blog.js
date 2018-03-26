@@ -20,11 +20,7 @@ module.exports = {
             code: 0,
             message: '成功',
             data,
-            paging: {
-                page: parseInt(page),
-                size: parseInt(size),
-                total: parseInt(total),
-            }
+            total,
         });
 
     },
