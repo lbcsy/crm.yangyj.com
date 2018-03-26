@@ -1,13 +1,16 @@
 import { PureComponent } from 'react';
 import { Card, Form, Input, Button } from 'antd';
+import router from 'umi/router';
 import CustomUpload from "components/CustomUpload";
 import CustomEditor from "components/CustomEditor";
+import QuickToolbar from "components/QuickToolbar";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
 export default class FormLayoutDemo extends PureComponent {
     render() {
+        const { action } = this.props;
         return (
             <Card bordered={false}>
                 <Form>
@@ -40,7 +43,10 @@ export default class FormLayoutDemo extends PureComponent {
                         />
                     </FormItem>
                     <FormItem>
-                        <Button type="primary">Submit</Button>
+                        <QuickToolbar>
+                            <Button type="default" onClick={() => router.goBack()}>返回</Button>
+                            {action && <Button type="primary">{action === 'add' ? '添加' : '保存'}</Button>}
+                        </QuickToolbar>
                     </FormItem>
                 </Form>
             </Card>

@@ -5,11 +5,11 @@ module.exports = {
             message: '成功',
         })
     },
-    'GET /api/admin/getCurrentUser':(req, res) => {
+    'GET /api/admin/currentUser':(req, res) => {
         res.send({
             code: 0,
             message: '成功',
-            dataset: {
+            data: {
                 id: 1,
                 name: '杨圆建',
                 avatar: 'https://avatars0.githubusercontent.com/u/9820142?s=40&v=4',
@@ -57,4 +57,4 @@ module.exports = {
             message: '成功',
         });
     }
-}
+};

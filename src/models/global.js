@@ -54,41 +54,42 @@ export default {
         },
         * fetchCurrentUser(action, { call, put }) {
             const res = yield call(fetchCurrentUser);
-            if(!res.code) {
-                yield put({ type: 'changeLoginStatus__', payload: true });
-                yield put({type: 'fetchCurrentUser__', payload: res.dataset});
+            if(res.code < 0) {
+                return false;
             }
+            yield put({ type: 'changeLoginStatus__', payload: true });
+            yield put({type: 'fetchCurrentUser__', payload: res.data});
         },
         * fetchLogin({ payload }, { call, put }) {
             const res = yield call(fetchLogin, payload);
-            if(!res.code) {
-                message.success(res.message);
-                yield put({ type: 'changeLoginStatus__', payload: true });
-                const selfURLParams = new URL(window.location.href);
-                let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));
-                if(redirectURL && redirectURL !== 'null') {
-                    console.log(redirectURL);
-                    const redirectURLParams = new URL(redirectURL);
-                    if(selfURLParams.host === redirectURLParams.host) {
-                        router.push(`${redirectURLParams.pathname}${redirectURLParams.search}`);
-                    } else {
-                        window.location.href = redirectURL;
-                    }
+            if(res.code < 0) {
+                message.error(res.message);
+                return false;
+            }
+            message.success(res.message);
+            yield put({ type: 'changeLoginStatus__', payload: true });
+            const selfURLParams = new URL(window.location.href);
+            let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));
+            if(redirectURL && redirectURL !== 'null') {
+                console.log(redirectURL);
+                const redirectURLParams = new URL(redirectURL);
+                if(selfURLParams.host === redirectURLParams.host) {
+                    router.push(`${redirectURLParams.pathname}${redirectURLParams.search}`);
                 } else {
-                    router.push('/');
+                    window.location.href = redirectURL;
                 }
             } else {
-                message.error(res.message);
+                router.push('/');
             }
         },
         * fetchEditPassword({ payload }, { call, put }) {
             const res = yield call(fetchEditPassword, payload);
-            if(!res.code) {
-                message.success(res.message);
-                yield put({ type: 'changeEditPasswordModalVisible__', payload: false });
-            } else {
+            if(res.code < 0) {
                 message.error(res.message);
+                return false;
             }
+            message.success(res.message);
+            yield put({ type: 'changeEditPasswordModalVisible__', payload: false });
         }
     }
 }

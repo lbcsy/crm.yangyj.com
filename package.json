@@ -11,6 +11,7 @@
   "dependencies": {
     "antd": "^3.3.1",
     "autobind": "^1.0.3",
+    "braft-editor": "^1.8.3",
     "enquire-js": "^0.1.2",
     "lodash-decorators": "^4.5.0",
     "moment": "^2.21.0",
@@ -18,6 +19,7 @@
     "qs": "^6.5.1",
     "rc-drawer-menu": "^0.5.5",
     "react-container-query": "^0.11.0",
+    "react-content-loader": "^3.1.1",
     "react-lz-editor": "^0.11.9",
     "umi": "^1.1.1",
     "umi-plugin-dva": "^0.4.0",

@@ -27,6 +27,14 @@ html,body {
   color: red;
 }
 
+/*
+ 修复 react-lz-editor 有序列表出现数字 1 的问题
+ */
+
+.public-DraftStyleDefault-ol:before {
+  content: "";
+}
+
 
 /* 顶部加载样式配置::start */
 #nprogress {

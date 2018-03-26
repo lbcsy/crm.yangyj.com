@@ -9,7 +9,7 @@ export async function fetchLogout() {
 }
 
 export async function fetchCurrentUser() {
-    return request('/api/admin/getCurrentUser');
+    return request('/api/admin/currentUser');
 }
 
 export async function fetchLogin(params) {
