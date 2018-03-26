@@ -40,13 +40,13 @@ export default class EditPassword extends PureComponent {
         return (
             <Modal
                 title="修改密码"
-                style={{ maxWidth: '360px', width: '100%' }}
+                style={{ maxWidth: '320px', width: '100%', top: 10 }}
                 visible={visible}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 footer={[
-                    <Button size="large" onClick={this.handleCancel}>取消</Button>,
-                    <Button type="primary" size="large" loading={confirmLoading} onClick={this.handleOk}>确认</Button>,
+                    <Button key="back" size="large" onClick={this.handleCancel}>取消</Button>,
+                    <Button key="submit" type="primary" size="large" loading={confirmLoading} onClick={this.handleOk}>确认</Button>,
                 ]}
             >
                 <Form>
