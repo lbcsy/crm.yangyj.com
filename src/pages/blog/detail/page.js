@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import PageHeaderLayout from 'layouts/PageHeaderLayout';
+import PageHeaderLayout from 'components/PageHeaderLayout';
 
 import DetailForm from './components/DetailForm';
 import DetailView from './components/DetailView';

@@ -19,8 +19,8 @@
     "rc-drawer-menu": "^0.5.5",
     "react-container-query": "^0.11.0",
     "react-lz-editor": "^0.11.9",
-    "umi": "^1.0.8",
-    "umi-plugin-dva": "^0.3.4",
+    "umi": "^1.1.1",
+    "umi-plugin-dva": "^0.4.0",
     "url-polyfill": "^1.0.11"
   }
 }
