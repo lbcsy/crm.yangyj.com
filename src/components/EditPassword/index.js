@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, Button } from 'antd';
 import { connect } from 'dva';
 import autobind from 'autobind';
 
@@ -40,31 +40,41 @@ export default class EditPassword extends PureComponent {
         return (
             <Modal
                 title="修改密码"
+                style={{ maxWidth: '360px', width: '100%' }}
                 visible={visible}
-                confirmLoading={confirmLoading}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
+                footer={[
+                    <Button size="large" onClick={this.handleCancel}>取消</Button>,
+                    <Button type="primary" size="large" loading={confirmLoading} onClick={this.handleOk}>确认</Button>,
+                ]}
             >
                 <Form>
-                    <FormItem>
+                    <FormItem
+                        label="旧密码"
+                    >
                         {getFieldDecorator('password', {
                             rules: [{ required: true, message: '请输入您的旧密码' }],
                         })(
-                            <Input type="password" placeholder="请输入您的旧密码" />
+                            <Input size="large" type="password" placeholder="请输入您的旧密码" />
                         )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem
+                        label="新的密码"
+                    >
                         {getFieldDecorator('newPassword', {
                             rules: [{ required: true, message: '请输入您的新密码' }],
                         })(
-                            <Input type="password" placeholder="请输入您的新密码" />
+                            <Input size="large" type="password" placeholder="请输入您的新密码" />
                         )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem
+                        label="确认密码"
+                    >
                         {getFieldDecorator('confirmNewPassword', {
                             rules: [{ required: true, message: '请确认您的新密码' }],
                         })(
-                            <Input type="password" placeholder="请确认您的新密码" />
+                            <Input size="large" type="password" placeholder="请确认您的新密码" />
                         )}
                     </FormItem>
                 </Form>
