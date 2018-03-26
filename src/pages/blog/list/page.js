@@ -37,8 +37,9 @@ export default class page extends PureComponent {
         this.fetchList(query);
     }
 
-    fetchList(query) {
-        this.props.dispatch({
+    fetchList(query = {}) {
+        const { dispatch } = this.props;
+        dispatch({
             type: 'blog/fetchList',
             payload: query,
         });
