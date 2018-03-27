@@ -1,4 +1,5 @@
-import { fetchList } from 'services/blog';
+import { getList, delDetail, } from 'services/blog';
+import router from "umi/router";
 
 export default {
     namespace: 'blog',
@@ -6,37 +7,38 @@ export default {
         page: 1,
         size: 10,
         total: 0,
-        data: [],
+        list: [],
     },
     reducers: {
         changePage__(state, { payload }) {
             return {
                 ...state,
-                page: parseInt(payload, 10),
+                page: +payload,
             }
         },
         changeSize__(state, { payload }) {
             return {
                 ...state,
-                size: parseInt(payload, 10),
+                size: +payload,
             }
         },
         changeTotal__(state, { payload }) {
             return {
                 ...state,
-                total: parseInt(payload, 10),
+                total: +payload,
             }
         },
         changeData__(state, { payload }) {
             return {
                 ...state,
-                data: payload,
+                list: payload,
             }
         },
     },
     effects: {
-        * fetchList({ payload }, { call, put, select }) {
-            const blog = yield select(state => state.blog);
+        * getList({ payload }, { call, put, select }) {
+            const state = yield select(state => state);
+            const { blog } = state;
             const params = {
                 page: blog.page,
                 size: blog.size,
@@ -48,12 +50,41 @@ export default {
             if(params.size) {
                 yield put({ type: 'changeSize__', payload: params.size });
             }
-            const res = yield call(fetchList, params);
-            if(res.code < 0) {
+            const res = yield call(getList, params);
+            if(+res.code < 0) {
                return false;
             }
             yield put({ type: 'changeTotal__', payload: res.total });
             yield put({ type: 'changeData__', payload: res.data });
+        },
+        * delDetail({ payload, location }, { call, put, select }) {
+            const res = yield call(delDetail, payload);
+            if(+res.code < 0) {
+                return false;
+            }
+            const state = yield select(state => state);
+            const { blog } = state;
+            const { list } = blog;
+            let newData = [];
+            list.map(item => {
+                if(+item.id !== payload) {
+                    newData.push(item);
+                }
+                return false;
+            });
+
+            if(!newData.length) {
+                router.push({
+                    pathname: location.pathname,
+                    query: {
+                        ...location.query,
+                        page: blog.page-1 || 1,
+                        t: new Date().getTime(),
+                    },
+                });
+                return false;
+            }
+            yield put({ type: 'changeData__', payload: newData });
         }
     }
 }

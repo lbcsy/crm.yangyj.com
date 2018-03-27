@@ -1,5 +1,5 @@
 module.exports = {
-    'POST /api/admin/logout': (req, res) => {
+    'PUT /api/admin/logout': (req, res) => {
         res.send({
             code: 0,
             message: '成功',
@@ -17,7 +17,7 @@ module.exports = {
         });
 
     },
-    'POST /api/admin/login': (req, res) => {
+    'PUT /api/admin/login': (req, res) => {
         if(req.body.username === 'admin' && req.body.password === '123456') {
             res.send({
                 code: 0,
@@ -30,7 +30,7 @@ module.exports = {
             });
         }
     },
-    'POST /api/admin/editPassword': (req, res) => {
+    'PUT /api/admin/editPassword': (req, res) => {
         if(req.body.password !== '123456') {
             res.send({
                 code: -1,

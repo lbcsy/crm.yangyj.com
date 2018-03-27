@@ -1,6 +1,6 @@
 import router from 'umi/router';
 import { message } from 'antd';
-import { fetchLogout, fetchCurrentUser, fetchLogin, fetchEditPassword } from 'services/global';
+import { logout, currentUser, login, editPassword } from 'services/global';
 
 export default {
     namespace: 'global',
@@ -23,7 +23,7 @@ export default {
                 loginStatus: payload,
             }
         },
-        fetchCurrentUser__(state, { payload }) {
+        changeCurrentUser__(state, { payload }) {
             return {
                 ...state,
                 currentUser: payload,
@@ -37,10 +37,10 @@ export default {
         },
     },
     effects: {
-        * fetchLogout(action, { call, put }) {
+        * logout(action, { call, put }) {
             // 前端退出登录
             yield put({ type: 'changeLoginStatus__', payload: false });
-            yield put({ type: 'fetchCurrentUser__', payload: {} });
+            yield put({ type: 'changeCurrentUser__', payload: {} });
             let query = {};
             if(window.location.pathname !== '/') {
                 query.redirectURL = encodeURIComponent(window.location.href);
@@ -50,20 +50,19 @@ export default {
                 query,
             });
             // 服务端退出登录
-            yield call(fetchLogout);
+            yield call(logout);
         },
-        * fetchCurrentUser(action, { call, put }) {
-            const res = yield call(fetchCurrentUser);
-            if(res.code < 0) {
+        * currentUser(action, { call, put }) {
+            const res = yield call(currentUser);
+            if(+res.code < 0) {
                 return false;
             }
             yield put({ type: 'changeLoginStatus__', payload: true });
-            yield put({type: 'fetchCurrentUser__', payload: res.data});
+            yield put({type: 'changeCurrentUser__', payload: res.data});
         },
-        * fetchLogin({ payload }, { call, put }) {
-            const res = yield call(fetchLogin, payload);
-            if(res.code < 0) {
-                message.error(res.message);
+        * login({ payload }, { call, put }) {
+            const res = yield call(login, payload);
+            if(+res.code < 0) {
                 return false;
             }
             message.success(res.message);
@@ -82,10 +81,9 @@ export default {
                 router.push('/');
             }
         },
-        * fetchEditPassword({ payload }, { call, put }) {
-            const res = yield call(fetchEditPassword, payload);
-            if(res.code < 0) {
-                message.error(res.message);
+        * editPassword({ payload }, { call, put }) {
+            const res = yield call(editPassword, payload);
+            if(+res.code < 0) {
                 return false;
             }
             message.success(res.message);

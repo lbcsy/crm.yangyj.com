@@ -2,28 +2,28 @@
 import { stringify  } from 'qs';
 import request from '../utils/request';
 
-export async function fetchLogout() {
+export async function logout() {
     return request('/api/admin/logout', {
-        method: 'POST',
+        method: 'PUT',
     });
 }
 
-export async function fetchCurrentUser() {
+export async function currentUser() {
     return request('/api/admin/currentUser');
 }
 
-export async function fetchLogin(params) {
+export async function login(params) {
     return request('/api/admin/login', {
-        method: 'POST',
+        method: 'PUT',
         body: {
             ...params
         },
     });
 }
 
-export async function fetchEditPassword(params) {
+export async function editPassword(params) {
     return request('/api/admin/editPassword', {
-        method: 'POST',
+        method: 'PUT',
         body: {
             ...params
         },

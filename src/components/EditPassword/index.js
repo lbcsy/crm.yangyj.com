@@ -20,7 +20,7 @@ export default class EditPassword extends PureComponent {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 dispatch({
-                    type: 'global/fetchEditPassword',
+                    type: 'global/editPassword',
                     payload: values,
                 });
             }

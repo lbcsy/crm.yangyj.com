@@ -22,7 +22,7 @@ export default class Login extends PureComponent {
 
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                dispatch({ type: 'global/fetchLogin', payload: values });
+                dispatch({ type: 'global/login', payload: values });
             }
         });
     };

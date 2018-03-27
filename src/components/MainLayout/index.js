@@ -38,29 +38,35 @@ export default class MainLayout extends PureComponent {
             });
         });
 
-        this.props.dispatch({
-            type: 'global/fetchCurrentUser',
+        const { dispatch } = this.props;
+
+        dispatch({
+            type: 'global/currentUser',
         });
     }
 
     handleMenuCollapse(collapsed) {
-        this.props.dispatch({
+        const { dispatch } = this.props;
+
+        dispatch({
             type: 'global/changeCollapsed__',
             payload: collapsed,
         });
     }
 
     handleMenuClick({ key }) {
+        const { dispatch } = this.props;
+
         if (key === 'editPassword') {
-            this.props.dispatch({
+            dispatch({
                 type: 'global/changeEditPasswordModalVisible__',
                 payload: true,
             });
             return;
         }
         if (key === 'logout') {
-            this.props.dispatch({
-                type: 'global/fetchLogout',
+            dispatch({
+                type: 'global/logout',
             });
         }
     }

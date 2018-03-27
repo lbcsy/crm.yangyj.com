@@ -1,6 +1,6 @@
 import fetch from 'dva/fetch';
 // eslint-disable-next-line
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 
 const codeMessage = {
     200: '服务器成功返回请求的数据。',
@@ -67,10 +67,11 @@ export default function request(url, options) {
 
     return fetch(url, newOptions)
         .then(checkStatus)
-        .then((response) => {
-            if (newOptions.method === 'DELETE' || response.status === 204) {
-                return response.text();
+        .then(response => response.json())
+        .then(data => {
+            if(+data.code === -1) {
+                message.error(data.message || '系统故障');
             }
-            return response.json();
+            return data;
         })
 }

@@ -11,7 +11,7 @@ export default {
             message.error(err.message);
 
             dispatch({
-                type: 'global/fetchLogout',
+                type: 'global/logout',
             });
             return;
         }
