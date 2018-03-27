@@ -104,11 +104,11 @@ export default class page extends PureComponent {
                                 />
                                 <div>
                                     <span className="pull-left">
-                                        <IconText type="star-o" text="156"/>
+                                        <IconText type="eye-o" text={item.count.view} />
                                         <Divider type="vertical"/>
-                                        <IconText type="like-o" text="156"/>
+                                        <IconText type="like-o" text={item.count.like}/>
                                         <Divider type="vertical"/>
-                                        <IconText type="message" text="2"/>
+                                        <IconText type="message" text={item.count.comment}/>
                                     </span>
                                     <span className="pull-right">
                                         <Link to={`/blog/detail?action=edit&id=${item.id}`}>
