@@ -1,4 +1,4 @@
-import { getList, delDetail, } from 'services/blog';
+import { getList, getDetail, delDetail, } from 'services/blog';
 import router from "umi/router";
 
 export default {
@@ -8,6 +8,7 @@ export default {
         size: 10,
         total: 0,
         list: [],
+        detail: {},
     },
     reducers: {
         changePage__(state, { payload }) {
@@ -34,6 +35,12 @@ export default {
                 list: payload,
             }
         },
+        changeDetail__(state, { payload }) {
+            return {
+                ...state,
+                detail: payload,
+            }
+        },
     },
     effects: {
         * getList({ payload }, { call, put, select }) {
@@ -57,34 +64,50 @@ export default {
             yield put({ type: 'changeTotal__', payload: res.total });
             yield put({ type: 'changeData__', payload: res.data });
         },
-        * delDetail({ payload, location }, { call, put, select }) {
+        * getDetail({ payload }, { call, put }) {
+            yield put({ type: 'changeDetail__', payload: {} });
+            if(!+payload) {
+                return false;
+            }
+            const res = yield call(getDetail, payload);
+            if(+res.code < 0) {
+                return false;
+            }
+            yield put({ type: 'changeDetail__', payload: res.data });
+        },
+        * delDetail({ payload, location, cb }, { call, put, select }) {
             const res = yield call(delDetail, payload);
             if(+res.code < 0) {
                 return false;
             }
-            const state = yield select(state => state);
-            const { blog } = state;
-            const { list } = blog;
-            let newData = [];
-            list.map(item => {
-                if(+item.id !== payload) {
-                    newData.push(item);
-                }
-                return false;
-            });
 
-            if(!newData.length) {
-                router.push({
-                    pathname: location.pathname,
-                    query: {
-                        ...location.query,
-                        page: blog.page-1 || 1,
-                        t: new Date().getTime(),
-                    },
+            if(location) {
+                const state = yield select(state => state);
+                const { blog } = state;
+                const { list } = blog;
+                let newData = [];
+                list.map(item => {
+                    if(+item.id !== payload) {
+                        newData.push(item);
+                    }
+                    return false;
                 });
-                return false;
+                if(!newData.length) {
+                    router.push({
+                        pathname: location.pathname,
+                        query: {
+                            ...location.query,
+                            page: blog.page-1 || 1,
+                            t: new Date().getTime(),
+                        },
+                    });
+                }
+                yield put({ type: 'changeData__', payload: newData });
             }
-            yield put({ type: 'changeData__', payload: newData });
+
+            if(cb) {
+                cb();
+            }
         }
     }
 }

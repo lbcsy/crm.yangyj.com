@@ -3,7 +3,7 @@ import Link from 'umi/link';
 import { stringify } from 'qs';
 import router from 'umi/router';
 import { connect } from 'dva';
-import { Card, List, Icon, Button, Avatar, Divider, Popconfirm } from 'antd';
+import { Card, List, Icon, Button, Divider, Popconfirm } from 'antd';
 import PageHeaderLayout from 'components/PageHeaderLayout';
 import Ellipsis from 'components/Ellipsis';
 import IconText from 'components/IconText';
@@ -28,16 +28,16 @@ export default class page extends PureComponent {
         const urlParams = `${stringify(location.query)}${location.hash}`;
         const nextUrlParams = `${stringify(nextLocation.query)}${nextLocation.hash}`;
         if(urlParams !== nextUrlParams) {
-            this.fetchList(nextLocation.query);
+            this.getList(nextLocation.query);
         }
     }
 
     componentDidMount() {
         const { query } = this.props.location;
-        this.fetchList(query);
+        this.getList(query);
     }
 
-    fetchList(query = {}) {
+    getList(query = {}) {
         const { dispatch } = this.props;
         dispatch({
             type: 'blog/getList',
@@ -53,10 +53,8 @@ export default class page extends PureComponent {
             href: '/',
         }, {
             title: '博客管理',
-            href: '/blog/list',
         }, {
             title: '文章列表',
-            href: '/blog/list',
         }];
 
         const pagination = {
@@ -94,12 +92,10 @@ export default class page extends PureComponent {
                             <List.Item
                                 key={item.title}
                                 className={styles.item}
-                                extra={<img alt="logo"
-                                            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"/>}
+                                extra={item.image && <Link to={`/blog/detail?action=edit&id=${item.id}`}><img alt={item.title} src={item.image} /></Link>}
                             >
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.image}/>}
-                                    title={<Link to={`/blog/detail?action=view&id=${item.id}`}>{item.title}</Link>}
+                                    title={<Link to={`/blog/detail?action=edit&id=${item.id}`}>{item.title}</Link>}
                                     description={<Ellipsis lines={3}>{item.intro}</Ellipsis>}
                                 />
                                 <div>
@@ -111,7 +107,7 @@ export default class page extends PureComponent {
                                         <IconText type="message" text={item.count.comment}/>
                                     </span>
                                     <span className="pull-right">
-                                        <Link to={`/blog/detail?action=edit&id=${item.id}`}>
+                                        <Link to={`/blog/detail?action=edit&id=${item.id}&status=editing`}>
                                             <IconText type="edit" text="编辑"/>
                                         </Link>
                                         <Divider type="vertical"/>
@@ -124,6 +120,7 @@ export default class page extends PureComponent {
                                         <Divider type="vertical"/>
                                         {/*<IconText type="setting" text="更多"/>*/}
                                     </span>
+                                    <div className="clearfix" />
                                 </div>
                             </List.Item>
                         )}

@@ -1,10 +1,12 @@
 import { PureComponent } from 'react';
-import ReactLzEditor from 'react-lz-editor'
+import autobind from 'autobind';
+import ReactLzEditor from 'react-lz-editor';
 
+@autobind
 export default class LzEditor extends PureComponent {
-    render() {
-        const { editProps = {} } = this.props;
 
+    render() {
+        const { editProps } = this.props;
         return (
             <ReactLzEditor
                 {...editProps}

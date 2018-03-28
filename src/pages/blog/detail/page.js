@@ -3,22 +3,32 @@ import { Card } from 'antd';
 import { connect } from 'dva';
 import PageHeaderLayout from 'components/PageHeaderLayout';
 import DetailForm from './components/DetailForm';
-import DetailView from './components/DetailView';
 
-@connect()
+@connect(state => ({detail: state.blog.detail}))
 export default class Detail extends PureComponent {
     componentDidMount() {
-        // load data
+        const { location } = this.props;
+        const { query } = location;
+        this.getDetail(query.id);
+    }
+
+    getDetail(id = 0) {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'blog/getDetail',
+            payload: id,
+        });
     }
 
     render() {
-        const { location } = this.props;
+        const { location, detail } = this.props;
         const { query } = location;
         const { action } = query;
 
         const newProps = {
             ...this.props,
-            action
+            action,
+            detail,
         };
 
         let DetailDom = () => <Card bordered={false}>参数错误</Card>;
@@ -45,7 +55,7 @@ export default class Detail extends PureComponent {
                 break;
             case 'view':
                 breadcrumbList.push({ title: '查看文章' });
-                DetailDom = () => <DetailView {...newProps}/>;
+                DetailDom = () => <DetailForm {...newProps}/>;
                 break;
             default:
                 breadcrumbList.push({ title: '查看文章' });
