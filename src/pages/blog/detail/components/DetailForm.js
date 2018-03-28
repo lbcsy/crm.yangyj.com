@@ -27,37 +27,61 @@ const fields = ['id', 'title', 'image', 'intro', 'content'];
 @autobind
 export default class DetailForm extends PureComponent {
 
-    handleSaveDetail() {
-        const { form, detail } = this.props;
+    handleAddDetail() {
+        const { form, dispatch } = this.props;
 
-        console.log(this.props);
+        form.validateFieldsAndScroll((err, values) => {
+            dispatch({ type: 'blog/addDetail', payload: values });
+        });
+    }
+
+    handleSaveDetail() {
+        const { form, detail, dispatch } = this.props;
 
         form.validateFieldsAndScroll((err, values) => {
             const params = {
                 ...detail,
                 ...values,
             };
-            console.log(params);
+            dispatch({ type: 'blog/saveDetail', payload: params });
         });
     }
 
     render() {
         const { action, detail, form } = this.props;
+
         const { getFieldDecorator } = form;
+
+        const formItemLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 4 },
+                md: { span: 2 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 20 },
+                md: { span: 22 },
+            },
+        };
 
         return (
             <Card bordered={false}>
                 <Form>
                     <FormItem
+                        {...formItemLayout}
                         label="标题"
                     >
-                        {getFieldDecorator('title', {
-                            rules: [{ required: true, message: '请输入标题' }],
-                        })(
-                            <Input placeholder="文章标题" />
-                        )}
+                        {
+                            getFieldDecorator('title', {
+                                rules: [{ required: true, message: '请输入标题' }],
+                            })(
+                                <Input placeholder="请输入标题" disabled={action === 'view'} />
+                            )
+                        }
                     </FormItem>
                     <FormItem
+                        {...formItemLayout}
                         label="缩略图"
                     >
                         {
@@ -67,15 +91,19 @@ export default class DetailForm extends PureComponent {
                         }
                     </FormItem>
                     <FormItem
+                        {...formItemLayout}
                         label="简介"
                     >
-                        {getFieldDecorator('intro', {
-                            rules: [{ required: true, message: '请输入简介' }],
-                        })(
-                            <TextArea placeholder="文章简介" />
-                        )}
+                        {
+                            getFieldDecorator('intro', {
+                                rules: [{ required: true, message: '请输入标题' }],
+                            })(
+                                <TextArea placeholder="请输入简介" rows={5} disabled={action === 'view'} />
+                            )
+                        }
                     </FormItem>
                     <FormItem
+                        {...formItemLayout}
                         label="正文"
                     >
                         {
@@ -88,11 +116,9 @@ export default class DetailForm extends PureComponent {
                                     <CustomEditor
                                         type="lz-editor"
                                         editProps={{
-                                            importContent: form.getFieldValue('content'),
+                                            importContent: action === 'add' ? '' : form.getFieldValue('content'),
                                             cbReceiver: (content) => {
-                                                form.setFieldsValue({
-                                                    content: content
-                                                });
+                                                form.setFieldsValue({ content: content});
                                             },
                                         }}
                                     />
@@ -100,14 +126,17 @@ export default class DetailForm extends PureComponent {
                         }
                     </FormItem>
                     <QuickToolbar>
-                        <Button type="default" onClick={() => router.goBack()}>返回</Button>
+                        {
+                            action !== 'view' &&
+                            <Button type="default" onClick={() => router.goBack()}>取消</Button>
+                        }
                         {
                             action === 'view' &&
-                            <Button type="primary" ghost onClick={() => router.push(`/blog/detail?action=edit&id=${detail.id}`)}>编辑</Button>
+                            <Button type="primary" ghost onClick={() => router.push(`/blog/detail/${detail.id}?action=edit`)}>编辑</Button>
                         }
                         {
                             action === 'add'  &&
-                            <Button type="primary" ghost onClick={() => router.push(`/blog/detail?action=add`)}>添加</Button>
+                            <Button type="primary" ghost onClick={this.handleAddDetail}>添加</Button>
                         }
                         {
                             action === 'edit' &&
@@ -117,7 +146,7 @@ export default class DetailForm extends PureComponent {
                             action === 'view'  &&
                             <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
                                 const { dispatch } = this.props;
-                                dispatch({ type: 'blog/delDetail', payload: detail, cb: () => router.push(`/blog/list`) });
+                                dispatch({ type: 'blog/delDetail', payload: detail.id, cb: () => router.push(`/blog`) });
                             }}>
                                 <Button type="danger" ghost>删除</Button>
                             </Popconfirm>

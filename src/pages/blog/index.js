@@ -7,7 +7,7 @@ import { Card, List, Icon, Button, Divider, Popconfirm } from 'antd';
 import PageHeaderLayout from 'components/PageHeaderLayout';
 import Ellipsis from 'components/Ellipsis';
 import IconText from 'components/IconText';
-import styles from './page.less';
+import styles from './index.less';
 
 @connect(state => {
     const { blog, loading } = state;
@@ -74,7 +74,7 @@ export default class page extends PureComponent {
         return (
             <PageHeaderLayout breadcrumbList={breadcrumbList}>
                 <Card bordered={false}>
-                    <Link to={`/blog/detail?action=add`}>
+                    <Link to={`/blog/detail`}>
                         <Button type="dashed"
                                 className={styles.addButton}
                         >
@@ -92,10 +92,10 @@ export default class page extends PureComponent {
                             <List.Item
                                 key={item.title}
                                 className={styles.item}
-                                extra={item.image && <Link to={`/blog/detail?action=edit&id=${item.id}`}><img alt={item.title} src={item.image} /></Link>}
+                                extra={item.image && <Link to={`/blog/detail/${item.id}`}><img alt={item.title} src={item.image} /></Link>}
                             >
                                 <List.Item.Meta
-                                    title={<Link to={`/blog/detail?action=edit&id=${item.id}`}>{item.title}</Link>}
+                                    title={<Link to={`/blog/detail/${item.id}`}>{item.title}</Link>}
                                     description={<Ellipsis lines={3}>{item.intro}</Ellipsis>}
                                 />
                                 <div>
@@ -107,7 +107,7 @@ export default class page extends PureComponent {
                                         <IconText type="message" text={item.count.comment}/>
                                     </span>
                                     <span className="pull-right">
-                                        <Link to={`/blog/detail?action=edit&id=${item.id}&status=editing`}>
+                                        <Link to={`/blog/detail/${item.id}?action=edit`}>
                                             <IconText type="edit" text="编辑"/>
                                         </Link>
                                         <Divider type="vertical"/>

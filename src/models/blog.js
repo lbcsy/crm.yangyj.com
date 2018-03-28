@@ -1,5 +1,6 @@
-import { getList, getDetail, delDetail, } from 'services/blog';
+import { getList, getDetail, addDetail, saveDetail, delDetail, } from 'services/blog';
 import router from "umi/router";
+import { message } from 'antd';
 
 export default {
     namespace: 'blog',
@@ -75,11 +76,30 @@ export default {
             }
             yield put({ type: 'changeDetail__', payload: res.data });
         },
+        * addDetail({ payload }, { call, put }) {
+            const res = yield call(addDetail, payload);
+            if(+res.code < 0) {
+                return false;
+            }
+            message.success(res.message);
+
+            router.push(`/blog/detail/${res.data.id}`);
+        },
+        * saveDetail({ payload }, { call, put }) {
+            const res = yield call(saveDetail, payload);
+            if(+res.code < 0) {
+                return false;
+            }
+            message.success(res.message);
+
+            router.push(`/blog/detail/${payload.id}`);
+        },
         * delDetail({ payload, location, cb }, { call, put, select }) {
             const res = yield call(delDetail, payload);
             if(+res.code < 0) {
                 return false;
             }
+            message.success(res.message);
 
             if(location) {
                 const state = yield select(state => state);

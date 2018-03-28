@@ -7,7 +7,7 @@ const menuData = [{
     children: [
         {
             name: '文章列表',
-            path: 'list',
+            path: '',
         },
     ]
 }];

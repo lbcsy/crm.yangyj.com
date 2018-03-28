@@ -55,6 +55,21 @@ module.exports = {
             });
         }
     },
+    'POST /api/admin/blog': (req, res) => {
+        res.send({
+            code: 0,
+            message: '成功',
+            data: {
+                id: Math.ceil(Math.random() *  100),
+            }
+        });
+    },
+    'PUT /api/admin/blog/:id': (req, res) => {
+        res.send({
+            code: 0,
+            message: '成功',
+        });
+    },
     'DELETE /api/admin/blog/:id': (req, res) => {
         res.send({
             code: 0,
