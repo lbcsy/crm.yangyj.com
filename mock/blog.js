@@ -1,5 +1,5 @@
 module.exports = {
-    'GET /api/admin/blog':(req, res) => {
+    'GET /api/admin/blog/article':(req, res) => {
         const total = '1000';
         const size = req.query.size || '10';
         const page = req.query.page || '1';
@@ -29,7 +29,7 @@ module.exports = {
         });
 
     },
-    'GET /api/admin/blog/:id': (req, res) => {
+    'GET /api/admin/blog/article/:id': (req, res) => {
         if(!+req.params.id) {
             res.send({
                 code: 0,
@@ -55,7 +55,7 @@ module.exports = {
             });
         }
     },
-    'POST /api/admin/blog': (req, res) => {
+    'POST /api/admin/blog/article': (req, res) => {
         res.send({
             code: 0,
             message: '成功',
@@ -64,13 +64,13 @@ module.exports = {
             }
         });
     },
-    'PUT /api/admin/blog/:id': (req, res) => {
+    'PUT /api/admin/blog/article/:id': (req, res) => {
         res.send({
             code: 0,
             message: '成功',
         });
     },
-    'DELETE /api/admin/blog/:id': (req, res) => {
+    'DELETE /api/admin/blog/article/:id': (req, res) => {
         res.send({
             code: 0,
             message: '成功',

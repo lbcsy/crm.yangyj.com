@@ -31,7 +31,7 @@ export default class DetailForm extends PureComponent {
         const { form, dispatch } = this.props;
 
         form.validateFieldsAndScroll((err, values) => {
-            dispatch({ type: 'blog/addDetail', payload: values });
+            dispatch({ type: 'blog/addArticleDetail', payload: values });
         });
     }
 
@@ -43,7 +43,7 @@ export default class DetailForm extends PureComponent {
                 ...detail,
                 ...values,
             };
-            dispatch({ type: 'blog/saveDetail', payload: params });
+            dispatch({ type: 'blog/updateArticleDetail', payload: params });
         });
     }
 
@@ -73,11 +73,16 @@ export default class DetailForm extends PureComponent {
                         label="标题"
                     >
                         {
-                            getFieldDecorator('title', {
-                                rules: [{ required: true, message: '请输入标题' }],
-                            })(
-                                <Input placeholder="请输入标题" disabled={action === 'view'} />
-                            )
+                            action === 'view'
+                                ? <p>{detail.title}</p>
+                                :
+                                getFieldDecorator('title', {
+                                    rules: [
+                                        { required: true, message: '请输入标题' },
+                                    ],
+                                })(
+                                    <Input placeholder="请输入标题" disabled={action === 'view'} />
+                                )
                         }
                     </FormItem>
                     <FormItem
@@ -86,8 +91,9 @@ export default class DetailForm extends PureComponent {
                     >
                         {
                             action === 'view'
-                            ? <img alt={detail.title} src={detail.image || 'http://iph.href.lu/400x300?text=暂无图片'} width="200" />
-                            : <CustomUpload />
+                                ? <img alt={detail.title} src={detail.image || 'http://iph.href.lu/400x300?text=暂无图片'} width="200" />
+                                :
+                                <CustomUpload />
                         }
                     </FormItem>
                     <FormItem
@@ -95,11 +101,16 @@ export default class DetailForm extends PureComponent {
                         label="简介"
                     >
                         {
-                            getFieldDecorator('intro', {
-                                rules: [{ required: true, message: '请输入标题' }],
-                            })(
-                                <TextArea placeholder="请输入简介" rows={5} disabled={action === 'view'} />
-                            )
+                            action === 'view'
+                                ? <p>{detail.intro}</p>
+                                :
+                                getFieldDecorator('intro', {
+                                    rules: [
+                                        { required: true, message: '请输入简介' },
+                                    ],
+                                })(
+                                    <TextArea placeholder="请输入简介" rows={5} disabled={action === 'view'} />
+                                )
                         }
                     </FormItem>
                     <FormItem
@@ -111,7 +122,9 @@ export default class DetailForm extends PureComponent {
                                 ? <div dangerouslySetInnerHTML={{__html: detail.content}} />
                                 :
                                 getFieldDecorator('content', {
-                                    rules: [{ required: true, message: '正文' }],
+                                    rules: [
+                                        { required: true, message: '正文' },
+                                    ],
                                 })(
                                     <CustomEditor
                                         type="lz-editor"
@@ -132,7 +145,7 @@ export default class DetailForm extends PureComponent {
                         }
                         {
                             action === 'view' &&
-                            <Button type="primary" ghost onClick={() => router.push(`/blog/detail/${detail.id}?action=edit`)}>编辑</Button>
+                            <Button type="primary" ghost onClick={() => router.push(`/blog/article/detail/${detail.id}?action=edit`)}>编辑</Button>
                         }
                         {
                             action === 'add'  &&
@@ -146,7 +159,7 @@ export default class DetailForm extends PureComponent {
                             action === 'view'  &&
                             <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
                                 const { dispatch } = this.props;
-                                dispatch({ type: 'blog/delDetail', payload: detail.id, cb: () => router.push(`/blog`) });
+                                dispatch({ type: 'blog/delArticleDetail', payload: detail.id, cb: () => router.push('/blog/article') });
                             }}>
                                 <Button type="danger" ghost>删除</Button>
                             </Popconfirm>

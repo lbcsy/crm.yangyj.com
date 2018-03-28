@@ -11,16 +11,17 @@ import styles from './index.less';
 
 @connect(state => {
     const { blog, loading } = state;
+    const { article } = blog;
     const { effects } = loading;
     return {
-        page: blog.page,
-        size: blog.size,
-        total: blog.total,
-        list: blog.list,
-        loading: effects['blog/fetchList'],
+        page: article.page,
+        size: article.size,
+        total: article.total,
+        list: article.list,
+        loading: effects['blog/getArticleList'],
     }
 })
-export default class page extends PureComponent {
+export default class Article extends PureComponent {
 
     componentWillReceiveProps(nextProps) {
         const location = this.props.location;
@@ -40,7 +41,7 @@ export default class page extends PureComponent {
     getList(query = {}) {
         const { dispatch } = this.props;
         dispatch({
-            type: 'blog/getList',
+            type: 'blog/getArticleList',
             payload: query,
         });
     }
@@ -74,7 +75,7 @@ export default class page extends PureComponent {
         return (
             <PageHeaderLayout breadcrumbList={breadcrumbList}>
                 <Card bordered={false}>
-                    <Link to={`/blog/detail`}>
+                    <Link to={`/blog/article/detail`}>
                         <Button type="dashed"
                                 className={styles.addButton}
                         >
@@ -92,10 +93,10 @@ export default class page extends PureComponent {
                             <List.Item
                                 key={item.title}
                                 className={styles.item}
-                                extra={item.image && <Link to={`/blog/detail/${item.id}`}><img alt={item.title} src={item.image} /></Link>}
+                                extra={item.image && <Link to={`/blog/article/detail/${item.id}`}><img alt={item.title} src={item.image} /></Link>}
                             >
                                 <List.Item.Meta
-                                    title={<Link to={`/blog/detail/${item.id}`}>{item.title}</Link>}
+                                    title={<Link to={`/blog/article/detail/${item.id}`}>{item.title}</Link>}
                                     description={<Ellipsis lines={3}>{item.intro}</Ellipsis>}
                                 />
                                 <div>
@@ -107,13 +108,13 @@ export default class page extends PureComponent {
                                         <IconText type="message" text={item.count.comment}/>
                                     </span>
                                     <span className="pull-right">
-                                        <Link to={`/blog/detail/${item.id}?action=edit`}>
+                                        <Link to={`/blog/article/detail/${item.id}?action=edit`}>
                                             <IconText type="edit" text="编辑"/>
                                         </Link>
                                         <Divider type="vertical"/>
                                             <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
                                                 const { dispatch } = this.props;
-                                                dispatch({ type: 'blog/delDetail', payload: item.id, location })
+                                                dispatch({ type: 'blog/delArticleDetail', payload: item.id, location })
                                             }}>
                                                 <IconText type="delete" text="删除" style={{color: 'red', cursor: "pointer"}}/>
                                             </Popconfirm>

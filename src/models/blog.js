@@ -1,101 +1,119 @@
-import { getList, getDetail, addDetail, saveDetail, delDetail, } from 'services/blog';
+import { getArticleList, getArticleDetail, addArticleDetail, updateArticleDetail, delArticleDetail, } from 'services/blog';
 import router from "umi/router";
 import { message } from 'antd';
 
 export default {
     namespace: 'blog',
     state: {
-        page: 1,
-        size: 10,
-        total: 0,
-        list: [],
-        detail: {},
+        article: {
+            page: 1,
+            size: 10,
+            total: 0,
+            list: [],
+            detail: {},
+        }
     },
     reducers: {
-        changePage__(state, { payload }) {
+        changeArticlePage__(state, { payload }) {
             return {
                 ...state,
-                page: +payload,
+                article: {
+                    ...state.article,
+                    page: +payload,
+                },
             }
         },
-        changeSize__(state, { payload }) {
+        changeArticleSize__(state, { payload }) {
             return {
                 ...state,
-                size: +payload,
+                article: {
+                    ...state.article,
+                    size: +payload,
+                },
             }
         },
-        changeTotal__(state, { payload }) {
+        changeArticleTotal__(state, { payload }) {
             return {
                 ...state,
-                total: +payload,
+                article: {
+                    ...state.article,
+                    total: +payload,
+                },
             }
         },
-        changeData__(state, { payload }) {
+        changeArticleList__(state, { payload }) {
             return {
                 ...state,
-                list: payload,
+                article: {
+                    ...state.article,
+                    list: payload,
+                },
             }
         },
-        changeDetail__(state, { payload }) {
+        changeArticleDetail__(state, { payload }) {
             return {
                 ...state,
-                detail: payload,
+                article: {
+                    ...state.article,
+                    detail: payload,
+                },
             }
         },
     },
     effects: {
-        * getList({ payload }, { call, put, select }) {
+        * getArticleList({ payload }, { call, put, select }) {
             const state = yield select(state => state);
             const { blog } = state;
+            const { article } = blog;
             const params = {
-                page: blog.page,
-                size: blog.size,
+                page: article.page,
+                size: article.size,
                 ...payload,
             };
             if(params.page) {
-                yield put({ type: 'changePage__', payload: params.page });
+                yield put({ type: 'changeArticlePage__', payload: params.page });
             }
             if(params.size) {
-                yield put({ type: 'changeSize__', payload: params.size });
+                yield put({ type: 'changeArticleSize__', payload: params.size });
             }
-            const res = yield call(getList, params);
+            const res = yield call(getArticleList, params);
             if(+res.code < 0) {
                return false;
             }
-            yield put({ type: 'changeTotal__', payload: res.total });
-            yield put({ type: 'changeData__', payload: res.data });
+            yield put({ type: 'changeArticleTotal__', payload: res.total });
+            yield put({ type: 'changeArticleList__', payload: res.data });
         },
-        * getDetail({ payload }, { call, put }) {
-            yield put({ type: 'changeDetail__', payload: {} });
+        * getArticleDetail({ payload }, { call, put }) {
+            yield put({ type: 'changeArticleDetail__', payload: {} });
             if(!+payload) {
                 return false;
             }
-            const res = yield call(getDetail, payload);
+            const res = yield call(getArticleDetail, payload);
             if(+res.code < 0) {
                 return false;
             }
-            yield put({ type: 'changeDetail__', payload: res.data });
+            yield put({ type: 'changeArticleDetail__', payload: res.data });
         },
-        * addDetail({ payload }, { call, put }) {
-            const res = yield call(addDetail, payload);
-            if(+res.code < 0) {
-                return false;
-            }
-            message.success(res.message);
-
-            router.push(`/blog/detail/${res.data.id}`);
-        },
-        * saveDetail({ payload }, { call, put }) {
-            const res = yield call(saveDetail, payload);
+        * addArticleDetail({ payload }, { call }) {
+            const res = yield call(addArticleDetail, payload);
             if(+res.code < 0) {
                 return false;
             }
             message.success(res.message);
 
-            router.push(`/blog/detail/${payload.id}`);
+            router.push(`/blog/article/detail/${res.data.id}`);
         },
-        * delDetail({ payload, location, cb }, { call, put, select }) {
-            const res = yield call(delDetail, payload);
+        * updateArticleDetail({ payload }, { call }) {
+            const res = yield call(updateArticleDetail, payload);
+            if(+res.code < 0) {
+                return false;
+            }
+            message.success(res.message);
+
+            router.push(`/blog/article/detail/${payload.id}`);
+        },
+        * delArticleDetail({ payload, location, cb }, { call, put, select }) {
+            const res = yield call(delArticleDetail, payload);
             if(+res.code < 0) {
                 return false;
             }
@@ -104,7 +122,8 @@ export default {
             if(location) {
                 const state = yield select(state => state);
                 const { blog } = state;
-                const { list } = blog;
+                const { article } = blog;
+                const { list } = article;
                 let newData = [];
                 list.map(item => {
                     if(+item.id !== payload) {
@@ -117,12 +136,12 @@ export default {
                         pathname: location.pathname,
                         query: {
                             ...location.query,
-                            page: blog.page-1 || 1,
+                            page: article.page-1 || 1,
                             t: new Date().getTime(),
                         },
                     });
                 }
-                yield put({ type: 'changeData__', payload: newData });
+                yield put({ type: 'changeArticleList__', payload: newData });
             }
 
             if(cb) {

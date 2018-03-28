@@ -1,16 +1,16 @@
 import { stringify  } from 'qs';
 import request from '../utils/request';
 
-export async function getList(params) {
-    return request(`/api/admin/blog${params && '?' + stringify(params)}`);
+export async function getArticleList(params) {
+    return request(`/api/admin/blog/article${params && '?' + stringify(params)}`);
 }
 
-export async function getDetail(id) {
-    return request(`/api/admin/blog/${id}`);
+export async function getArticleDetail(id) {
+    return request(`/api/admin/blog/article/${id}`);
 }
 
-export async function addDetail(params) {
-    return request(`/api/admin/blog`, {
+export async function addArticleDetail(params) {
+    return request(`/api/admin/blog/article`, {
         method: 'POST',
         body: {
             ...params
@@ -18,8 +18,8 @@ export async function addDetail(params) {
     });
 }
 
-export async function saveDetail(params) {
-    return request(`/api/admin/blog/${params.id}`, {
+export async function updateArticleDetail(params) {
+    return request(`/api/admin/blog/article/${params.id}`, {
         method: 'PUT',
         body: {
             ...params
@@ -27,8 +27,8 @@ export async function saveDetail(params) {
     });
 }
 
-export async function delDetail(id) {
-    return request(`/api/admin/blog/${id}`, {
+export async function delArticleDetail(id) {
+    return request(`/api/admin/blog/article/${id}`, {
         method: 'DELETE',
     });
 }

@@ -4,7 +4,14 @@ import PageHeaderLayout from 'components/PageHeaderLayout';
 import DetailForm from './components/DetailForm';
 import {stringify} from "qs";
 
-@connect(state => ({detail: state.blog.detail}))
+@connect(state => {
+    const { blog } = state;
+    const { article } = blog;
+    const { detail } = article;
+    return {
+        detail,
+    };
+})
 export default class Detail extends PureComponent {
 
     componentWillReceiveProps(nextProps) {
@@ -28,7 +35,7 @@ export default class Detail extends PureComponent {
     getDetail(id = 0) {
         const { dispatch } = this.props;
         dispatch({
-            type: 'blog/getDetail',
+            type: 'blog/getArticleDetail',
             payload: id,
         });
     }
@@ -43,10 +50,10 @@ export default class Detail extends PureComponent {
             href: '/',
         }, {
             title: '博客管理',
-            href: '/blog',
+            href: '/blog/article',
         }, {
             title: '文章列表',
-            href: '/blog',
+            href: '/blog/article',
         }];
 
         if(match.params.id) {
