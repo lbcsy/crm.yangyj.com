@@ -1,4 +1,5 @@
 export default {
+    // hashHistory: true,
     plugins: [
         'umi-plugin-dva',
         ['umi-plugin-routes', {
@@ -17,6 +18,8 @@ export default {
                 });
             }
         }],
+        ['./plugins'],
+
     ],
     loading: './src/components/PageLoading',
 };

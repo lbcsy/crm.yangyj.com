@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import LzEditor from './LzEditor';
+import BraftEditor from './BraftEditor';
 
 let defaultProps = {};
 
@@ -9,10 +10,10 @@ export default class CustomEditor extends Component {
      * @returns {boolean}
      */
     shouldComponentUpdate() {
-        // 如果没有传值，则忽略
-        if (!Object.keys(defaultProps).length) {
-            for(let x of defaultProps) {
-                if(!defaultProps[x]) {
+        // 有值的情况下，defaultProps 有属性 = undefined 则允许更新
+        if (Object.keys(defaultProps).length) {
+            for(let x in defaultProps) {
+                if(typeof defaultProps[x] === 'undefined') {
                     return true;
                 }
             }
@@ -40,6 +41,9 @@ export default class CustomEditor extends Component {
         switch (type) {
             case 'lz-editor':
                 EditorDom = () => <LzEditor editProps={editProps} />;
+                break;
+            case 'braft-editor':
+                EditorDom = () => <BraftEditor editProps={editProps} />;
                 break;
             default:
         }

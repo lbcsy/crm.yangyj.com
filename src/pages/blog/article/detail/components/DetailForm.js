@@ -48,7 +48,7 @@ export default class DetailForm extends PureComponent {
     }
 
     render() {
-        const { action, detail, form } = this.props;
+        const { action, detail, form, loading } = this.props;
 
         const { getFieldDecorator } = form;
 
@@ -66,7 +66,7 @@ export default class DetailForm extends PureComponent {
         };
 
         return (
-            <Card bordered={false}>
+            <Card bordered={false} loading={loading}>
                 <Form>
                     <FormItem
                         {...formItemLayout}
@@ -129,7 +129,7 @@ export default class DetailForm extends PureComponent {
                                     <CustomEditor
                                         type="lz-editor"
                                         editProps={{
-                                            importContent: action === 'add' ? '' : form.getFieldValue('content'),
+                                            importContent: action === 'add' ? '' : detail.content,
                                             cbReceiver: (content) => {
                                                 form.setFieldsValue({ content: content});
                                             },

@@ -28,15 +28,23 @@ html,body {
 }
 
 /*
- 修复 react-lz-editor 有序列表出现数字 1 的问题
+ fix react-lz-editor ol show number problem
  */
 
 .public-DraftStyleDefault-ol:before {
   content: "";
 }
+/*
+ fix blockquote style
+ */
+.RichEditor-editor .RichEditor-blockquote {
+  margin: 0;
+}
 
 
-/* 顶部加载样式配置::start */
+/*
+  top progress loading: start
+ */
 #nprogress {
   pointer-events: none;
 }
@@ -110,4 +118,4 @@ html,body {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-/* 顶部加载样式配置::end */
+/* top progress loading: end */

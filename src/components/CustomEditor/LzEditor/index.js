@@ -18,6 +18,7 @@ export default props => {
     return (
         <ReactLzEditor
             uploadConfig={uploadConfig}
+            convertFormat="html"
             {...editProps}
         />
     );

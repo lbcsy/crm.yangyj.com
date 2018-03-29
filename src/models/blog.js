@@ -62,6 +62,7 @@ export default {
     },
     effects: {
         * getArticleList({ payload }, { call, put, select }) {
+            yield put({ type: 'changeArticleList__', payload: {} });
             const state = yield select(state => state);
             const { blog } = state;
             const { article } = blog;

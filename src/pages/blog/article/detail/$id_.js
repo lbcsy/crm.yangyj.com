@@ -1,15 +1,18 @@
 import { PureComponent } from 'react';
 import { connect } from 'dva';
+import router from 'umi/router';
 import PageHeaderLayout from 'components/PageHeaderLayout';
 import DetailForm from './components/DetailForm';
-import {stringify} from "qs";
+import { stringify } from "qs";
 
 @connect(state => {
-    const { blog } = state;
+    const { blog, loading } = state;
     const { article } = blog;
     const { detail } = article;
+    const { effects } = loading;
     return {
         detail,
+        loading: effects['blog/getArticleDetail'],
     };
 })
 export default class Detail extends PureComponent {
@@ -57,6 +60,10 @@ export default class Detail extends PureComponent {
         }];
 
         if(match.params.id) {
+            if(isNaN(+match.params.id)) {
+                router.goBack();
+                return null;
+            }
             switch (action) {
                 case 'edit':
                     breadcrumbList.push({

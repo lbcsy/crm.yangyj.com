@@ -82,7 +82,7 @@ export default class MainLayout extends PureComponent {
         return (
             <Layout>
                 { visible && <EditPassword />}
-                <BackTop />
+                <BackTop style={{ zIndex: 98 }} />
                 <SiderMenu
                     isMobile={this.state.isMobile}
                     location={location}
