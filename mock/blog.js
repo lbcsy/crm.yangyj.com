@@ -43,7 +43,7 @@ module.exports = {
                 data: {
                     id: req.params.id,
                     title: `港交所市场数据论坛 Wind获颁“最佳信息商” ${req.params.id}`,
-                    image: 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png',
+                    image: req.params.id % 2 ? 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png' : '',
                     intro: '一年一度的香港交易所市场数据论坛12月7日在上海成功举办，在此次论坛中，Wind凭借向投资者提供丰富的港股深度行情数据以及与港交所在市场数据及互联互通业务合作中的出色表现，获颁“最佳信息商”及“衍生产品市场数据合作伙伴”奖项',
                     count: {
                         view: Math.ceil(Math.random() * 1000),

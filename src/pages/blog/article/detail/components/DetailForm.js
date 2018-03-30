@@ -91,9 +91,15 @@ export default class DetailForm extends PureComponent {
                     >
                         {
                             action === 'view'
-                                ? <img alt={detail.title} src={detail.image || 'http://iph.href.lu/400x300?text=暂无图片'} width="200" />
+                                ? <img alt={detail.title} src={detail.image || 'http://iph.href.lu/400x300?text=暂无图片'} width={detail.image ? 200 : 100} />
                                 :
-                                <CustomUpload />
+                                getFieldDecorator('title', {
+                                    rules: [
+                                        { required: true, message: '请输入标题' },
+                                    ],
+                                })(
+                                    <CustomUpload />
+                                )
                         }
                     </FormItem>
                     <FormItem
@@ -140,29 +146,32 @@ export default class DetailForm extends PureComponent {
                     </FormItem>
                     <QuickToolbar>
                         {
-                            action !== 'view' &&
-                            <Button type="default" onClick={() => router.goBack()}>取消</Button>
-                        }
-                        {
                             action === 'view' &&
-                            <Button type="primary" ghost onClick={() => router.push(`/blog/article/detail/${detail.id}?action=edit`)}>编辑</Button>
+                            <div>
+                                <Button type="default" onClick={() => router.goBack()}>返回</Button>
+                                <Button type="primary" ghost disabled>审核</Button>
+                                <Button type="primary" ghost onClick={() => router.push(`/blog/article/detail/${detail.id}?action=edit`)}>编辑</Button>
+                                <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
+                                    const { dispatch } = this.props;
+                                    dispatch({ type: 'blog/delArticleDetail', payload: detail.id, cb: () => router.push('/blog/article') });
+                                }}>
+                                    <Button type="danger" ghost>删除</Button>
+                                </Popconfirm>
+                            </div>
                         }
                         {
                             action === 'add'  &&
-                            <Button type="primary" ghost onClick={this.handleAddDetail}>添加</Button>
+                            <div>
+                                <Button type="default" onClick={() => router.goBack()}>取消</Button>
+                                <Button type="primary" ghost onClick={this.handleAddDetail}>添加</Button>
+                            </div>
                         }
                         {
                             action === 'edit' &&
-                            <Button type="primary" ghost onClick={this.handleSaveDetail}>保存</Button>
-                        }
-                        {
-                            action === 'view'  &&
-                            <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
-                                const { dispatch } = this.props;
-                                dispatch({ type: 'blog/delArticleDetail', payload: detail.id, cb: () => router.push('/blog/article') });
-                            }}>
-                                <Button type="danger" ghost>删除</Button>
-                            </Popconfirm>
+                            <div>
+                                <Button type="default" onClick={() => router.goBack()}>取消</Button>
+                                <Button type="primary" ghost onClick={this.handleSaveDetail}>保存</Button>
+                            </div>
                         }
                     </QuickToolbar>
                 </Form>
