@@ -1,5 +1,5 @@
 import { stringify  } from 'qs';
-import request from '../utils/request';
+import request from 'utils/request';
 
 export async function getArticleList(params) {
     return request(`/api/admin/blog/article${params && '?' + stringify(params)}`);

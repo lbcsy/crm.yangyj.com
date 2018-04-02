@@ -10,15 +10,14 @@ import IconText from 'components/IconText';
 import styles from './index.less';
 
 @connect(state => {
-    const { blog, loading } = state;
-    const { article } = blog;
+    const { blogArticle, loading } = state;
     const { effects } = loading;
     return {
-        page: article.page,
-        size: article.size,
-        total: article.total,
-        list: article.list,
-        loading: effects['blog/getArticleList'],
+        page: blogArticle.page,
+        size: blogArticle.size,
+        total: blogArticle.total,
+        list: blogArticle.list,
+        loading: effects['blogArticle/getArticleList'],
     }
 })
 export default class Article extends PureComponent {
@@ -41,7 +40,7 @@ export default class Article extends PureComponent {
     getList(query = {}) {
         const { dispatch } = this.props;
         dispatch({
-            type: 'blog/getArticleList',
+            type: 'blogArticle/getArticleList',
             payload: query,
         });
     }
@@ -114,7 +113,7 @@ export default class Article extends PureComponent {
                                         <Divider type="vertical"/>
                                             <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
                                                 const { dispatch } = this.props;
-                                                dispatch({ type: 'blog/delArticleDetail', payload: item.id, location })
+                                                dispatch({ type: 'blogArticle/delArticleDetail', payload: item.id, location })
                                             }}>
                                                 <IconText type="delete" text="删除" style={{color: 'red', cursor: "pointer"}}/>
                                             </Popconfirm>

@@ -1,11 +1,12 @@
 export default {
     // hashHistory: true,
+    disableDynamicImport: true,
     plugins: [
         'umi-plugin-dva',
         ['umi-plugin-routes', {
             // 排除相关路由
             exclude: [
-                ({ path, exact, component }) => /components/.test(component),
+                ({ path, exact, component }) => /components|models|services/.test(component),
             ],
             update(routes) {
                 return routes.map(item => {

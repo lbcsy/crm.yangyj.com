@@ -6,13 +6,12 @@ import DetailForm from './components/DetailForm';
 import { stringify } from "qs";
 
 @connect(state => {
-    const { blog, loading } = state;
-    const { article } = blog;
-    const { detail } = article;
+    const { blogArticle, loading } = state;
+    const { detail } = blogArticle;
     const { effects } = loading;
     return {
         detail,
-        loading: effects['blog/getArticleDetail'],
+        loading: effects['blogArticle/getArticleDetail'],
     };
 })
 export default class Detail extends PureComponent {
@@ -38,7 +37,7 @@ export default class Detail extends PureComponent {
     getDetail(id = 0) {
         const { dispatch } = this.props;
         dispatch({
-            type: 'blog/getArticleDetail',
+            type: 'blogArticle/getArticleDetail',
             payload: id,
         });
     }
@@ -53,7 +52,6 @@ export default class Detail extends PureComponent {
             href: '/',
         }, {
             title: '博客管理',
-            href: '/blog/article',
         }, {
             title: '文章列表',
             href: '/blog/article',

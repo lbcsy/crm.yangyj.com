@@ -1,62 +1,45 @@
-import { getArticleList, getArticleDetail, addArticleDetail, updateArticleDetail, delArticleDetail, } from 'services/blog';
+import { getArticleList, getArticleDetail, addArticleDetail, updateArticleDetail, delArticleDetail, } from '../services/article';
 import router from "umi/router";
 import { message } from 'antd';
 
 export default {
-    namespace: 'blog',
+    namespace: 'blogArticle',
     state: {
-        article: {
-            page: 1,
-            size: 10,
-            total: 0,
-            list: [],
-            detail: {},
-        }
+        page: 1,
+        size: 10,
+        total: 0,
+        list: [],
+        detail: {},
     },
     reducers: {
         changeArticlePage__(state, { payload }) {
             return {
                 ...state,
-                article: {
-                    ...state.article,
-                    page: +payload,
-                },
+                page: +payload,
             }
         },
         changeArticleSize__(state, { payload }) {
             return {
                 ...state,
-                article: {
-                    ...state.article,
-                    size: +payload,
-                },
+                size: +payload,
             }
         },
         changeArticleTotal__(state, { payload }) {
             return {
                 ...state,
-                article: {
-                    ...state.article,
-                    total: +payload,
-                },
+                total: +payload,
             }
         },
         changeArticleList__(state, { payload }) {
             return {
                 ...state,
-                article: {
-                    ...state.article,
-                    list: payload,
-                },
+                list: payload,
             }
         },
         changeArticleDetail__(state, { payload }) {
             return {
                 ...state,
-                article: {
-                    ...state.article,
-                    detail: payload,
-                },
+                detail: payload,
             }
         },
     },
@@ -64,11 +47,10 @@ export default {
         * getArticleList({ payload }, { call, put, select }) {
             yield put({ type: 'changeArticleList__', payload: {} });
             const state = yield select(state => state);
-            const { blog } = state;
-            const { article } = blog;
+            const { blogArticle } = state;
             const params = {
-                page: article.page,
-                size: article.size,
+                page: blogArticle.page,
+                size: blogArticle.size,
                 ...payload,
             };
             if(params.page) {
@@ -122,9 +104,8 @@ export default {
 
             if(location) {
                 const state = yield select(state => state);
-                const { blog } = state;
-                const { article } = blog;
-                const { list } = article;
+                const { blogArticle } = state;
+                const { list } = blogArticle;
                 let newData = [];
                 list.map(item => {
                     if(+item.id !== payload) {
@@ -137,7 +118,7 @@ export default {
                         pathname: location.pathname,
                         query: {
                             ...location.query,
-                            page: article.page-1 || 1,
+                            page: blogArticle.page-1 || 1,
                             t: new Date().getTime(),
                         },
                     });
