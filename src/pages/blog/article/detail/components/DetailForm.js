@@ -31,7 +31,7 @@ export default class DetailForm extends PureComponent {
         const { form, dispatch } = this.props;
 
         form.validateFieldsAndScroll((err, values) => {
-            dispatch({ type: 'blogArticle/addArticleDetail', payload: values });
+            dispatch({ type: 'blogArticle/addDetail', payload: values });
         });
     }
 
@@ -43,7 +43,7 @@ export default class DetailForm extends PureComponent {
                 ...detail,
                 ...values,
             };
-            dispatch({ type: 'blogArticle/updateArticleDetail', payload: params });
+            dispatch({ type: 'blogArticle/updateDetail', payload: params });
         });
     }
 
@@ -153,7 +153,7 @@ export default class DetailForm extends PureComponent {
                                 <Button type="primary" ghost onClick={() => router.push(`/blog/article/detail/${detail.id}?action=edit`)}>编辑</Button>
                                 <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
                                     const { dispatch } = this.props;
-                                    dispatch({ type: 'blogArticle/delArticleDetail', payload: detail.id, cb: () => router.push('/blog/article') });
+                                    dispatch({ type: 'blogArticle/delDetail', payload: detail.id, cb: () => router.push('/blog/article') });
                                 }}>
                                     <Button type="danger" ghost>删除</Button>
                                 </Popconfirm>

@@ -11,7 +11,7 @@ import { stringify } from "qs";
     const { effects } = loading;
     return {
         detail,
-        loading: effects['blogArticle/getArticleDetail'],
+        loading: effects['blogArticle/getDetail'],
     };
 })
 export default class Detail extends PureComponent {
@@ -37,7 +37,7 @@ export default class Detail extends PureComponent {
     getDetail(id = 0) {
         const { dispatch } = this.props;
         dispatch({
-            type: 'blogArticle/getArticleDetail',
+            type: 'blogArticle/getDetail',
             payload: id,
         });
     }
