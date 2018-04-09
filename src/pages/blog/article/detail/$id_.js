@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
 import PageHeaderLayout from 'components/PageHeaderLayout';
-import DetailForm from './components/DetailForm';
+import DetailForm from '../components/DetailForm';
 import { stringify } from "qs";
 
 @connect(state => {
