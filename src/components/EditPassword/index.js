@@ -40,7 +40,6 @@ export default class EditPassword extends PureComponent {
         return (
             <Modal
                 title="修改密码"
-                style={{ maxWidth: '320px', width: '100%', top: 10 }}
                 visible={visible}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
