@@ -135,7 +135,7 @@ export default class MainLayout extends PureComponent {
                             }]}
                             copyright={
                                 <div>
-                                    Copyright <Icon type="copyright" /> 2018 杨圆建 五米后台管理系统
+                                    Copyright <Icon type="copyright" /> 2018 CRM管理系统
                                     <br />
                                     本系统采用 umi + antd，借鉴 ant-design-pro
                                     <br />

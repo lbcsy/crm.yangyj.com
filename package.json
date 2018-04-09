@@ -1,7 +1,7 @@
 {
-  "name": "oa.yangyj.com",
-  "description": "OA 管理系统，React练手项目",
-  "repository": "https://github.com/smithyj/oa.yangyj.com",
+  "name": "crm.yangyj.com",
+  "description": "CRM管理系统",
+  "repository": "https://github.com/smithyj/crm.yangyj.com",
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
