@@ -82,7 +82,7 @@ export default {
             if(+res.code < 0) {
                 return false;
             }
-            message.success(res.message);
+            message.success(res.msg);
 
             router.push(`/blog/article/detail/${res.data.id}`);
         },
@@ -91,7 +91,7 @@ export default {
             if(+res.code < 0) {
                 return false;
             }
-            message.success(res.message);
+            message.success(res.msg);
 
             router.push(`/blog/article/detail/${payload.id}`);
         },
@@ -100,7 +100,7 @@ export default {
             if(+res.code < 0) {
                 return false;
             }
-            message.success(res.message);
+            message.success(res.msg);
 
             if(location) {
                 const state = yield select(state => state);

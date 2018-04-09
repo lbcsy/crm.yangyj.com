@@ -24,7 +24,7 @@ async function checkStatus(response) {
         return response;
     }
     const res = await response.json();
-    const err = res.message || (codeMessage[response.status] || response.statusText);
+    const err = res.msg || (codeMessage[response.status] || response.statusText);
     // notification.error({
     //     message: `请求错误 ${response.status}: ${response.url}`,
     //     description: errortext,
@@ -70,7 +70,7 @@ export default function request(url, options) {
         .then(response => response.json())
         .then(data => {
             if(+data.code === -1) {
-                message.error(data.message || '系统故障');
+                message.error(data.msg || '系统故障');
             }
             return data;
         })

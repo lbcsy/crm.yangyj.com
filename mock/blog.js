@@ -23,7 +23,7 @@ module.exports = {
         }
         res.send({
             code: 0,
-            message: '成功',
+            msg: '成功',
             data,
             total,
         });
@@ -33,13 +33,13 @@ module.exports = {
         if(!+req.params.id) {
             res.send({
                 code: 0,
-                message: '成功',
+                msg: '成功',
                 data: {}
             });
         } else {
             res.send({
                 code: 0,
-                message: '成功',
+                msg: '成功',
                 data: {
                     id: req.params.id,
                     title: `港交所市场数据论坛 Wind获颁“最佳信息商” ${req.params.id}`,
@@ -58,7 +58,7 @@ module.exports = {
     'POST /api/admin/blog/article': (req, res) => {
         res.send({
             code: 0,
-            message: '成功',
+            msg: '成功',
             data: {
                 id: Math.ceil(Math.random() *  100),
             }
@@ -67,13 +67,13 @@ module.exports = {
     'PUT /api/admin/blog/article/:id': (req, res) => {
         res.send({
             code: 0,
-            message: '成功',
+            msg: '成功',
         });
     },
     'DELETE /api/admin/blog/article/:id': (req, res) => {
         res.send({
             code: 0,
-            message: '成功',
+            msg: '成功',
             data: {
                 id: req.params.id,
             },

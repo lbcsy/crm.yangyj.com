@@ -65,7 +65,7 @@ export default {
             if(+res.code < 0) {
                 return false;
             }
-            message.success(res.message);
+            message.success(res.msg);
             yield put({ type: 'changeLoginStatus__', payload: true });
             const selfURLParams = new URL(window.location.href);
             let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));
@@ -86,7 +86,7 @@ export default {
             if(+res.code < 0) {
                 return false;
             }
-            message.success(res.message);
+            message.success(res.msg);
             yield put({ type: 'changeEditPasswordModalVisible__', payload: false });
         }
     }

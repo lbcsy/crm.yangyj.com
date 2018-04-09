@@ -9,7 +9,7 @@ export function config() {
             const status = err.name;
 
             if (status === 401) {
-                message.error(err.message);
+                message.error(err.msg);
 
                 dispatch({
                     type: 'global/logout',
@@ -28,7 +28,7 @@ export function config() {
                 router.push('/404');
                 return;
             }
-            message.error(err.message);
+            message.error(err.msg);
         },
     };
 };
