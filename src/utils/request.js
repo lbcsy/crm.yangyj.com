@@ -65,7 +65,10 @@ export default function request(url, options) {
         }
     }
 
-    return fetch(url, newOptions)
+    const baseUrl = Object.create(url);
+    // const baseUrl = `http://api.zentrust.cn${url}`;
+
+    return fetch(baseUrl, newOptions)
         .then(checkStatus)
         .then(response => response.json())
         .then(data => {

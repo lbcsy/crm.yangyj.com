@@ -5,11 +5,12 @@ export function config() {
     return {
         onError(err, dispatch) {
             err.preventDefault();
+            console.log(err);
 
             const status = err.name;
 
             if (status === 401) {
-                message.error(err.msg);
+                message.error(err.message);
 
                 dispatch({
                     type: 'global/logout',
@@ -28,7 +29,7 @@ export function config() {
                 router.push('/404');
                 return;
             }
-            message.error(err.msg);
+            message.error(err.message || err.message);
         },
     };
 };
