@@ -1,7 +1,7 @@
 import ReactLzEditor from 'react-lz-editor';
 
 export default props => {
-    const { editProps } = props;
+    const { editorProps } = props;
     const uploadConfig = {
         QINIU_URL: "http://upload.qiniu.com", //上传地址，现在暂只支持七牛上传
         QINIU_IMG_TOKEN_URL: "http://www.yourServerAddress.mobi/getUptokenOfQiniu.do", //请求图片的token
@@ -19,7 +19,7 @@ export default props => {
         <ReactLzEditor
             uploadConfig={uploadConfig}
             convertFormat="html"
-            {...editProps}
+            {...editorProps}
         />
     );
 }

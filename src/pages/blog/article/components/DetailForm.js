@@ -47,6 +47,10 @@ export default class DetailForm extends PureComponent {
         });
     }
 
+    handleSaveContent(content) {
+         this.props.form.setFieldsValue({ content: content});
+    }
+
     render() {
         const { action, detail, form, loading } = this.props;
 
@@ -93,9 +97,9 @@ export default class DetailForm extends PureComponent {
                             action === 'view'
                                 ? <img alt={detail.title} src={detail.image || 'http://iph.href.lu/400x300?text=暂无图片'} width={detail.image ? 200 : 100} />
                                 :
-                                getFieldDecorator('title', {
+                                getFieldDecorator('image', {
                                     rules: [
-                                        { required: true, message: '请输入标题' },
+                                        { required: true, message: '请上传图片' },
                                     ],
                                 })(
                                     <CustomUpload />
@@ -134,11 +138,9 @@ export default class DetailForm extends PureComponent {
                                 })(
                                     <CustomEditor
                                         type="lz-editor"
-                                        editProps={{
+                                        editorProps={{
                                             importContent: action === 'add' ? '' : detail.content,
-                                            cbReceiver: (content) => {
-                                                form.setFieldsValue({ content: content});
-                                            },
+                                            cbReceiver: this.handleSaveContent,
                                         }}
                                     />
                                 )

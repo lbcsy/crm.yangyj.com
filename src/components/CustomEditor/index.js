@@ -21,29 +21,25 @@ export default class CustomEditor extends Component {
         return false;
     }
 
-    componentDidMount() {
-        const { editProps } = this.props;
+    render() {
+        const { type, editorProps } = this.props;
 
         defaultProps = {
-            ...editProps,
+            ...editorProps,
         };
-    }
-
-    render() {
-        const { type, editProps } = this.props;
 
         if(!Object.keys(defaultProps).length) {
-            defaultProps = editProps;
+            defaultProps = editorProps;
         }
 
         let EditorDom = () => <div>编辑器类型错误</div>;
 
         switch (type) {
             case 'lz-editor':
-                EditorDom = () => <LzEditor editProps={editProps} />;
+                EditorDom = () => <LzEditor editorProps={editorProps} />;
                 break;
             case 'braft-editor':
-                EditorDom = () => <BraftEditor editProps={editProps} />;
+                EditorDom = () => <BraftEditor editorProps={editorProps} />;
                 break;
             default:
         }
