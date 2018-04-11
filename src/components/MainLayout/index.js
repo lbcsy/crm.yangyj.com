@@ -46,7 +46,6 @@ export default class MainLayout extends PureComponent {
     }
 
     handleMenuCollapse(collapsed) {
-        console.log(collapsed);
         const { dispatch } = this.props;
 
         dispatch({
