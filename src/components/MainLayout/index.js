@@ -46,6 +46,7 @@ export default class MainLayout extends PureComponent {
     }
 
     handleMenuCollapse(collapsed) {
+        console.log(collapsed);
         const { dispatch } = this.props;
 
         dispatch({
@@ -75,7 +76,7 @@ export default class MainLayout extends PureComponent {
         const { children, collapsed, location, loginStatus, currentUser, logo, visible } = this.props;
 
         // 未登录状态
-        if(typeof loginStatus === 'undefined') {
+        if(typeof loginStatus === 'undefined' || !loginStatus) {
             return null;
         }
 

@@ -3,11 +3,10 @@ import CONFIG from 'common/config';
 
 async function checkResponse(response) {
     const data = await response.json();
-    const code = +data.code;
-    if(code >= 0) {
+    const code = data.code;
+    if(code>=0) {
         return {
             ...data,
-            code: +data.code,
         };
     }
     const err = data.msg || '系统故障';

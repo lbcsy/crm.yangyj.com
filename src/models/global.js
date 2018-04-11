@@ -12,28 +12,16 @@ export default {
     },
     reducers: {
         changeCollapsed__(state, { payload }) {
-            return {
-                ...state,
-                collapsed: payload,
-            }
+            state.collapsed = payload;
         },
         changeLoginStatus__(state, { payload }) {
-            return {
-                ...state,
-                loginStatus: payload,
-            }
+            state.loginStatus = payload;
         },
         changeCurrentUser__(state, { payload }) {
-            return {
-                ...state,
-                currentUser: payload,
-            }
+            state.currentUser = payload;
         },
         changeEditPasswordModalVisible__(state, { payload }) {
-            return {
-                ...state,
-                editPasswordModalVisible: payload,
-            }
+            state.editPasswordModalVisible = payload;
         },
     },
     effects: {
@@ -54,17 +42,11 @@ export default {
         },
         * currentUser(action, { call, put }) {
             const res = yield call(currentUser);
-            if(+res.code < 0) {
-                return false;
-            }
             yield put({ type: 'changeLoginStatus__', payload: true });
             yield put({type: 'changeCurrentUser__', payload: res.data});
         },
         * login({ payload }, { call, put }) {
             const res = yield call(login, payload);
-            if(+res.code < 0) {
-                return false;
-            }
             message.success(res.msg);
             yield put({ type: 'changeLoginStatus__', payload: true });
             const selfURLParams = new URL(window.location.href);
@@ -83,9 +65,6 @@ export default {
         },
         * editPassword({ payload }, { call, put }) {
             const res = yield call(editPassword, payload);
-            if(+res.code < 0) {
-                return false;
-            }
             message.success(res.msg);
             yield put({ type: 'changeEditPasswordModalVisible__', payload: false });
         }

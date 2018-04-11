@@ -13,34 +13,19 @@ export default {
     },
     reducers: {
         changePage__(state, { payload }) {
-            return {
-                ...state,
-                page: +payload,
-            }
+            state.page = +payload;
         },
         changeSize__(state, { payload }) {
-            return {
-                ...state,
-                size: +payload,
-            }
+            state.size = +payload;
         },
         changeTotal__(state, { payload }) {
-            return {
-                ...state,
-                total: +payload,
-            }
+            state.total = +payload;
         },
         changeList__(state, { payload }) {
-            return {
-                ...state,
-                list: payload,
-            }
+            state.list = payload;
         },
         changeDetail__(state, { payload }) {
-            return {
-                ...state,
-                detail: payload,
-            }
+            state.detail = payload;
         },
     },
     effects: {
@@ -60,9 +45,6 @@ export default {
                 yield put({ type: 'changeSize__', payload: params.size });
             }
             const res = yield call(getList, params);
-            if(+res.code < 0) {
-               return false;
-            }
             yield put({ type: 'changeTotal__', payload: res.total });
             yield put({ type: 'changeList__', payload: res.data });
         },
@@ -72,34 +54,22 @@ export default {
                 return false;
             }
             const res = yield call(getDetail, payload);
-            if(+res.code < 0) {
-                return false;
-            }
             yield put({ type: 'changeDetail__', payload: res.data });
         },
         * addDetail({ payload }, { call }) {
             const res = yield call(addDetail, payload);
-            if(+res.code < 0) {
-                return false;
-            }
             message.success(res.msg);
 
             router.push(`/blog/article/detail/${res.data.id}`);
         },
         * updateDetail({ payload }, { call }) {
             const res = yield call(updateDetail, payload);
-            if(+res.code < 0) {
-                return false;
-            }
             message.success(res.msg);
 
             router.push(`/blog/article/detail/${payload.id}`);
         },
         * delDetail({ payload, location, cb }, { call, put, select }) {
             const res = yield call(delDetail, payload);
-            if(+res.code < 0) {
-                return false;
-            }
             message.success(res.msg);
 
             if(location) {

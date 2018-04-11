@@ -1,8 +1,10 @@
 export default {
     // hashHistory: true,
     disableDynamicImport: true,
+    disableFastClick: true,
     plugins: [
-        'umi-plugin-dva',
+
+        ['umi-plugin-dva', { immer: true}],
         ['umi-plugin-routes', {
             // 排除相关路由
             exclude: [
@@ -19,8 +21,6 @@ export default {
                 });
             }
         }],
-        ['./plugins'],
-
     ],
     loading: './src/components/PageLoading',
 };
