@@ -26,8 +26,9 @@ export default props => {
             const successFn = (response) => {
                 // 假设服务端直接返回文件上传后的地址
                 // 上传成功后调用param.success并传入上传后的文件地址
+                const res = JSON.parse(xhr.responseText);
                 param.success({
-                    ...JSON.parse(xhr.responseText),
+                    ...res.data,
                 })
             };
 
