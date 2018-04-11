@@ -1,19 +1,20 @@
 // eslint-disable-next-line
 import { stringify  } from 'qs';
 import request from '../utils/request';
+import API from 'common/api';
 
 export async function logout() {
-    return request('/api/admin/logout', {
+    return request(API.LOGOUT, {
         method: 'PUT',
     });
 }
 
 export async function currentUser() {
-    return request('/api/admin/currentUser');
+    return request(API.CURRENT_USER);
 }
 
 export async function login(params) {
-    return request('/api/admin/login', {
+    return request(API.LOGIN, {
         method: 'PUT',
         body: {
             ...params
@@ -22,7 +23,7 @@ export async function login(params) {
 }
 
 export async function editPassword(params) {
-    return request('/api/admin/editPassword', {
+    return request(API.EDIT_PASSWORD, {
         method: 'PUT',
         body: {
             ...params

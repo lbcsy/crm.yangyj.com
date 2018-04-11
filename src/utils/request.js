@@ -1,6 +1,5 @@
 import fetch from 'dva/fetch';
-// eslint-disable-next-line
-import { notification, message } from 'antd';
+import CONFIG from 'common/config';
 
 async function checkResponse(response) {
     const data = await response.json();
@@ -48,11 +47,6 @@ export default function request(url, options) {
         }
     }
 
-    let baseUrl;
-    baseUrl = url;
-    // const baseUrl = `http://api.zentrust.cn${url}`;
-    baseUrl = `http://dev.yangyj.com${url}`;
-
-    return fetch(baseUrl, newOptions)
+    return fetch(`${CONFIG.BASE_URL}${url}`, newOptions)
         .then(checkResponse);
 }

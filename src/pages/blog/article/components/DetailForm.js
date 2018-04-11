@@ -137,10 +137,13 @@ export default class DetailForm extends PureComponent {
                                     ],
                                 })(
                                     <CustomEditor
-                                        type="lz-editor"
+                                        type="braft-editor"
                                         editorProps={{
-                                            importContent: action === 'add' ? '' : detail.content,
-                                            cbReceiver: this.handleSaveContent,
+                                            contentFormat: 'html',
+                                            initialContent: detail.content,
+                                            onChange: (content) => {
+                                                form.setFieldsValue({ content });
+                                            }
                                         }}
                                     />
                                 )
