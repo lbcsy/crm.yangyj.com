@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { stringify  } from 'qs';
-import request from '../utils/request';
+import request from 'utils/request';
 import API from 'common/api';
 
 export async function logout() {

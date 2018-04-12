@@ -41,7 +41,6 @@ export default function request(url, options) {
         // newOptions.body is FormData
         newOptions.headers = {
             Accept: 'application/json',
-            'Content-Type': 'multipart/form-data',
             ...newOptions.headers,
         };
     }
@@ -50,7 +49,6 @@ export default function request(url, options) {
     if(apiToken) {
         newOptions.headers.Authorization = `Bearer ${apiToken}`;
     }
-
 
     return fetch(`${CONFIG.BASE_URL}${url}`, newOptions)
         .then(checkResponse);
