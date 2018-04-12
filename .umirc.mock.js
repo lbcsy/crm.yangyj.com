@@ -1,6 +1,5 @@
-export default {
-    // fixed mock bug, not dynamic load model
-    // https://github.com/umijs/umi/issues/230
-    ...require('./mock/global'),
-    ...require('./mock/blog'),
-};
+const mock = {};
+require('fs').readdirSync(require('path').join(__dirname + '/mock')).forEach(function(file) {
+    Object.assign(mock, require('./mock/' + file))
+});
+module.exports = mock;

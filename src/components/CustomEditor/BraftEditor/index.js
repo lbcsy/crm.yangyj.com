@@ -1,8 +1,10 @@
 // 引入编辑器以及编辑器样式
+import { message } from 'antd';
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/braft.css'
 import CONFIG from 'common/config';
 import API from 'common/api';
+import STORAGE from 'utils/storage';
 
 export default props => {
 
@@ -26,10 +28,14 @@ export default props => {
             const successFn = (response) => {
                 // 假设服务端直接返回文件上传后的地址
                 // 上传成功后调用param.success并传入上传后的文件地址
-                const res = JSON.parse(xhr.responseText);
-                param.success({
-                    ...res.data,
-                })
+                try {
+                    const res = JSON.parse(xhr.responseText);
+                    param.success({
+                        ...res.data,
+                    });
+                } catch (err) {
+                    errorFn();
+                }
             };
 
             const progressFn = (event) => {
@@ -42,6 +48,7 @@ export default props => {
                 param.error({
                     msg: 'unable to upload.'
                 });
+                message.error('上传失败');
             };
 
             xhr.upload.addEventListener("progress", progressFn, false);
@@ -51,6 +58,12 @@ export default props => {
 
             fd.append('file', param.file);
             xhr.open('POST', serverURL, true);
+
+            const apiToken = STORAGE.get('api_token');
+            if(apiToken) {
+                xhr.setRequestHeader('Authorization', `Bearer ${apiToken}`);
+            }
+
             xhr.send(fd)
 
         }, // 指定上传函数，说明见下文

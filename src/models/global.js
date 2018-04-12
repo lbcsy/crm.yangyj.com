@@ -1,6 +1,7 @@
 import router from 'umi/router';
 import { message } from 'antd';
 import { logout, currentUser, login, editPassword } from 'services/global';
+import STORAGE from 'utils/storage';
 
 export default {
     namespace: 'global',
@@ -27,6 +28,7 @@ export default {
     effects: {
         * logout(action, { call, put }) {
             // 前端退出登录
+            STORAGE.remove('api_token');
             yield put({ type: 'changeLoginStatus__', payload: false });
             yield put({ type: 'changeCurrentUser__', payload: {} });
             let query = {};
@@ -47,7 +49,9 @@ export default {
         },
         * login({ payload }, { call, put }) {
             const res = yield call(login, payload);
-            message.success(res.msg);
+            const { msg, data } = res;
+            message.success(msg);
+            STORAGE.put('api_token', data.api_token);
             yield put({ type: 'changeLoginStatus__', payload: true });
             const selfURLParams = new URL(window.location.href);
             let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));

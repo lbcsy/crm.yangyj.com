@@ -18,7 +18,7 @@ module.exports = {
 
     },
     'PUT /api/admin/login': (req, res) => {
-        if(req.body.username === 'admin' && req.body.password === '123456') {
+        if(req.body.name === 'admin' && req.body.password === '123456') {
             res.send({
                 code: 0,
                 msg: '成功',
@@ -56,5 +56,16 @@ module.exports = {
             code: 0,
             msg: '成功',
         });
-    }
+    },
+    'POST /api/admin/upload':(req, res) => {
+        console.log(req.body);
+        res.send({
+            code: 0,
+            msg: '成功',
+            data: {
+                url: 'https://avatars0.githubusercontent.com/u/9820142?s=40&v=4',
+            }
+        });
+
+    },
 };

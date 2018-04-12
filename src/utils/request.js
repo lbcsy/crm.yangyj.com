@@ -1,5 +1,6 @@
 import fetch from 'dva/fetch';
 import CONFIG from 'common/config';
+import STORAGE from 'utils/storage';
 
 async function checkResponse(response) {
     const data = await response.json();
@@ -27,24 +28,29 @@ export default function request(url, options) {
     const defaultOptions = {
         credentials: 'include',
     };
-    const newOptions = { ...defaultOptions, ...options };
-    if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
-        if (!(newOptions.body instanceof FormData)) {
-            newOptions.headers = {
-                Accept: 'application/json',
-                'Content-Type': 'application/json; charset=utf-8',
-                ...newOptions.headers,
-            };
-            newOptions.body = JSON.stringify(newOptions.body);
-        } else {
-            // newOptions.body is FormData
-            newOptions.headers = {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
-                ...newOptions.headers,
-            };
-        }
+    let newOptions = { ...defaultOptions, ...options };
+
+    if (!(newOptions.body instanceof FormData)) {
+        newOptions.headers = {
+            Accept: 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
+            ...newOptions.headers,
+        };
+        newOptions.body = JSON.stringify(newOptions.body);
+    } else {
+        // newOptions.body is FormData
+        newOptions.headers = {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+            ...newOptions.headers,
+        };
     }
+
+    const apiToken = STORAGE.get('api_token');
+    if(apiToken) {
+        newOptions.headers.Authorization = `Bearer ${apiToken}`;
+    }
+
 
     return fetch(`${CONFIG.BASE_URL}${url}`, newOptions)
         .then(checkResponse);
