@@ -1,63 +1,39 @@
-import { PureComponent } from 'react';
-import { Upload, Icon, message } from 'antd';
-// eslint-disable-next-line
-import styles from './index.less';
+import { Component } from 'react';
+import DefaultUpload from './DefaultUpload';
 
-function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
+let defaultProps = {};
 
-function beforeUpload(file) {
-    const isJPG = file.type === 'image/png';
-    if (!isJPG) {
-        message.error('You can only upload JPG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJPG && isLt2M;
-}
-
-export default class CustomUpload extends PureComponent {
-    state = {
-        loading: false,
-    };
-    handleChange = (info) => {
-        if (info.file.status === 'uploading') {
-            this.setState({ loading: true });
-            return;
+export default class CustomUpload extends Component {
+    /**
+     * 阻止更新，防止编辑器重新渲染
+     * @returns {boolean}
+     */
+    shouldComponentUpdate(nextProps) {
+        // 有值的情况下，defaultProps 有属性 = undefined 则允许更新
+        if (Object.keys(defaultProps).length) {
+            for(let x in defaultProps) {
+                if(typeof defaultProps[x] === 'undefined') {
+                    return true;
+                }
+            }
         }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, imageUrl => this.setState({
-                imageUrl,
-                loading: false,
-            }));
-        }
+        return false;
     }
+
     render() {
-        const uploadButton = (
-            <div>
-                <Icon type={this.state.loading ? 'loading' : 'plus'} />
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
-        const imageUrl = this.state.imageUrl;
-        return (
-            <Upload
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="//jsonplaceholder.typicode.com/posts/"
-                beforeUpload={beforeUpload}
-                onChange={this.handleChange}
-            >
-                {imageUrl ? <img src={imageUrl} alt="" /> : uploadButton}
-            </Upload>
-        );
+        const { type, uploadProps = {} } = this.props;
+
+        defaultProps = {
+            ...uploadProps,
+        };
+
+        let Upload = () => <div>上传组件类型错误</div>;
+
+        switch (type) {
+            default:
+                Upload = () => <DefaultUpload {...this.props} />;
+        }
+
+        return <Upload />;
     }
 }

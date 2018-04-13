@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { Card, Form, Input, Button, Popconfirm } from 'antd';
+import { Card, Form, Input, Button, Popconfirm, Icon } from 'antd';
 import router from 'umi/router';
 import autobind from 'autobind';
 import CustomUpload from "components/CustomUpload";
@@ -22,33 +22,41 @@ const fields = ['id', 'title', 'image', 'intro', 'content'];
             return false;
         });
         return newFields;
+    },
+    onValuesChange(props, values) {
+        const { dispatch } = props;
+        let data = {};
+        Object.keys(values).map((item) => {
+           data[item] = values[item];
+           return true;
+        });
+        dispatch({
+            type: 'blogArticle/changeDetail__',
+            payload: {
+                ...props.detail,
+                ...data,
+            }
+        })
     }
 })
 @autobind
 export default class DetailForm extends PureComponent {
-
     handleAddDetail() {
         const { form, dispatch } = this.props;
-
         form.validateFieldsAndScroll((err, values) => {
-            dispatch({ type: 'blogArticle/addDetail', payload: values });
+            if (!err) {
+                dispatch({ type: 'blogArticle/addDetail', payload: values });
+            }
         });
     }
 
     handleSaveDetail() {
         const { form, detail, dispatch } = this.props;
-
         form.validateFieldsAndScroll((err, values) => {
-            const params = {
-                ...detail,
-                ...values,
-            };
-            dispatch({ type: 'blogArticle/updateDetail', payload: params });
+            if (!err) {
+                dispatch({ type: 'blogArticle/updateDetail', payload: { ...detail, ...values } });
+            }
         });
-    }
-
-    handleSaveContent(content) {
-         this.props.form.setFieldsValue({ content: content});
     }
 
     render() {
@@ -60,12 +68,12 @@ export default class DetailForm extends PureComponent {
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 4 },
-                md: { span: 2 },
+                md: { span: 3 },
             },
             wrapperCol: {
                 xs: { span: 24 },
                 sm: { span: 20 },
-                md: { span: 22 },
+                md: { span: 21 },
             },
         };
 
@@ -102,7 +110,29 @@ export default class DetailForm extends PureComponent {
                                         { required: true, message: '请上传图片' },
                                     ],
                                 })(
-                                    <CustomUpload />
+                                    <CustomUpload uploadProps={{
+                                        listType: 'picture-card',
+                                        callback: (info) => {
+                                            if(info.file.status === 'done' && info.file.response.code === 0) {
+                                                form.setFieldsValue({ image: info.file.response.data.url });
+                                            }
+                                        },
+                                        onRemove: () => {
+                                            form.setFieldsValue({ image: '' });
+                                        },
+                                        renderChildren: (fileList) => {
+                                            if(fileList.length >= 1) {
+                                                return null;
+                                            }
+                                            return (
+                                                <div>
+                                                    <Icon type="plus" />
+                                                    <div className="ant-upload-text">上传</div>
+                                                </div>
+                                            );
+                                        }
+                                    }}>
+                                    </CustomUpload>
                                 )
                         }
                     </FormItem>
@@ -125,7 +155,7 @@ export default class DetailForm extends PureComponent {
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="正文"
+                        label="文章内容"
                     >
                         {
                             action === 'view'
@@ -133,11 +163,10 @@ export default class DetailForm extends PureComponent {
                                 :
                                 getFieldDecorator('content', {
                                     rules: [
-                                        { required: true, message: '正文' },
+                                        { required: true, message: '请填写文章内容' },
                                     ],
                                 })(
                                     <CustomEditor
-                                        type="braft-editor"
                                         editorProps={{
                                             initialContent: action === 'add' ? '' : detail.content,
                                             onChange: (content) => {

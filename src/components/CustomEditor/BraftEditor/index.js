@@ -6,12 +6,25 @@ import API from 'common/api';
 import request from 'utils/request';
 
 export default props => {
-    const defaultProps = {
+    const { editorProps } = props;
+
+    let newProps = {};
+
+    Object.keys(editorProps).map((key) => {
+        if(key === 'media') {
+            return true;
+        }
+        newProps[key] = editorProps[key];
+        return true;
+    });
+
+    let defaultProps = {
         contentFormat: 'html',
         initialContent: '',
         height: 0,
         placeholder: '请输入内容',
         tabIndents: 4,
+        viewWrapper: '.BraftEditor-content',
         media: {
             allowPasteImage: true, // 是否允许直接粘贴剪贴板图片（例如QQ截图等）到编辑器
             image: true, // 开启图片插入功能
@@ -31,11 +44,12 @@ export default props => {
                     param.success({
                         ...res.data,
                     });
+                    message.success(`上传成功`);
                 } catch (error) {
                     param.error({
                         msg: 'unable not upload'
                     });
-                    message.error(error.message);
+                    message.error(`上传失败, 失败原因：${error.message}`);
                 }
 
             }, // 指定上传函数，说明见下文
@@ -44,30 +58,17 @@ export default props => {
             onChange: null, // 指定媒体库文件列表发生变化时的回调，参数为媒体库文件列表(数组)
             onInsert: null, // 指定从媒体库插入文件到编辑器时的回调，参数为被插入的媒体文件列表(数组)
         },
+        ...newProps,
     };
 
-    let newProps = {};
-
-    Object.keys(props.editorProps).map((key) => {
-       if(key === 'media') {
-           return true;
-       }
-       newProps[key] = props.editorProps[key];
-       return true;
-    });
-
-    let editorProps = {
-        ...defaultProps,
-    };
-
-    if(props.editorProps.media) {
-        editorProps.media = {
+    if(editorProps.media) {
+        defaultProps.media = {
+            ...defaultProps.media,
             ...editorProps.media,
-            ...props.editorProps.media,
         };
     }
 
     return (
-        <BraftEditor {...editorProps} />
+        <BraftEditor {...defaultProps} />
     )
 }

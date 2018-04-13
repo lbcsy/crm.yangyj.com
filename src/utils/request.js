@@ -1,6 +1,6 @@
 import fetch from 'dva/fetch';
 import CONFIG from 'common/config';
-import STORAGE from 'utils/storage';
+import storage from 'utils/storage';
 
 async function checkResponse(response) {
     const data = await response.json();
@@ -45,7 +45,7 @@ export default function request(url, options) {
         };
     }
 
-    const apiToken = STORAGE.get('api_token');
+    const apiToken = storage.get('api_token');
     if(apiToken) {
         newOptions.headers.Authorization = `Bearer ${apiToken}`;
     }

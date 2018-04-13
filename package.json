@@ -11,7 +11,7 @@
   "dependencies": {
     "antd": "^3.3.1",
     "autobind": "^1.0.3",
-    "braft-editor": "^1.8.6",
+    "braft-editor": "^1.8.7",
     "enquire-js": "^0.1.2",
     "lodash-decorators": "^4.5.0",
     "moment": "^2.21.0",
@@ -21,7 +21,7 @@
     "react-container-query": "^0.11.0",
     "react-content-loader": "^3.1.1",
     "react-lz-editor": "^0.11.9",
-    "umi": "^1.1.5",
+    "umi": "^1.1.6",
     "umi-plugin-dva": "^0.6.0",
     "umi-plugin-routes": "^0.1.2",
     "url-polyfill": "^1.0.11"

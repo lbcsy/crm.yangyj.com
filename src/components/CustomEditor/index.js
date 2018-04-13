@@ -21,7 +21,7 @@ export default class CustomEditor extends Component {
     }
 
     render() {
-        const { type, editorProps } = this.props;
+        const { type, editorProps = {} } = this.props;
 
         defaultProps = {
             ...editorProps,
@@ -34,10 +34,8 @@ export default class CustomEditor extends Component {
         let EditorDom = () => <div>编辑器类型错误</div>;
 
         switch (type) {
-            case 'braft-editor':
-                EditorDom = () => <BraftEditor editorProps={editorProps} />;
-                break;
             default:
+                EditorDom = () => <BraftEditor {...this.props} />;
         }
 
         return <EditorDom/>;
