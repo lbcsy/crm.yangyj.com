@@ -139,7 +139,6 @@ export default class DetailForm extends PureComponent {
                                     <CustomEditor
                                         type="braft-editor"
                                         editorProps={{
-                                            contentFormat: 'html',
                                             initialContent: action === 'add' ? '' : detail.content,
                                             onChange: (content) => {
                                                 form.setFieldsValue({ content });

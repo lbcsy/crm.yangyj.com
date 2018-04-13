@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import LzEditor from './LzEditor';
 import BraftEditor from './BraftEditor';
 
 let defaultProps = {};
@@ -35,9 +34,6 @@ export default class CustomEditor extends Component {
         let EditorDom = () => <div>编辑器类型错误</div>;
 
         switch (type) {
-            case 'lz-editor':
-                EditorDom = () => <LzEditor editorProps={editorProps} />;
-                break;
             case 'braft-editor':
                 EditorDom = () => <BraftEditor editorProps={editorProps} />;
                 break;

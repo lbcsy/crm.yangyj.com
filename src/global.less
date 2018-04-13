@@ -28,11 +28,21 @@ html,body {
 }
 
 /*
- fix react-lz-editor ol show number problem
+  fix antd style
  */
+.ant-message {
+  z-index: 9999999;
+}
 
-.public-DraftStyleDefault-ol:before {
-  content: "";
+/*
+  fix braft-editor continal style
+ */
+.BraftEditor-container {
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+}
+.BraftEditor-content {
+  min-height: 500px;
 }
 
 
