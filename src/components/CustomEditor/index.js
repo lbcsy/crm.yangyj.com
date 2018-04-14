@@ -27,15 +27,11 @@ export default class CustomEditor extends Component {
             ...editorProps,
         };
 
-        if(!Object.keys(defaultProps).length) {
-            defaultProps = editorProps;
-        }
-
         let EditorDom = () => <div>编辑器类型错误</div>;
 
         switch (type) {
             default:
-                EditorDom = () => <BraftEditor {...this.props} />;
+                EditorDom = () => <BraftEditor editorProps={defaultProps} />;
         }
 
         return <EditorDom/>;

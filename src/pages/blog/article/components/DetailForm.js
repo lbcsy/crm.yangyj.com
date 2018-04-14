@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { Card, Form, Input, Button, Popconfirm, Icon } from 'antd';
+import { Card, Form, Input, Button, Popconfirm, Icon, message } from 'antd';
 import router from 'umi/router';
 import autobind from 'autobind';
 import CustomUpload from "components/CustomUpload";
@@ -77,6 +77,54 @@ export default class DetailForm extends PureComponent {
             },
         };
 
+        let uploadProps = {
+            accept: 'image/*',
+            listType: 'picture-card',
+            beforeUpload: (file) => {
+                const mime = ['png', 'jpeg', 'jpg', 'gif'];
+                if(!mime.includes(file.type.split('/')[1])) {
+                    message.error(`只能上传: ${mime.join(', ')} 类型文件`);
+                    return false;
+                }
+                return true;
+            },
+            onChangeCb: (info) => {
+                if(info.file.status === 'done' && info.file.response.code === 0) {
+                    form.setFieldsValue({ image: info.file.response.data.url });
+                }
+            },
+            onRemove: () => {
+                form.setFieldsValue({ image: '' });
+            },
+            render: (fileList) => {
+                if(fileList.length >= 1) {
+                    return null;
+                }
+                return (
+                    <div>
+                        <Icon type="plus" />
+                        <div className="ant-upload-text">上传</div>
+                    </div>
+                );
+            }
+        };
+        if(form.getFieldValue('image')) {
+            uploadProps.defaultFileList = [
+                {
+                    uid: -1,
+                    url: form.getFieldValue('image'),
+                    thumbUrl: form.getFieldValue('image'),
+                }
+            ];
+        }
+
+        const editorProps = {
+            initialContent: form.getFieldValue('content'),
+            onChange: (content) => {
+                form.setFieldsValue({ content });
+            }
+        };
+
         return (
             <Card bordered={false} loading={loading}>
                 <Form>
@@ -110,29 +158,7 @@ export default class DetailForm extends PureComponent {
                                         { required: true, message: '请上传图片' },
                                     ],
                                 })(
-                                    <CustomUpload uploadProps={{
-                                        listType: 'picture-card',
-                                        callback: (info) => {
-                                            if(info.file.status === 'done' && info.file.response.code === 0) {
-                                                form.setFieldsValue({ image: info.file.response.data.url });
-                                            }
-                                        },
-                                        onRemove: () => {
-                                            form.setFieldsValue({ image: '' });
-                                        },
-                                        renderChildren: (fileList) => {
-                                            if(fileList.length >= 1) {
-                                                return null;
-                                            }
-                                            return (
-                                                <div>
-                                                    <Icon type="plus" />
-                                                    <div className="ant-upload-text">上传</div>
-                                                </div>
-                                            );
-                                        }
-                                    }}>
-                                    </CustomUpload>
+                                    <CustomUpload uploadProps={uploadProps} />
                                 )
                         }
                     </FormItem>
@@ -166,14 +192,7 @@ export default class DetailForm extends PureComponent {
                                         { required: true, message: '请填写文章内容' },
                                     ],
                                 })(
-                                    <CustomEditor
-                                        editorProps={{
-                                            initialContent: action === 'add' ? '' : detail.content,
-                                            onChange: (content) => {
-                                                form.setFieldsValue({ content });
-                                            }
-                                        }}
-                                    />
+                                    <CustomEditor editorProps={editorProps} />
                                 )
                         }
                     </FormItem>

@@ -8,7 +8,7 @@ export default class CustomUpload extends Component {
      * 阻止更新，防止编辑器重新渲染
      * @returns {boolean}
      */
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate() {
         // 有值的情况下，defaultProps 有属性 = undefined 则允许更新
         if (Object.keys(defaultProps).length) {
             for(let x in defaultProps) {
@@ -31,7 +31,7 @@ export default class CustomUpload extends Component {
 
         switch (type) {
             default:
-                Upload = () => <DefaultUpload {...this.props} />;
+                Upload = () => <DefaultUpload uploadProps={defaultProps} />;
         }
 
         return <Upload />;
