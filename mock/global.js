@@ -1,12 +1,14 @@
 module.exports = {
     'PUT /api/admin/logout': (req, res) => {
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
         })
     },
     'GET /api/admin/currentUser':(req, res) => {
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
             data: {
@@ -20,11 +22,13 @@ module.exports = {
     'PUT /api/admin/login': (req, res) => {
         if(req.body.name === 'admin' && req.body.password === '123456') {
             res.send({
+                status: true,
                 code: 0,
                 msg: '成功',
             });
         } else {
             res.send({
+                status: false,
                 code: -1,
                 msg: '账号密码错误',
             });
@@ -33,6 +37,7 @@ module.exports = {
     'PUT /api/admin/editPassword': (req, res) => {
         if(req.body.password !== '123456') {
             res.send({
+                status: false,
                 code: -1,
                 msg: '密码不正确',
             });
@@ -40,6 +45,7 @@ module.exports = {
         }
         if(req.body.newPassword !== req.body.confirmNewPassword) {
             res.send({
+                status: false,
                 code: -1,
                 msg: '新密码输入不一致',
             });
@@ -47,19 +53,21 @@ module.exports = {
         }
         if(req.body.newPassword.length < 6) {
             res.send({
+                status: false,
                 code: -1,
                 msg: '新密码最小长度为6位',
             });
             return;
         }
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
         });
     },
     'POST /api/admin/upload':(req, res) => {
-        console.log(req.body);
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
             data: {

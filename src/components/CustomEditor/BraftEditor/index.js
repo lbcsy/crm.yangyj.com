@@ -36,20 +36,21 @@ export default props => {
                 fd.append('file', param.file);
 
                 try {
-                    const res = await request(API.UPLOAD, {
+                    const { status, msg, data = {} } = await request(API.UPLOAD, {
                         method: 'POST',
                         body: fd,
                     });
 
+                    if(!status) {
+                        throw new Error(msg || '上传失败');
+                    }
+
                     param.success({
-                        ...res.data,
+                        ...data,
                     });
-                    message.success(`上传成功`);
+                    message.success(msg);
                 } catch (error) {
-                    param.error({
-                        msg: 'unable not upload'
-                    });
-                    message.error(`上传失败, 失败原因：${error.message}`);
+                    param.error({msg: error.message });
                 }
 
             }, // 指定上传函数，说明见下文

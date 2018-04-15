@@ -80,6 +80,12 @@ export default class DetailForm extends PureComponent {
         let uploadProps = {
             accept: 'image/*',
             listType: 'picture-card',
+            defaultFileList: [
+                {
+                    uid: -1,
+                    url: 'http://dev.yangyj.com/storage/uploads/2018-04-15/6OsHR1QY979aPEON8bKLjMEsy0EJbk51zmTWJhJO.jpeg',
+                }
+            ],
             beforeUpload: (file) => {
                 const mime = ['png', 'jpeg', 'jpg', 'gif'];
                 if(!mime.includes(file.type.split('/')[1])) {
@@ -89,7 +95,7 @@ export default class DetailForm extends PureComponent {
                 return true;
             },
             onChangeCb: (info) => {
-                if(info.file.status === 'done' && info.file.response.code === 0) {
+                if(info.file.status === 'done' && info.file.response.status) {
                     form.setFieldsValue({ image: info.file.response.data.url });
                 }
             },

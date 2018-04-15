@@ -43,13 +43,18 @@ export default {
             yield call(logout);
         },
         * currentUser(action, { call, put }) {
-            const res = yield call(currentUser);
+            const { status, data } = yield call(currentUser);
+            if(!status) {
+                return false;
+            }
             yield put({ type: 'changeLoginStatus__', payload: true });
-            yield put({type: 'changeCurrentUser__', payload: res.data});
+            yield put({type: 'changeCurrentUser__', payload: data});
         },
         * login({ payload }, { call, put }) {
-            const res = yield call(login, payload);
-            const { msg, data } = res;
+            const { status, msg, data = {} } = yield call(login, payload);
+            if(!status) {
+                return false;
+            }
             message.success(msg);
             storage.put('api_token', data.api_token);
             yield put({ type: 'changeLoginStatus__', payload: true });
@@ -68,8 +73,11 @@ export default {
             }
         },
         * editPassword({ payload }, { call, put }) {
-            const res = yield call(editPassword, payload);
-            message.success(res.msg);
+            const { status, msg } = yield call(editPassword, payload);
+            if(!status) {
+                return false;
+            }
+            message.success(msg);
             yield put({ type: 'changeEditPasswordModalVisible__', payload: false });
         }
     }

@@ -29,28 +29,28 @@ export default class DefaultUpload extends PureComponent
 
     handleChange(info) {
         const { uploadProps = {} } = this.props;
-        const { status, response = {} } = info.file;
+        const { status, response } = info.file;
         const { onChangeCb = (info) => {console.log('默认上传回调',  info)}} = uploadProps;
 
         if (status === 'error') {
-            message.error(`上传失败`);
+            message.error(response.msg || `上传失败`);
         }
         if (status === 'done') {
-            if(response.code !== 0) {
-                message.error(`上传失败`);
+            if(!response.status) {
+                message.error(response.msg || '上传失败');
             } else {
-                message.success(`上传成功`);
+                message.success(response.msg || `上传成功`);
             }
         }
 
         let fileList = info.fileList.filter((file) => {
-            const { status, response = {} } = file;
+            const { status, response } = file;
 
             if(status === 'error') {
                 return false;
             }
             if(status === 'done') {
-                if(response.code && response.code !== 0) {
+                if(!response.status) {
                     return false;
                 }
             }
@@ -61,13 +61,11 @@ export default class DefaultUpload extends PureComponent
             let newFile = {
                 ...file,
             };
-            if(status) {
-                if(status  === 'done' && response.data) {
-                    newFile = {
-                        ...newFile,
-                        ...response.data
-                    };
-                }
+            if(status === 'done') {
+                newFile = {
+                    ...newFile,
+                    ...response.data
+                };
             }
             return newFile;
         });

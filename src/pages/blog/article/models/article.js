@@ -44,33 +44,48 @@ export default {
             if(params.size) {
                 yield put({ type: 'changeSize__', payload: params.size });
             }
-            const res = yield call(getList, params);
-            yield put({ type: 'changeTotal__', payload: res.total });
-            yield put({ type: 'changeList__', payload: res.data });
+            const { status, data, total } = yield call(getList, params);
+            if(!status) {
+                return false;
+            }
+            yield put({ type: 'changeTotal__', payload: total });
+            yield put({ type: 'changeList__', payload: data });
         },
         * getDetail({ payload }, { call, put }) {
             yield put({ type: 'changeDetail__', payload: {} });
             if(!+payload) {
                 return false;
             }
-            const res = yield call(getDetail, payload);
-            yield put({ type: 'changeDetail__', payload: res.data });
+            const { status, data } = yield call(getDetail, payload);
+            if(!status) {
+                return false;
+            }
+            yield put({ type: 'changeDetail__', payload: data });
         },
         * addDetail({ payload }, { call }) {
-            const res = yield call(addDetail, payload);
-            message.success(res.msg);
+            const { status, msg, data = {} } = yield call(addDetail, payload);
+            if(!status) {
+                return false;
+            }
+            message.success(msg);
 
-            router.push(`/blog/article/detail/${res.data.id}`);
+            router.push(`/blog/article/detail/${data.id}`);
         },
         * updateDetail({ payload }, { call }) {
-            const res = yield call(updateDetail, payload);
-            message.success(res.msg);
+            const { status, msg } = yield call(updateDetail, payload);
+            if(!status) {
+                return false;
+            }
+            message.success(msg);
 
             router.push(`/blog/article/detail/${payload.id}`);
         },
         * delDetail({ payload, location, cb }, { call, put, select }) {
-            const res = yield call(delDetail, payload);
-            message.success(res.msg);
+            const { status, msg } = yield call(delDetail, payload);
+            if(!status) {
+                return false;
+            }
+            message.success(msg);
 
             if(location) {
                 const state = yield select(state => state);

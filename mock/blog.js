@@ -22,6 +22,7 @@ module.exports = {
             });
         }
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
             data,
@@ -32,6 +33,7 @@ module.exports = {
     'GET /api/admin/blog/article/:id': (req, res) => {
         if(!+req.params.id) {
             res.send({
+                status: true,
                 code: 0,
                 msg: '成功',
                 data: {}
@@ -57,6 +59,7 @@ module.exports = {
     },
     'POST /api/admin/blog/article': (req, res) => {
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
             data: {
@@ -66,12 +69,14 @@ module.exports = {
     },
     'PUT /api/admin/blog/article/:id': (req, res) => {
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
         });
     },
     'DELETE /api/admin/blog/article/:id': (req, res) => {
         res.send({
+            status: true,
             code: 0,
             msg: '成功',
             data: {

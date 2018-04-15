@@ -1,20 +1,27 @@
-import { message } from 'antd';
+// eslint-disable-next-line
+import router from "umi/router";
 
 export function config() {
     return {
         onError(err, dispatch) {
             err.preventDefault();
 
-            message.error(err.message || '系统故障');
+            const status = err.name;
 
-            const code = err.code;
-
-            if(code === -1001) {
+            if (status === 401) {
                 dispatch({
                     type: 'global/logout',
                 });
             }
-
+            // if (status === 403) {
+            //     router.push('/403');
+            // }
+            // if (status <= 504 && status >= 500) {
+            //     router.push('/500');
+            // }
+            // if (status >= 404 && status < 422) {
+            //     router.push('/404');
+            // }
         },
     };
 };
