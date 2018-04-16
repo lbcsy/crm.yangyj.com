@@ -95,7 +95,7 @@ export default class DetailForm extends PureComponent {
                 return true;
             },
             onChangeCb: (info) => {
-                if(info.file.status === 'done' && info.file.response.status) {
+                if(info.file.status === 'done' && info.file.response.status === 'success') {
                     form.setFieldsValue({ image: info.file.response.data.url });
                 }
             },

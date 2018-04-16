@@ -24,12 +24,12 @@ function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    const errtext = codeMessage[response.status] || response.statusText;
+    const errText = codeMessage[response.status] || response.statusText;
     notification.error({
         message: `请求错误 ${response.status}`,
-        description: errtext,
+        description: errText,
     });
-    const error = new Error(errtext);
+    const error = new Error(errText);
     error.name = response.status;
     error.response = response;
     throw error;
@@ -44,7 +44,7 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
     const defaultOptions = {
-        credentials: 'include',
+        // credentials: 'include',
         headers: {},
     };
     const newOptions = { ...defaultOptions, ...options };
@@ -62,9 +62,9 @@ export default function request(url, options) {
         }
     }
 
-    const apiToken = storage.get('api_token');
-    if(apiToken) {
-        newOptions.headers.Authorization = `Bearer ${apiToken}`;
+    const access_token = storage.get('access_token');
+    if(access_token) {
+        newOptions.headers.Authorization = `Bearer ${access_token}`;
     }
     newOptions.headers.Accept = 'application/json';
 
@@ -72,10 +72,10 @@ export default function request(url, options) {
     return fetch(`${CONFIG.BASE_URL}${url}`, newOptions)
         .then(checkStatus)
         .then(response => response.json())
-        .then(data => {
-            if(!data.status) {
-                message.error(data.msg || '系统故障');
+        .then(response => {
+            if(response.status === 'error') {
+                message.error(response.message || '系统故障');
             }
-            return data;
+            return response;
         })
 }

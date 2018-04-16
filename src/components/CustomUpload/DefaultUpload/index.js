@@ -33,13 +33,13 @@ export default class DefaultUpload extends PureComponent
         const { onChangeCb = (info) => {console.log('默认上传回调',  info)}} = uploadProps;
 
         if (status === 'error') {
-            message.error(response.msg || `上传失败`);
+            message.error(response.message || `上传失败`);
         }
         if (status === 'done') {
-            if(!response.status) {
-                message.error(response.msg || '上传失败');
+            if(response.status === 'error') {
+                message.error(response.message || '上传失败');
             } else {
-                message.success(response.msg || `上传成功`);
+                message.success(response.message || `上传成功`);
             }
         }
 
@@ -50,7 +50,7 @@ export default class DefaultUpload extends PureComponent
                 return false;
             }
             if(status === 'done') {
-                if(!response.status) {
+                if(response.status === 'error') {
                     return false;
                 }
             }
@@ -105,9 +105,9 @@ export default class DefaultUpload extends PureComponent
             defaultProps.fileList = this.state.fileList;
         }
 
-        const apiToken = storage.get('api_token');
-        if(apiToken) {
-            defaultProps.headers.Authorization = `Bearer ${apiToken}`;
+        const access_token = storage.get('access_token');
+        if(access_token) {
+            defaultProps.headers.Authorization = `Bearer ${access_token}`;
         }
 
         return (

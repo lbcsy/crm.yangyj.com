@@ -36,19 +36,19 @@ export default props => {
                 fd.append('file', param.file);
 
                 try {
-                    const { status, msg, data = {} } = await request(API.UPLOAD, {
+                    const response = await request(API.UPLOAD, {
                         method: 'POST',
                         body: fd,
                     });
 
-                    if(!status) {
-                        throw new Error(msg || '上传失败');
+                    if(response.status === 'error') {
+                        throw new Error(response.message || '上传失败');
                     }
 
                     param.success({
-                        ...data,
+                        ...response.data,
                     });
-                    message.success(msg);
+                    message.success(response.message);
                 } catch (error) {
                     param.error({msg: error.message });
                 }

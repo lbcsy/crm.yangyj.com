@@ -28,7 +28,7 @@ export default {
     effects: {
         * logout(action, { call, put }) {
             // 前端退出登录
-            storage.remove('api_token');
+            storage.remove('access_token');
             yield put({ type: 'changeLoginStatus__', payload: false });
             yield put({ type: 'changeCurrentUser__', payload: {} });
             let query = {};
@@ -43,20 +43,21 @@ export default {
             yield call(logout);
         },
         * currentUser(action, { call, put }) {
-            const { status, data } = yield call(currentUser);
-            if(!status) {
+            const response = yield call(currentUser);
+            if(response.status === 'error') {
                 return false;
             }
             yield put({ type: 'changeLoginStatus__', payload: true });
-            yield put({type: 'changeCurrentUser__', payload: data});
+            yield put({ type: 'changeCurrentUser__', payload: response.data});
         },
         * login({ payload }, { call, put }) {
-            const { status, msg, data = {} } = yield call(login, payload);
-            if(!status) {
+            const response = yield call(login, payload);
+            const { access_token } = response.data;
+            if(response.status === 'error') {
                 return false;
             }
-            message.success(msg);
-            storage.put('api_token', data.api_token);
+            message.success(response.message);
+            storage.put('access_token', access_token);
             yield put({ type: 'changeLoginStatus__', payload: true });
             const selfURLParams = new URL(window.location.href);
             let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));
@@ -73,11 +74,11 @@ export default {
             }
         },
         * editPassword({ payload }, { call, put }) {
-            const { status, msg } = yield call(editPassword, payload);
-            if(!status) {
+            const response = yield call(editPassword, payload);
+            if(response.status === 'error') {
                 return false;
             }
-            message.success(msg);
+            message.success(response.message);
             yield put({ type: 'changeEditPasswordModalVisible__', payload: false });
         }
     }

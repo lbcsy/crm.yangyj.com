@@ -1,5 +1,5 @@
 module.exports = {
-    'GET /api/admin/blog/article':(req, res) => {
+    'GET /api/v1/admin/blog/article':(req, res) => {
         const total = '1000';
         const size = req.query.size || '10';
         const page = req.query.page || '1';
@@ -22,26 +22,26 @@ module.exports = {
             });
         }
         res.send({
-            status: true,
+            status: 'success',
             code: 0,
-            msg: '成功',
+            message: '成功',
             data,
             total,
         });
 
     },
-    'GET /api/admin/blog/article/:id': (req, res) => {
+    'GET /api/v1/admin/blog/article/:id': (req, res) => {
         if(!+req.params.id) {
             res.send({
-                status: true,
+                status: 'success',
                 code: 0,
-                msg: '成功',
+                message: '成功',
                 data: {}
             });
         } else {
             res.send({
                 code: 0,
-                msg: '成功',
+                message: '成功',
                 data: {
                     id: req.params.id,
                     title: `港交所市场数据论坛 Wind获颁“最佳信息商” ${req.params.id}`,
@@ -57,28 +57,28 @@ module.exports = {
             });
         }
     },
-    'POST /api/admin/blog/article': (req, res) => {
+    'POST /api/v1/admin/blog/article': (req, res) => {
         res.send({
-            status: true,
+            status: 'success',
             code: 0,
-            msg: '成功',
+            message: '成功',
             data: {
                 id: Math.ceil(Math.random() *  100),
             }
         });
     },
-    'PUT /api/admin/blog/article/:id': (req, res) => {
+    'PUT /api/v1/admin/blog/article/:id': (req, res) => {
         res.send({
-            status: true,
+            status: 'success',
             code: 0,
-            msg: '成功',
+            message: '成功',
         });
     },
-    'DELETE /api/admin/blog/article/:id': (req, res) => {
+    'DELETE /api/v1/admin/blog/article/:id': (req, res) => {
         res.send({
-            status: true,
+            status: 'success',
             code: 0,
-            msg: '成功',
+            message: '成功',
             data: {
                 id: req.params.id,
             },
