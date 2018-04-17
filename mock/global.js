@@ -25,6 +25,9 @@ module.exports = {
                 status: 'success',
                 code: 0,
                 message: '成功',
+                data: {
+                    access_token: 'xxxx',
+                }
             });
         } else {
             res.send({
