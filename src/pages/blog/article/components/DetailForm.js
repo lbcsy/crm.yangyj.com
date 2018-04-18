@@ -80,12 +80,12 @@ export default class DetailForm extends PureComponent {
         let uploadProps = {
             accept: 'image/*',
             listType: 'picture-card',
-            defaultFileList: [
-                {
-                    uid: -1,
-                    url: 'http://dev.yangyj.com/storage/uploads/2018-04-15/6OsHR1QY979aPEON8bKLjMEsy0EJbk51zmTWJhJO.jpeg',
-                }
-            ],
+            // defaultFileList: [
+            //     {
+            //         uid: -1,
+            //         url: 'http://dev.yangyj.com/storage/uploads/2018-04-15/6OsHR1QY979aPEON8bKLjMEsy0EJbk51zmTWJhJO.jpeg',
+            //     }
+            // ],
             beforeUpload: (file) => {
                 const mime = ['png', 'jpeg', 'jpg', 'gif'];
                 if(!mime.includes(file.type.split('/')[1])) {
