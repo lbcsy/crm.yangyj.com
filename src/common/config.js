@@ -1,6 +1,9 @@
-export default {
+const CONFIG = {
     BASE_URL: '',
-    // BASE_URL: 'http://dev.yangyj.com',
-    // BASE_URL: 'https://test.yangyj.com',
-    // BASE_URL: 'https://www.yangyj.com',
 };
+
+CONFIG.BASE_URL = 'http://dev.yangyj.com';
+// CONFIG.BASE_URL = 'https://test.yangyj.com';
+// CONFIG.BASE_URL = 'https://www.yangyj.com';
+
+export default CONFIG;

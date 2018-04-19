@@ -13,7 +13,7 @@ export default {
             update(routes) {
                 return routes.map(item => {
                     const { path } = item;
-                    let newPath = path.replace('_', "?");
+                    let newPath = path ? path.replace('_', "?") : '';
                     return {
                         ...item,
                         path: newPath,

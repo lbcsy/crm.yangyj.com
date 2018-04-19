@@ -24,6 +24,7 @@ export default class DefaultUpload extends PureComponent
     handleCancelPreview() {
         this.setState({
             visible: false,
+            previewUrl: '',
         });
     }
 

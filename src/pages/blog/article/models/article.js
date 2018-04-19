@@ -48,7 +48,7 @@ export default {
             if(response.status === 'error') {
                 return false;
             }
-            yield put({ type: 'changeTotal__', payload: response.total });
+            yield put({ type: 'changeTotal__', payload: response.total || 0 });
             yield put({ type: 'changeList__', payload: response.data });
         },
         * getDetail({ payload }, { call, put }) {

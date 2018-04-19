@@ -41,6 +41,15 @@ const fields = ['id', 'title', 'image', 'intro', 'content'];
 })
 @autobind
 export default class DetailForm extends PureComponent {
+
+    componentWillUnmount() {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'blogArticle/changeDetail__',
+            payload: {}
+        })
+    }
+
     handleAddDetail() {
         const { form, dispatch } = this.props;
         form.validateFieldsAndScroll((err, values) => {
@@ -202,7 +211,7 @@ export default class DetailForm extends PureComponent {
                             action === 'view' &&
                             <div>
                                 <Button type="default" onClick={() => router.goBack()}>返回</Button>
-                                <Button type="primary" ghost disabled>审核</Button>
+                                {/*<Button type="primary" ghost disabled>审核</Button>*/}
                                 <Button type="primary" ghost onClick={() => router.push(`/blog/article/detail/${detail.id}?action=edit`)}>编辑</Button>
                                 <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
                                     const { dispatch } = this.props;
