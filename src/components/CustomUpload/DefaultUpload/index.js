@@ -128,7 +128,7 @@ export default class DefaultUpload extends PureComponent
                     onCancel={this.handleCancelPreview}
                     footer={null}
                 >
-                    <p>{this.state.previewUrl ? <img alt="预览图片" src={this.state.previewUrl} width="100%" /> : '缺少预览地址'}</p>
+                    <span>{this.state.previewUrl ? <img alt="预览图片" src={this.state.previewUrl} width="100%" /> : ''}</span>
                 </Modal>
             </div>
         )

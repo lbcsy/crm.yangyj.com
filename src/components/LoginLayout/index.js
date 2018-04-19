@@ -10,7 +10,7 @@ export default props => {
             <div className={styles.content}>
                 <div className={styles.header}>
                     <img alt="logo" className={styles.logo} src={logo} />
-                    <span className={styles.title}>CRM管理系统</span>
+                    <span className={styles.title}>Super Backend System</span>
                 </div>
                 {children}
             </div>
@@ -43,7 +43,7 @@ export default props => {
                 }]}
                 copyright={
                     <div>
-                        Copyright <Icon type="copyright" /> 2018 CRM管理系统
+                        Copyright <Icon type="copyright" /> 2018 Super Backend System
                         <br />
                         本系统采用 umi + antd，借鉴 ant-design-pro
                         <br />

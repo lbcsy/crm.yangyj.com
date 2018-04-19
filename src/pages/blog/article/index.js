@@ -123,6 +123,12 @@ export default class Article extends PureComponent {
                                             <IconText type="message" text={count.comment || 0}/>
                                         </span>
                                         <span className="pull-right">
+                                            <Link to={`/blog/article/detail/${item.id}`}>
+                                                <IconText type="desktop" text="查看"/>
+                                            </Link>
+
+                                            <Divider type="vertical"/>
+
                                             <Link to={`/blog/article/detail/${item.id}?action=edit`}>
                                                 <IconText type="edit" text="编辑"/>
                                             </Link>
@@ -168,7 +174,7 @@ export default class Article extends PureComponent {
                     onCancel={this.handleCancelPreview}
                     footer={null}
                 >
-                    <p>{this.state.previewUrl ? <img alt="预览图片" src={this.state.previewUrl} width="100%" /> : '缺少预览地址'}</p>
+                    <span>{this.state.previewUrl ? <img alt="预览图片" src={this.state.previewUrl} width="100%" /> : ''}</span>
                 </Modal>
             </PageHeaderLayout>
         )

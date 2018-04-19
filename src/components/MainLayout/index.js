@@ -135,7 +135,7 @@ export default class MainLayout extends PureComponent {
                             }]}
                             copyright={
                                 <div>
-                                    Copyright <Icon type="copyright" /> 2018 CRM管理系统
+                                    Copyright <Icon type="copyright" /> 2018 Super Backend System
                                     <br />
                                     本系统采用 umi + antd，借鉴 ant-design-pro
                                     <br />

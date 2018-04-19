@@ -38,7 +38,7 @@ export default class Login extends PureComponent {
                         {getFieldDecorator('username', {
                             rules: [{ required: true, message: '请输入您的账号' }],
                         })(
-                            <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="账号" />
+                            <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名 / 手机号 / 邮箱" />
                         )}
                     </FormItem>
                     <FormItem>

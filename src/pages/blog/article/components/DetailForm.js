@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { Card, Form, Input, Button, Popconfirm, Icon, message } from 'antd';
+import { Card, Form, Input, Button, Popconfirm, Icon, message, Modal } from 'antd';
 import router from 'umi/router';
 import autobind from 'autobind';
 import CustomUpload from "components/CustomUpload";
@@ -42,6 +42,11 @@ const fields = ['id', 'title', 'image', 'intro', 'content'];
 @autobind
 export default class DetailForm extends PureComponent {
 
+    state = {
+        previewUrl: '',
+        visible: false,
+    };
+
     componentWillUnmount() {
         const { dispatch } = this.props;
         dispatch({
@@ -68,8 +73,15 @@ export default class DetailForm extends PureComponent {
         });
     }
 
+    handleCancelPreview() {
+        this.setState({
+            visible: false,
+            previewUrl: '',
+        });
+    }
+
     render() {
-        const { action, detail, form, loading } = this.props;
+        const { action, detail, form, loading, addLoading, saveLoading } = this.props;
 
         const { getFieldDecorator } = form;
 
@@ -161,11 +173,25 @@ export default class DetailForm extends PureComponent {
                     >
                         {
                             action === 'view'
-                                ? <img alt={detail.title} src={detail.image || 'http://iph.href.lu/400x300?text=暂无图片'} width={detail.image ? 200 : 100} />
+                                ? (
+                                    detail.image
+                                    ? <img
+                                            alt={detail.title}
+                                            src={detail.image}
+                                            width="100"
+                                            onClick={() => {
+                                                this.setState({
+                                                    visible: true,
+                                                    previewUrl: detail.image,
+                                                });
+                                            }}
+                                        />
+                                    : '无'
+                                )
                                 :
                                 getFieldDecorator('image', {
                                     rules: [
-                                        { required: true, message: '请上传图片' },
+                                        // { required: true, message: '请上传图片' },
                                     ],
                                 })(
                                     <CustomUpload uploadProps={uploadProps} />
@@ -182,7 +208,7 @@ export default class DetailForm extends PureComponent {
                                 :
                                 getFieldDecorator('intro', {
                                     rules: [
-                                        { required: true, message: '请输入简介' },
+                                        // { required: true, message: '请输入简介' },
                                     ],
                                 })(
                                     <TextArea placeholder="请输入简介" rows={5} disabled={action === 'view'} />
@@ -225,18 +251,25 @@ export default class DetailForm extends PureComponent {
                             action === 'add'  &&
                             <div>
                                 <Button type="default" onClick={() => router.goBack()}>取消</Button>
-                                <Button type="primary" ghost onClick={this.handleAddDetail}>添加</Button>
+                                <Button type="primary" ghost onClick={this.handleAddDetail} loading={addLoading}>添加</Button>
                             </div>
                         }
                         {
                             action === 'edit' &&
                             <div>
                                 <Button type="default" onClick={() => router.goBack()}>取消</Button>
-                                <Button type="primary" ghost onClick={this.handleSaveDetail}>保存</Button>
+                                <Button type="primary" ghost onClick={this.handleSaveDetail} loading={saveLoading}>保存</Button>
                             </div>
                         }
                     </QuickToolbar>
                 </Form>
+                <Modal
+                    visible={this.state.visible}
+                    onCancel={this.handleCancelPreview}
+                    footer={null}
+                >
+                    <span>{this.state.previewUrl ? <img alt="预览图片" src={this.state.previewUrl} width="100%" /> : ''}</span>
+                </Modal>
             </Card>
         );
     }

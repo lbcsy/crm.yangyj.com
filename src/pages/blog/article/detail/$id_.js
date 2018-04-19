@@ -12,6 +12,8 @@ import { stringify } from "qs";
     return {
         detail,
         loading: effects['blogArticle/getDetail'],
+        addLoading: effects['blogArticle/addDetail'],
+        saveLoading: effects['blogArticle/updateDetail'],
     };
 })
 export default class Detail extends PureComponent {
@@ -65,19 +67,19 @@ export default class Detail extends PureComponent {
             switch (action) {
                 case 'edit':
                     breadcrumbList.push({
-                        title: '编辑文章',
+                        title: '编辑',
                     });
                     break;
                 default:
                     action = 'view';
                     breadcrumbList.push({
-                        title: '查看文章',
+                        title: '查看',
                     })
             }
         } else {
             action = 'add';
             breadcrumbList.push({
-                title: '添加文章',
+                title: '添加',
             });
         }
 

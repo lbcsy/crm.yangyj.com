@@ -92,7 +92,7 @@ export default class SiderMenu extends PureComponent {
         }
         return (
             <Link
-                to={itemPath}
+                to={`${itemPath}?t=${parseInt((new Date().getTime() / 1000), 10)}`}
                 target={target}
                 replace={itemPath === this.props.location.pathname}
                 onClick={
@@ -213,7 +213,7 @@ export default class SiderMenu extends PureComponent {
                 <div className={styles.logo} key="logo">
                     <Link to="/">
                         <img alt="logo" src={logo} />
-                        <h1>CRM管理系统</h1>
+                        <h1>Super Backend System</h1>
                     </Link>
                 </div>
                 <Menu
