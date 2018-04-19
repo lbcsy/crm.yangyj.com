@@ -7,7 +7,7 @@ export async function getList(params) {
 }
 
 export async function getDetail(id) {
-    return request(`${API.BLOG_ARTICLE}${id}`);
+    return request(`${API.BLOG_ARTICLE}/${id}`);
 }
 
 export async function addDetail(params) {
@@ -20,7 +20,7 @@ export async function addDetail(params) {
 }
 
 export async function updateDetail(params) {
-    return request(`${API.BLOG_ARTICLE}${params.id}`, {
+    return request(`${API.BLOG_ARTICLE}/${params.id}`, {
         method: 'PUT',
         body: {
             ...params
@@ -29,7 +29,7 @@ export async function updateDetail(params) {
 }
 
 export async function delDetail(id) {
-    return request(`${API.BLOG_ARTICLE}${id}`, {
+    return request(`${API.BLOG_ARTICLE}/${id}`, {
         method: 'DELETE',
     });
 }

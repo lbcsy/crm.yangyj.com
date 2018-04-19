@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 
 @connect(state =>  {
     return {
-        loading:  state.loading.effects['global/fetchLogin']
+        loading:  state.loading.effects['global/login']
     }
 })
 @Form.create()

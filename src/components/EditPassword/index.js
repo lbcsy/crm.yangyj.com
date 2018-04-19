@@ -9,11 +9,26 @@ const FormItem = Form.Item;
 @connect(state => {
     return {
         visible: state.global.editPasswordModalVisible,
-        confirmLoading: state.loading.effects['global/fetchEditPassword'],
+        confirmLoading: state.loading.effects['global/editPassword'],
     }
 })
 @autobind
 export default class EditPassword extends PureComponent {
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleEventKey);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleEventKey);
+    }
+
+    handleEventKey(e) {
+        if(e.keyCode === 13) {
+            this.handleOk();
+            return false;
+        }
+    }
+
     handleOk() {
         const { dispatch } = this.props;
 
@@ -62,7 +77,10 @@ export default class EditPassword extends PureComponent {
                         label="新的密码"
                     >
                         {getFieldDecorator('newPassword', {
-                            rules: [{ required: true, message: '请输入您的新密码' }],
+                            rules: [
+                                { required: true, message: '请输入您的新密码' },
+                                { len: 6, message: '长度最少6位' },
+                            ],
                         })(
                             <Input size="large" type="password" placeholder="请输入您的新密码" />
                         )}
@@ -71,7 +89,10 @@ export default class EditPassword extends PureComponent {
                         label="确认密码"
                     >
                         {getFieldDecorator('confirmNewPassword', {
-                            rules: [{ required: true, message: '请确认您的新密码' }],
+                            rules: [
+                                { required: true, message: '请确认您的新密码' },
+                                { len: 6, message: '长度最少6位' },
+                            ],
                         })(
                             <Input size="large" type="password" placeholder="请确认您的新密码" />
                         )}
