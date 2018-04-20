@@ -41,7 +41,7 @@ export default props => {
                         body: fd,
                     });
 
-                    if(response.status === 'error') {
+                    if(response.status !== 'success') {
                         throw new Error(response.message || '上传失败');
                     }
 

@@ -45,7 +45,7 @@ export default {
                 yield put({ type: 'changeSize__', payload: params.size });
             }
             const response = yield call(getList, params);
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             yield put({ type: 'changeTotal__', payload: response.total || 0 });
@@ -57,14 +57,14 @@ export default {
                 return false;
             }
             const response = yield call(getDetail, payload);
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             yield put({ type: 'changeDetail__', payload: response.data });
         },
         * addDetail({ payload }, { call }) {
             const response = yield call(addDetail, payload);
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             message.success(response.message);
@@ -73,16 +73,16 @@ export default {
         },
         * updateDetail({ payload }, { call }) {
             const response = yield call(updateDetail, payload);
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             message.success(response.message);
 
             router.push(`/blog/article/detail/${payload.id}`);
         },
-        * delDetail({ payload, location, cb }, { call, put, select }) {
+        * delDetail({ payload, location }, { call, put, select }) {
             const response = yield call(delDetail, payload);
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             message.success(response.message);
@@ -111,9 +111,7 @@ export default {
                 yield put({ type: 'changeList__', payload: newData });
             }
 
-            if(cb) {
-                cb();
-            }
+            return true;
         }
     }
 }

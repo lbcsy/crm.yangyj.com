@@ -45,6 +45,7 @@ export default class DetailForm extends PureComponent {
     state = {
         previewUrl: '',
         visible: false,
+        delStatus: false,
     };
 
     componentWillUnmount() {
@@ -240,10 +241,25 @@ export default class DetailForm extends PureComponent {
                                 {/*<Button type="primary" ghost disabled>审核</Button>*/}
                                 <Button type="primary" ghost onClick={() => router.push(`/blog/article/detail/${detail.id}?action=edit`)}>编辑</Button>
                                 <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
+                                    if(this.state.delStatus) {
+                                        return false;
+                                    }
+                                    this.setState({
+                                        delStatus: true,
+                                    });
                                     const { dispatch } = this.props;
-                                    dispatch({ type: 'blogArticle/delDetail', payload: detail.id, cb: () => router.push('/blog/article') });
+                                    dispatch({ type: 'blogArticle/delDetail', payload: detail.id })
+                                        .then(cbData => {
+                                            this.setState({
+                                                delStatus: false,
+                                            });
+                                            if(!cbData) {
+                                                return false;
+                                            }
+                                            router.push('/blog/article')
+                                        });
                                 }}>
-                                    <Button type="danger" ghost>删除</Button>
+                                    <Button type="danger" ghost loading={this.state.delStatus}>删除</Button>
                                 </Popconfirm>
                             </div>
                         }

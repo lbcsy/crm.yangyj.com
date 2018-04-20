@@ -27,6 +27,9 @@ export default {
     },
     effects: {
         * logout(action, { call, put }) {
+            // 服务端退出登录
+            yield call(logout);
+
             // 前端退出登录
             storage.remove('access_token');
             yield put({ type: 'changeLoginStatus__', payload: false });
@@ -39,12 +42,10 @@ export default {
                 pathname: '/login',
                 query,
             });
-            // 服务端退出登录
-            yield call(logout);
         },
         * currentUser(action, { call, put }) {
             const response = yield call(currentUser);
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             yield put({ type: 'changeLoginStatus__', payload: true });
@@ -53,10 +54,11 @@ export default {
         * login({ payload }, { call, put }) {
             const response = yield call(login, payload);
             const { access_token } = response.data;
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             message.success(response.message);
+
             storage.put('access_token', access_token);
             yield put({ type: 'changeLoginStatus__', payload: true });
             const selfURLParams = new URL(window.location.href);
@@ -75,7 +77,7 @@ export default {
         },
         * editPassword({ payload }, { call, put }) {
             const response = yield call(editPassword, payload);
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 return false;
             }
             message.success(response.message);

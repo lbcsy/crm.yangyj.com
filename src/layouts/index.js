@@ -43,7 +43,9 @@ const query = {
 })
 export default class Layout extends PureComponent {
     render() {
-        const { location, loading } = this.props;
+        const { location, loading, dispatch } = this.props;
+
+        window.g_dispatch = dispatch;
 
         const newProps = {
             ...this.props,

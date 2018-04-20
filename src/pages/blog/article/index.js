@@ -4,7 +4,7 @@ import { stringify } from 'qs';
 import router from 'umi/router';
 import { connect } from 'dva';
 import autobind from 'autobind';
-import { Card, List, Icon, Button, Divider, Popconfirm, Modal } from 'antd';
+import { Card, List, Icon, Button, Divider, Popconfirm, Modal, Spin } from 'antd';
 import PageHeaderLayout from 'components/PageHeaderLayout';
 import Ellipsis from 'components/Ellipsis';
 import IconText from 'components/IconText';
@@ -27,6 +27,7 @@ export default class Article extends PureComponent {
     state = {
         previewUrl: '',
         visible: false,
+        delStatus: {},
     };
 
     componentWillReceiveProps(nextProps) {
@@ -134,13 +135,35 @@ export default class Article extends PureComponent {
                                             </Link>
 
                                             <Divider type="vertical"/>
+                                            {
+                                                !this.state.delStatus[item.id]
+                                                ?
+                                                    <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
+                                                        let delStatus = {
+                                                            ...this.state.delStatus,
+                                                        };
+                                                        delStatus[item.id] = true;
+                                                        this.setState({
+                                                            delStatus
+                                                        });
+                                                        dispatch({ type: 'blogArticle/delDetail', payload: item.id, location })
+                                                            .then(() => {
+                                                                let delStatus = {
+                                                                    ...this.state.delStatus,
+                                                                };
+                                                                delStatus[item.id] = false;
 
-                                            <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消" onConfirm={() => {
-                                                dispatch({ type: 'blogArticle/delDetail', payload: item.id, location })
-                                            }}>
-                                                <IconText type="delete" text="删除"
-                                                          style={{color: 'red', cursor: "pointer"}}/>
-                                            </Popconfirm>
+                                                                this.setState({
+                                                                    delStatus
+                                                                });
+                                                            });
+                                                    }}>
+                                                        <IconText type="delete" text="删除"
+                                                                  style={{color: 'red', cursor: "pointer"}}/>
+                                                    </Popconfirm>
+                                                :   <Spin size="small" />
+                                            }
+
 
                                             <Divider type="vertical"/>
 

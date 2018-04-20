@@ -20,19 +20,29 @@ const codeMessage = {
     503: '服务不可用，服务器暂时过载或维护。',
     504: '网关超时。',
 };
-function checkStatus(response) {
+async function checkResponse(response) {
+    let res = await response.json();
     if (response.status >= 200 && response.status < 300) {
-        return response;
+        if(res.status !== 'success') {
+            message.error(res.message || '系统故障');
+        }
+        return res;
     }
-    const errText = codeMessage[response.status] || response.statusText;
+    res.status = 'error';
+
+    const errText = (codeMessage[response.status] || response.statusText) || res.message;
     notification.error({
         message: `请求错误 ${response.status}`,
         description: errText,
     });
-    const error = new Error(errText);
-    error.name = response.status;
-    error.response = response;
-    throw error;
+    if(window.location.pathname !== '/login') {
+        if(response.status === 401) {
+            window.g_dispatch({
+                type: 'global/logout',
+            });
+        }
+    }
+    return res;
 }
 
 /**
@@ -70,12 +80,5 @@ export default function request(url, options) {
 
 
     return fetch(`${CONFIG.BASE_URL}${url}`, newOptions)
-        .then(checkStatus)
-        .then(response => response.json())
-        .then(response => {
-            if(response.status === 'error') {
-                message.error(response.message || '系统故障');
-            }
-            return response;
-        })
+        .then(checkResponse)
 }

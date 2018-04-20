@@ -37,7 +37,7 @@ export default class DefaultUpload extends PureComponent
             message.error(response.message || `上传失败`);
         }
         if (status === 'done') {
-            if(response.status === 'error') {
+            if(response.status !== 'success') {
                 message.error(response.message || '上传失败');
             } else {
                 message.success(response.message || `上传成功`);
@@ -51,7 +51,7 @@ export default class DefaultUpload extends PureComponent
                 return false;
             }
             if(status === 'done') {
-                if(response.status === 'error') {
+                if(response.status !== 'success') {
                     return false;
                 }
             }
