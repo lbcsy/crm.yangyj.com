@@ -3,7 +3,7 @@ import { message } from 'antd';
 import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/braft.css'
 import API from 'common/api';
-import request from 'utils/request';
+import REQUEST from 'utils/request';
 
 export default props => {
     const { editorProps } = props;
@@ -36,7 +36,7 @@ export default props => {
                 fd.append('file', param.file);
 
                 try {
-                    const response = await request(API.UPLOAD, {
+                    const response = await REQUEST(API.UPLOAD, {
                         method: 'POST',
                         body: fd,
                     });

@@ -111,8 +111,6 @@ export default class DefaultUpload extends PureComponent
             defaultProps.headers.Authorization = `Bearer ${access_token}`;
         }
 
-        console.log(`defaultProps: `, defaultProps);
-
         return (
             <div>
                 <Upload {...defaultProps}>
