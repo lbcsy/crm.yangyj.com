@@ -11,6 +11,8 @@ const { TextArea } = Input;
 
 const fields = ['id', 'title', 'image', 'intro', 'content'];
 
+let isMounted = true;
+
 @Form.create({
     mapPropsToFields(props) {
         const { detail } = props;
@@ -30,6 +32,10 @@ const fields = ['id', 'title', 'image', 'intro', 'content'];
            data[item] = values[item];
            return true;
         });
+        // 组件卸载 不允许更新数据
+        if(!isMounted) {
+            return false;
+        }
         dispatch({
             type: 'blogArticle/changeDetail__',
             payload: {
@@ -49,11 +55,8 @@ export default class DetailForm extends PureComponent {
     };
 
     componentWillUnmount() {
-        const { dispatch } = this.props;
-        dispatch({
-            type: 'blogArticle/changeDetail__',
-            payload: {}
-        })
+        // 组件卸载
+        isMounted = false;
     }
 
     handleAddDetail() {
@@ -111,11 +114,17 @@ export default class DetailForm extends PureComponent {
                 return true;
             },
             onChangeCb: (info) => {
+                if(!isMounted) {
+                    return false;
+                }
                 if(info.file.status === 'done' && info.file.response.status === 'success') {
                     form.setFieldsValue({ image: info.file.response.data.url });
                 }
             },
             onRemove: () => {
+                if(!isMounted) {
+                    return false;
+                }
                 form.setFieldsValue({ image: '' });
             },
             renderChildren: (fileList) => {
@@ -144,6 +153,9 @@ export default class DetailForm extends PureComponent {
         const editorProps = {
             initialContent: form.getFieldValue('content'),
             onChange: (content) => {
+                if(!isMounted) {
+                    return false;
+                }
                 form.setFieldsValue({ content });
             }
         };

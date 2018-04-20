@@ -30,6 +30,16 @@ export default class Detail extends PureComponent {
         }
     }
 
+    componentWillUnmount() {
+        const { dispatch } = this.props;
+
+        // 卸载清空数据
+        dispatch({
+            type: "blogArticle/changeDetail__",
+            payload: {},
+        });
+    }
+
     componentDidMount() {
         const { match } = this.props;
         const { params } = match;
@@ -83,16 +93,11 @@ export default class Detail extends PureComponent {
             });
         }
 
-        const detailFormProps = {
-            ...this.props,
-            action,
-        };
-
         return (
             <PageHeaderLayout
                 breadcrumbList={breadcrumbList}
             >
-                <DetailForm {...detailFormProps}/>
+                <DetailForm {...this.props} action={action} />
             </PageHeaderLayout>
         );
     }
