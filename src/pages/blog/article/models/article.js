@@ -22,10 +22,14 @@ export default {
             state.total = +payload;
         },
         changeList__(state, { payload }) {
-            state.list = payload;
+            state.list = [
+                ...payload
+            ];
         },
         changeDetail__(state, { payload }) {
-            state.detail = payload;
+            state.detail = {
+                ...payload
+            };
         },
     },
     effects: {

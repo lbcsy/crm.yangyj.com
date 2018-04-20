@@ -26,10 +26,11 @@ let isMounted = true;
         return newFields;
     },
     onValuesChange(props, values) {
-        const { dispatch } = props;
-        let data = {};
+        const { detail, dispatch } = props;
+
+        let newDetail = {};
         Object.keys(values).map((item) => {
-           data[item] = values[item];
+            newDetail[item] = values[item];
            return true;
         });
         // 组件卸载 不允许更新数据
@@ -39,8 +40,8 @@ let isMounted = true;
         dispatch({
             type: 'blogArticle/changeDetail__',
             payload: {
-                ...props.detail,
-                ...data,
+                ...detail,
+                ...newDetail,
             }
         })
     }
