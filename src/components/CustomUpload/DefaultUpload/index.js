@@ -1,9 +1,8 @@
 import { PureComponent } from 'react';
 import { Upload, message, Button, Icon, Modal } from 'antd';
-import autobind from 'autobind';
 import API from 'common/api';
 import CONFIG from 'common/config';
-import storage from 'utils/storage';
+import STORAGE from 'utils/storage';
 
 @autobind
 export default class DefaultUpload extends PureComponent
@@ -106,7 +105,7 @@ export default class DefaultUpload extends PureComponent
             defaultProps.fileList = this.state.fileList;
         }
 
-        const access_token = storage.get('access_token');
+        const access_token = STORAGE.get('access_token');
         if(access_token) {
             defaultProps.headers.Authorization = `Bearer ${access_token}`;
         }

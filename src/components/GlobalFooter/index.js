@@ -21,7 +21,14 @@ export default ({ className, links, copyright }) => {
                     </div>
                 )
             }
-            {copyright && <div className={styles.copyright}>{copyright}</div>}
+            {
+                copyright
+                && <div className={styles.copyright}>
+                    {copyright}
+                    <br />
+                    构建信息：{__BUILD_ENV__.toUpperCase()} 分支：{__BRANCH__.toUpperCase()} 时间：{__DATETIME__}
+                </div>
+            }
         </div>
     );
 };

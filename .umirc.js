@@ -22,5 +22,5 @@ export default {
             }
         }],
     ],
-    loading: './src/components/PageLoading',
+    loading: './src/components/PageLoading'
 };

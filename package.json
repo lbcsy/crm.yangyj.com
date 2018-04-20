@@ -1,12 +1,19 @@
 {
   "name": "crm.yangyj.com",
-  "description": "CRM管理系统",
+  "description": "Super Backend System",
   "repository": "https://github.com/smithyj/crm.yangyj.com",
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
     "start": "umi dev",
-    "build": "umi build"
+    "build": "umi build",
+    "build:test": "BUILD_ENV=test umi build",
+    "build:prod": "BUILD_ENV=production umi build",
+    "rsync:test": "rsync -avz --delete ./dist/ ssh.yangyj.com:/www/wwwroot/test.crm.yangyj.com",
+    "rsync:prod": "rsync -avz --delete ./dist/ ssh.yangyj.com:/www/wwwroot/crm.yangyj.com",
+    "deploy:test": "npm run build:test && npm run rsync:test",
+    "deploy:prod": "npm run build:prod && npm run rsync:prod",
+    "deploy": "npm run deploy:test && npm run deploy:prod"
   },
   "dependencies": {
     "antd": "^3.3.1",

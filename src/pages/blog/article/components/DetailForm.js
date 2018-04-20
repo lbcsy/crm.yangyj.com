@@ -1,7 +1,6 @@
 import { PureComponent } from 'react';
 import { Card, Form, Input, Button, Popconfirm, Icon, message, Modal } from 'antd';
 import router from 'umi/router';
-import autobind from 'autobind';
 import CustomUpload from "components/CustomUpload";
 import CustomEditor from "components/CustomEditor";
 import QuickToolbar from "components/QuickToolbar";

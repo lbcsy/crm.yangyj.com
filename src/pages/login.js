@@ -1,7 +1,5 @@
 import { PureComponent } from 'react';
 import { Icon, Form, Input, Button } from 'antd';
-import autobind from 'autobind';
-import { connect } from 'dva';
 import styles from './login.less';
 
 const FormItem = Form.Item;

@@ -1,0 +1,14 @@
+{
+  "globals": {
+    "__DEV__": true,
+    "__TEST__": true,
+    "__PROD__": true,
+    "__BRANCH__": true,
+    "__DATETIME__": true,
+    "__BUILD_ENV__": true,
+
+    "connect": true,
+    "autobind": true,
+    "router": true
+  }
+}

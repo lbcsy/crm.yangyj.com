@@ -1,7 +1,7 @@
 import router from 'umi/router';
 import { message } from 'antd';
 import { logout, currentUser, login, editPassword } from 'services/global';
-import storage from 'utils/storage';
+import STORAGE from 'utils/storage';
 
 export default {
     namespace: 'global',
@@ -31,7 +31,7 @@ export default {
             yield call(logout);
 
             // 前端退出登录
-            storage.remove('access_token');
+            STORAGE.remove('access_token');
             yield put({ type: 'changeLoginStatus__', payload: false });
             yield put({ type: 'changeCurrentUser__', payload: {} });
             let query = {};
@@ -53,13 +53,12 @@ export default {
         },
         * login({ payload }, { call, put }) {
             const response = yield call(login, payload);
-            const { access_token } = response.data;
             if(response.status !== 'success') {
                 return false;
             }
             message.success(response.message);
 
-            storage.put('access_token', access_token);
+            STORAGE.put('access_token', response.data.access_token);
             yield put({ type: 'changeLoginStatus__', payload: true });
             const selfURLParams = new URL(window.location.href);
             let redirectURL = decodeURIComponent(selfURLParams.searchParams.get('redirectURL'));

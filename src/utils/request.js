@@ -1,7 +1,7 @@
 import fetch from 'dva/fetch';
 import { notification, message } from 'antd';
 import CONFIG from 'common/config';
-import storage from 'utils/storage';
+import STORAGE from 'utils/storage';
 
 const codeMessage = {
     200: '服务器成功返回请求的数据。',
@@ -72,7 +72,7 @@ export default function request(url, options) {
         }
     }
 
-    const access_token = storage.get('access_token');
+    const access_token = STORAGE.get('access_token');
     if(access_token) {
         newOptions.headers.Authorization = `Bearer ${access_token}`;
     }

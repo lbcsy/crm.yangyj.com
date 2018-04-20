@@ -1,7 +1,5 @@
 import { PureComponent } from 'react';
 import { Modal, Form, Input, Button } from 'antd';
-import { connect } from 'dva';
-import autobind from 'autobind';
 
 const FormItem = Form.Item;
 

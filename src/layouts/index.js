@@ -1,5 +1,4 @@
 import { PureComponent } from 'react';
-import { connect } from 'dva';
 import withRouter from 'umi/withRouter';
 import { LocaleProvider } from 'antd';
 import { ContainerQuery } from 'react-container-query';
