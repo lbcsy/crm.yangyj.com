@@ -1,6 +1,7 @@
 export default {
     // hashHistory: true,
     disableDynamicImport: true,
+    disableServiceWorker: true,
     disableFastClick: true,
     plugins: [
 

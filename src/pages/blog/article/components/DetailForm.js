@@ -118,7 +118,7 @@ export default class DetailForm extends PureComponent {
             onRemove: () => {
                 form.setFieldsValue({ image: '' });
             },
-            render: (fileList) => {
+            renderChildren: (fileList) => {
                 if(fileList.length >= 1) {
                     return null;
                 }

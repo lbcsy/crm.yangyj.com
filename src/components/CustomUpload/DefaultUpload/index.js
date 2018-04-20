@@ -111,12 +111,14 @@ export default class DefaultUpload extends PureComponent
             defaultProps.headers.Authorization = `Bearer ${access_token}`;
         }
 
+        console.log(`defaultProps: `, defaultProps);
+
         return (
             <div>
                 <Upload {...defaultProps}>
                     {
-                        defaultProps.render
-                            ? defaultProps.render(this.state.fileList)
+                        defaultProps.renderChildren
+                            ? defaultProps.renderChildren(this.state.fileList)
                             :
                                 <Button>
                                     <Icon type="upload" /> 上传

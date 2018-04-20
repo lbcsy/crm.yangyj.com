@@ -10,7 +10,7 @@ export default props => {
             <div className={styles.content}>
                 <div className={styles.header}>
                     <img alt="logo" className={styles.logo} src={logo} />
-                    <span className={styles.title}>Super Backend System</span>
+                    <span className={styles.title}>SUPER 管理系统</span>
                 </div>
                 {children}
             </div>
@@ -43,7 +43,7 @@ export default props => {
                 }]}
                 copyright={
                     <div>
-                        Copyright <Icon type="copyright" /> 2018 Super Backend System
+                        Copyright <Icon type="copyright" /> 2018 SUPER 管理系统
                         <br />
                         本系统采用 umi + antd，借鉴 ant-design-pro
                         <br />
