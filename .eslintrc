@@ -5,6 +5,6 @@
     "__PROD__": true,
     "__BRANCH__": true,
     "__DATETIME__": true,
-    "__BUILD_ENV__": true,
+    "__BUILD_ENV__": true
   }
 }
