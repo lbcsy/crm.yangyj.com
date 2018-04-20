@@ -1,5 +1,6 @@
 import { PureComponent } from 'react';
 import { Upload, message, Button, Icon, Modal } from 'antd';
+import autobind from 'autobind';
 import API from 'common/api';
 import CONFIG from 'common/config';
 import STORAGE from 'utils/storage';

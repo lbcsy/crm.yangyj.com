@@ -1,4 +1,5 @@
 import { PureComponent } from 'react';
+import autobind from 'autobind';
 import { Menu, Icon, Dropdown, Avatar, Divider } from 'antd';
 import Debounce from 'lodash-decorators/debounce';
 import Link from 'umi/link';

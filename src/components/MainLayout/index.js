@@ -1,6 +1,8 @@
 import { PureComponent } from 'react';
 import { Layout, Icon, BackTop } from 'antd';
 import { enquireScreen } from 'enquire-js';
+import autobind from 'autobind';
+import { connect } from 'dva';
 import SiderMenu from 'components/SiderMenu';
 import GlobalHeader from 'components/GlobalHeader';
 import GlobalFooter from 'components/GlobalFooter';

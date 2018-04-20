@@ -2,6 +2,8 @@ import { PureComponent } from 'react';
 import Link from 'umi/link';
 import { stringify } from 'qs';
 import router from 'umi/router';
+import { connect } from 'dva';
+import autobind from 'autobind';
 import { Card, List, Icon, Button, Divider, Popconfirm, Modal, Spin } from 'antd';
 import PageHeaderLayout from 'components/PageHeaderLayout';
 import Ellipsis from 'components/Ellipsis';
