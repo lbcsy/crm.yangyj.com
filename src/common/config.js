@@ -3,7 +3,8 @@ const CONFIG = {
 };
 
 if(__DEV__) {
-    CONFIG.BASE_URL = 'http://dev.yangyj.com';
+    // CONFIG.BASE_URL = 'http://dev.yangyj.com';
+    CONFIG.BASE_URL = 'https://test.yangyj.com';
 }
 if(__TEST__) {
     CONFIG.BASE_URL = 'https://test.yangyj.com';

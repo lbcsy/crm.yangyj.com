@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { resolve } from 'path';
 const childProcess = require('child_process');
 
@@ -14,19 +15,14 @@ const __BRANCH__ = childProcess.execSync("git branch | grep \\* | cut -d ' ' -f2
 // 时间
 const __DATETIME__ = new Date().toLocaleString();
 
+// 分支
+let alias = {}
+fs.readdirSync(resolve(__dirname, 'src')).forEach((item) => {
+   alias[item] = resolve(__dirname, `src/${item}`);
+});
+
 export default {
-    alias: {
-        src: resolve(__dirname, 'src'),
-        assets: resolve(__dirname, 'src/assets'),
-        common: resolve(__dirname, 'src/common'),
-        components: resolve(__dirname, 'src/components'),
-        layouts: resolve(__dirname, 'src/layouts'),
-        models: resolve(__dirname, 'src/models'),
-        pages: resolve(__dirname, 'src/pages'),
-        plugins: resolve(__dirname, 'src/plugins'),
-        services: resolve(__dirname, 'src/services'),
-        utils: resolve(__dirname, 'src/utils'),
-    },
+    alias,
     define: {
         __DEV__,
         __TEST__,

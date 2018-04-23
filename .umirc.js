@@ -14,10 +14,9 @@ export default {
             update(routes) {
                 return routes.map(item => {
                     const { path } = item;
-                    let newPath = path ? path.replace('_', "?") : '';
                     return {
                         ...item,
-                        path: newPath,
+                        path: path.split('/').map(path => path.replace(/^\$/, ':').replace(/\$$/, '?')).join('/'),
                     }
                 });
             }
