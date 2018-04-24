@@ -30,5 +30,5 @@ export default {
         __BRANCH__,
         __DATETIME__,
         __BUILD_ENV__,
-    }
+    },
 };

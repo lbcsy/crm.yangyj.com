@@ -16,11 +16,11 @@ export default {
                     const { path } = item;
                     return {
                         ...item,
-                        path: path.split('/').map(path => path.replace(/^\$/, ':').replace(/\$$/, '?')).join('/'),
+                        path: path.split('/').map(path => path.replace(/\:$/, '?')).join('/'),
                     }
                 });
             }
         }],
     ],
-    loading: './src/components/PageLoading'
+    loading: './src/components/Loading',
 };

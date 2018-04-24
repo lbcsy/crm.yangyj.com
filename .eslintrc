@@ -5,6 +5,12 @@
     "__PROD__": true,
     "__BRANCH__": true,
     "__DATETIME__": true,
-    "__BUILD_ENV__": true
+    "__BUILD_ENV__": true,
+    "React": true,
+    "autobind": true,
+    "connect": true
+  },
+  "rules": {
+    "dot-location": ["off"]
   }
 }

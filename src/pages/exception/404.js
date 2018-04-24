@@ -1,7 +1,7 @@
 import Exception from 'components/Exception';
 
 export default () => {
-    return (
-        <Exception type="404" />
-    );
-};
+  return (
+      <Exception type="404"/>
+  );
+}

@@ -1,6 +1,5 @@
 import fetch from 'dva/fetch';
-import {notification, message} from 'antd';
-import router from 'umi/router';
+import {message, notification} from 'antd';
 import CONFIG from 'common/config';
 import STORAGE from 'utils/storage';
 
@@ -53,7 +52,7 @@ export default function request(url, options) {
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     if (!(newOptions.body instanceof FormData)) {
       newOptions.headers = {
-        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Type': 'application/json charset=utf-8',
         ...newOptions.headers,
       };
       newOptions.body = JSON.stringify(newOptions.body);
@@ -70,30 +69,29 @@ export default function request(url, options) {
   }
   newOptions.headers.Accept = 'application/json';
 
+  return fetch(`${CONFIG.BASE_URL}${url}`, newOptions).
+      then(checkStatus).
+      then(response => response.json()).
+      then(response => {
+        if (response.status === 'error') {
+          message.error(response.message || '系统故障');
+        }
+        return response;
+      }).
+      catch(e => {
+        const {dispatch} = window.g_app._store;
+        const res = {
+          status: 'error',
+          message: e.message,
+        };
+        const status = e.name;
+        if (status === 401) {
+          dispatch({
+            type: 'global/logout',
+          });
+          return res;
+        }
 
-  return fetch(`${CONFIG.BASE_URL}${url}`, newOptions)
-    .then(checkStatus)
-    .then(response => {
-      const res = response.json();
-      if (res.status === 'error') {
-        message.error(res.message || '系统故障');
-      }
-      return res;
-    })
-    .catch(e => {
-      const {dispatch} = window.g_app._store;
-      const res = {
-        status: 'error',
-        message: e.message,
-      };
-      const status = e.name;
-      if (status === 401) {
-        dispatch({
-          type: 'global/logout',
-        });
         return res;
-      }
-
-      return res;
-    });
+      });
 }
