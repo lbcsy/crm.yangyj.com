@@ -267,7 +267,7 @@ export default class DetailForm extends React.PureComponent {
                 {
                   action === 'view'
                   && <div className="ant-input ant-input-disabled"
-                          style={{height: 'auto', padding: '30px 15px'}}
+                          style={{height: 'auto', padding: '10px 15px'}}
                           dangerouslySetInnerHTML={{__html: initialData.content}}/>
                 }
                 {

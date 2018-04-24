@@ -16,7 +16,7 @@ export default {
                     const { path } = item;
                     return {
                         ...item,
-                        path: path.split('/').map(path => path.replace(/\:$/, '?')).join('/'),
+                        path: path && path.split('/').map(path => path.replace(/\:$/, '?')).join('/'),
                     }
                 });
             }
