@@ -84,7 +84,7 @@ export default class EditPassword extends PureComponent {
               {getFieldDecorator('newPassword', {
                 rules: [
                   {required: true, message: '请输入您的新密码'},
-                  {len: 6, message: '长度最少6位'},
+                  {min: 6, message: '长度最少6位'},
                 ],
               })(
                   <Input size="large" type="password" placeholder="请输入您的新密码"/>,
@@ -96,7 +96,7 @@ export default class EditPassword extends PureComponent {
               {getFieldDecorator('confirmNewPassword', {
                 rules: [
                   {required: true, message: '请确认您的新密码'},
-                  {len: 6, message: '长度最少6位'},
+                  {min: 6, message: '长度最少6位'},
                 ],
               })(
                   <Input size="large" type="password" placeholder="请确认您的新密码"/>,
