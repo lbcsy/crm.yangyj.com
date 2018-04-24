@@ -125,86 +125,86 @@ export default class Article extends PureComponent {
                               </Link>
                             }
                             description={
-                              <Ellipsis tooltip lines={3}>{item.intro}</Ellipsis>
+                              <Ellipsis tooltip
+                                        lines={3}>{item.intro}</Ellipsis>
                             }
                         />
-                        <div>
-                    <span className="pull-left">
-                        <IconText type="eye-o" text={count.view || 0}/>
-                        <Divider type="vertical"/>
-                        <IconText type="like-o" text={count.like || 0}/>
-                        <Divider type="vertical"/>
-                        <IconText type="message" text={count.comment || 0}/>
-                    </span>
-                          <span className="pull-right">
-                        <Link to={`/blog/article/detail/${item.id}`}>
-                            <IconText type="desktop" text="查看"/>
-                        </Link>
-
-                        <Divider type="vertical"/>
-
-                        <Link
-                            to={`/blog/article/detail/${item.id}?action=edit`}>
-                            <IconText type="edit" text="编辑"/>
-                        </Link>
-
-                        <Divider type="vertical"/>
-                            {
-                              !this.state.delStatus[item.id]
-                                  ?
-                                  <Popconfirm title="确定要删除吗？" okText="确定"
-                                              cancelText="取消" onConfirm={() => {
-                                    let delStatus = {
-                                      ...this.state.delStatus,
-                                    };
-                                    delStatus[item.id] = true;
-                                    this.setState({
-                                      delStatus,
-                                    });
-                                    dispatch({
-                                      type: 'blog_article/delDetail',
-                                      payload: item.id,
-                                      location,
-                                    }).then(() => {
-                                      let delStatus = {
-                                        ...this.state.delStatus,
-                                      };
-                                      delStatus[item.id] = false;
-
-                                      this.setState({
-                                        delStatus,
-                                      });
-                                    });
-                                  }}>
-                                    <IconText type="delete" text="删除"
-                                              style={{
-                                                color: 'red',
-                                                cursor: 'pointer',
-                                              }}/>
-                                  </Popconfirm>
-                                  : <Spin size="small"/>
-                            }
+                        <div className={styles.control}>
+                          <div>
+                              <IconText type="eye-o" text={count.view || 0}/>
+                              <Divider type="vertical"/>
+                              <IconText type="like-o" text={count.like || 0}/>
+                              <Divider type="vertical"/>
+                              <IconText type="message" text={count.comment || 0}/>
+                          </div>
+                          <div>
+                            <Link to={`/blog/article/detail/${item.id}`}>
+                                <IconText type="desktop" text="查看"/>
+                            </Link>
 
                             <Divider type="vertical"/>
 
-                            {
-                              item.image
+                            <Link
+                                to={`/blog/article/detail/${item.id}?action=edit`}>
+                                <IconText type="edit" text="编辑"/>
+                            </Link>
 
-                              && <IconText
-                                  type="picture"
-                                  style={{cursor: 'pointer'}}
-                                  text="查看缩略图"
-                                  onClick={() => {
-                                    this.setState({
-                                      visible: true,
-                                      previewUrl: item.image,
-                                    });
-                                  }}
-                              />
-                            }
+                            <Divider type="vertical"/>
+                                {
+                                  !this.state.delStatus[item.id]
+                                      ?
+                                      <Popconfirm title="确定要删除吗？" okText="确定"
+                                                  cancelText="取消" onConfirm={() => {
+                                        let delStatus = {
+                                          ...this.state.delStatus,
+                                        };
+                                        delStatus[item.id] = true;
+                                        this.setState({
+                                          delStatus,
+                                        });
+                                        dispatch({
+                                          type: 'blog_article/delDetail',
+                                          payload: item.id,
+                                          location,
+                                        }).then(() => {
+                                          let delStatus = {
+                                            ...this.state.delStatus,
+                                          };
+                                          delStatus[item.id] = false;
 
-                    </span>
-                          <div className="clearfix"/>
+                                          this.setState({
+                                            delStatus,
+                                          });
+                                        });
+                                      }}>
+                                        <IconText type="delete" text="删除"
+                                                  style={{
+                                                    color: 'red',
+                                                    cursor: 'pointer',
+                                                  }}/>
+                                      </Popconfirm>
+                                      : <Spin size="small"/>
+                                }
+
+                                <Divider type="vertical"/>
+
+                                {
+                                  item.image
+
+                                  && <IconText
+                                      type="picture"
+                                      style={{cursor: 'pointer'}}
+                                      text="查看缩略图"
+                                      onClick={() => {
+                                        this.setState({
+                                          visible: true,
+                                          previewUrl: item.image,
+                                        });
+                                      }}
+                                  />
+                                }
+
+                          </div>
                         </div>
                       </List.Item>
                   );

@@ -285,41 +285,41 @@ export default class DetailForm extends React.PureComponent {
                       : <CustomEditor editorProps={editorProps}/>)
                 }
               </Form.Item>
-              <QuickToolbar direction="top">
+              <QuickToolbar>
                 {
                   action === 'view' &&
-                  <span>
-                  <Button type="default"
-                          onClick={() => router.goBack()}>返回</Button>
-                  <Button ghost
-                          type="primary"
-                          onClick={() => router.push(
-                              `/blog/article/detail/${initialData.id}?action=edit`)}>编辑</Button>
-                  <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消"
-                              onConfirm={this.handleDelDetail}>
-                    <Button type="danger" ghost loading={delLoading}>删除</Button>
-                  </Popconfirm>
-                </span>
+                  <div>
+                    <Button type="default"
+                            onClick={() => router.push('/blog/article')}>返回列表</Button>
+                    <Button ghost
+                            type="primary"
+                            onClick={() => router.push(
+                                `/blog/article/detail/${initialData.id}?action=edit`)}>编辑</Button>
+                    <Popconfirm title="确定要删除吗？" okText="确定" cancelText="取消"
+                                onConfirm={this.handleDelDetail}>
+                      <Button type="danger" ghost loading={delLoading}>删除</Button>
+                    </Popconfirm>
+                  </div>
                 }
                 {
                   action === 'add' &&
-                  <span>
-                  <Button type="default"
-                          onClick={() => router.goBack()}>取消</Button>
-                  <Button type="primary" ghost onClick={this.handleAddDetail}
-                          loading={addLoading}>添加</Button>
-                </span>
+                  <div>
+                    <Button type="default"
+                            onClick={() => router.goBack()}>取消</Button>
+                    <Button type="primary" ghost onClick={this.handleAddDetail}
+                            loading={addLoading}>添加</Button>
+                  </div>
                 }
                 {
                   action === 'edit' &&
-                  <span>
-                  <Button type="default"
-                          onClick={this.handleCancelDetail}>取消</Button>
-                  <Button type="primary"
-                          ghost
-                          onClick={this.handleSaveDetail}
-                          loading={saveLoading}>保存</Button>
-                </span>
+                  <div>
+                    <Button type="default"
+                            onClick={this.handleCancelDetail}>取消</Button>
+                    <Button type="primary"
+                            ghost
+                            onClick={this.handleSaveDetail}
+                            loading={saveLoading}>保存</Button>
+                  </div>
                 }
               </QuickToolbar>
             </Form>
