@@ -1,4 +1,13 @@
-import {Button, Card, Form, Icon, Input, message, Popconfirm, Modal} from 'antd';
+import {
+  Button,
+  Card,
+  Form,
+  Icon,
+  Input,
+  message,
+  Modal,
+  Popconfirm,
+} from 'antd';
 import Breadcrumbs from 'components/Breadcrumbs';
 import CustomUpload from 'components/CustomUpload';
 import CustomEditor from 'components/CustomEditor';
@@ -147,7 +156,7 @@ export default class DetailForm extends React.PureComponent {
         return true;
       },
       onChangeCb: (info) => {
-        if(!isMounted) {
+        if (!isMounted) {
           return false;
         }
         if (info.file.status === 'done' && info.file.response.status ===
@@ -156,7 +165,7 @@ export default class DetailForm extends React.PureComponent {
         }
       },
       onRemove: () => {
-        if(!isMounted) {
+        if (!isMounted) {
           return false;
         }
         form.setFieldsValue({image: ''});
@@ -187,14 +196,14 @@ export default class DetailForm extends React.PureComponent {
 
     let initialContent = '';
 
-    if(action === 'edit') {
+    if (action === 'edit') {
       initialContent = initialData.content;
     }
 
     const editorProps = {
       initialContent: initialContent,
       onChange: (content) => {
-        if(!isMounted) {
+        if (!isMounted) {
           return false;
         }
         form.setFieldsValue({content});
@@ -225,28 +234,27 @@ export default class DetailForm extends React.PureComponent {
                   label="缩略图"
               >
                 {
-                  action === 'view'
-                  && (
-                      initialData.image
-                          ? <img
-                              alt={initialData.title}
-                              src={initialData.image}
-                              width="100"
-                              onClick={() => {
-                                this.setState({
-                                  visible: true,
-                                  previewUrl: initialData.image,
-                                });
-                              }}
-                          />
-                          : '无'
-                  )
-                }
-                {
-                  action !== 'view'
-                  && getFieldDecorator('image', {
+                  getFieldDecorator('image', {
                     initialValue: initialData.image,
-                  })(<CustomUpload uploadProps={uploadProps}/>)
+                  })(
+                      action === 'view'
+                          ? (
+                              initialData.image
+                                  ? <img
+                                      alt={initialData.title}
+                                      src={initialData.image}
+                                      width="100"
+                                      onClick={() => {
+                                        this.setState({
+                                          visible: true,
+                                          previewUrl: initialData.image,
+                                        });
+                                      }}
+                                  />
+                                  : <span>无</span>
+                          )
+                          : <CustomUpload uploadProps={uploadProps}/>,
+                  )
                 }
               </Form.Item>
               <Form.Item
@@ -265,19 +273,16 @@ export default class DetailForm extends React.PureComponent {
                   label="内容"
               >
                 {
-                  action === 'view'
-                  && <div className="ant-input ant-input-disabled"
-                          style={{height: 'auto', padding: '10px 15px'}}
-                          dangerouslySetInnerHTML={{__html: initialData.content}}/>
-                }
-                {
-                  action !== 'view'
-                  && getFieldDecorator('content', {
+                  getFieldDecorator('content', {
                     initialValue: initialData.content,
                     rules: [
                       {required: true, message: '请输入内容'},
                     ],
-                  })(<CustomEditor editorProps={editorProps}/>)
+                  })(action === 'view'
+                      ? <div className="ant-input ant-input-disabled"
+                             style={{height: 'auto', padding: '10px 15px'}}
+                             dangerouslySetInnerHTML={{__html: initialData.content}}/>
+                      : <CustomEditor editorProps={editorProps}/>)
                 }
               </Form.Item>
               <QuickToolbar direction="top">
