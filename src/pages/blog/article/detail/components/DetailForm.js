@@ -18,6 +18,7 @@ import router from 'umi/router';
 @Form.create()
 @connect(({loading: {effects = {}}}) => {
   return {
+    loading: effects['blog_article/getDetail'],
     addLoading: effects['blog_article/addDetail'],
     saveLoading: effects['blog_article/saveDetail'],
     delLoading: effects['blog_article/delDetail'],
@@ -88,7 +89,7 @@ export default class DetailForm extends React.PureComponent {
   }
 
   render() {
-    const {addLoading, saveLoading, delLoading, action, form = {}, initialData = {}} = this.props;
+    const {loading, addLoading, saveLoading, delLoading, action, form = {}, initialData = {}} = this.props;
 
     const {getFieldDecorator} = form;
 
@@ -196,7 +197,7 @@ export default class DetailForm extends React.PureComponent {
         <div>
           <Breadcrumbs breadcrumbsList={breadcrumbsList}/>
 
-          <Card bordered={false}>
+          <Card bordered={false} loading={loading}>
             <Form>
               <Form.Item
                   {...formItemLayout}
