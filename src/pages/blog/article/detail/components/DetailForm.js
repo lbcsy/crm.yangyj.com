@@ -14,7 +14,6 @@ import CustomEditor from 'components/CustomEditor';
 import QuickToolbar from 'components/QuickToolbar';
 import router from 'umi/router';
 
-let isMounted = true;
 
 @Form.create()
 @connect(({loading: {effects = {}}}) => {
@@ -31,14 +30,6 @@ export default class DetailForm extends React.PureComponent {
     previewUrl: '',
     visible: false,
   };
-
-  componentWillMount() {
-    isMounted = true;
-  }
-
-  componentWillUnmount() {
-    isMounted = false;
-  }
 
   handleAddDetail() {
     const {form, dispatch} = this.props;
@@ -156,18 +147,12 @@ export default class DetailForm extends React.PureComponent {
         return true;
       },
       onChangeCb: (info) => {
-        if (!isMounted) {
-          return false;
-        }
         if (info.file.status === 'done' && info.file.response.status ===
             'success') {
           form.setFieldsValue({image: info.file.response.data.url});
         }
       },
       onRemove: () => {
-        if (!isMounted) {
-          return false;
-        }
         form.setFieldsValue({image: ''});
       },
       renderChildren: (fileList) => {
@@ -203,9 +188,6 @@ export default class DetailForm extends React.PureComponent {
     const editorProps = {
       initialContent: initialContent,
       onChange: (content) => {
-        if (!isMounted) {
-          return false;
-        }
         form.setFieldsValue({content});
       },
     };
