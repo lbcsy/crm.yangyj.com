@@ -22,6 +22,7 @@ fs.readdirSync(resolve(__dirname, 'src')).forEach((item) => {
 });
 
 export default {
+    es5ImcompatibleVersions: true,
     alias,
     define: {
         __DEV__,

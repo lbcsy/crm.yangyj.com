@@ -24,12 +24,11 @@
     "lodash-decorators": "^5.0.0",
     "moment": "^2.22.1",
     "nprogress": "^0.2.0",
-    "path-to-regexp": "^2.2.0",
     "qs": "^6.5.1",
     "rc-drawer-menu": "^0.5.5",
     "react-container-query": "^0.11.0",
-    "umi": "^1.1.6",
-    "umi-plugin-dva": "^0.6.0",
+    "umi": "^1.2.4",
+    "umi-plugin-dva": "^0.6.3",
     "umi-plugin-routes": "^0.1.2",
     "url-polyfill": "^1.0.11"
   }

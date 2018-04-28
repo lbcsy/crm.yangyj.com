@@ -94,7 +94,7 @@ export default class Article extends PureComponent {
           <Breadcrumbs breadcrumbsList={breadcrumbsList}/>
 
           <Card bordered={false}>
-            <Link to={`/blog/article/detail`}>
+            <Link to={`/blog/article/detail/add`}>
               <Button type="dashed"
                       className={styles.addButton}
               >

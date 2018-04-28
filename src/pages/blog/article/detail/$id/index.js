@@ -26,7 +26,7 @@ export default class Detail extends React.PureComponent {
   }
 
   render() {
-    const { detail, location: { query: { action = 'view' } } } = this.props;
+    let { detail, location: { query: { action = 'view' } } } = this.props;
 
     if(!['edit', 'view'].includes(action)) {
       return (<div>非法请求</div>);

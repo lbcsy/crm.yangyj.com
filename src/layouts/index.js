@@ -42,6 +42,13 @@ const query = {
   };
 })
 export default class Layout extends PureComponent {
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0);
+    }
+  }
+
   render() {
     const {location, loading} = this.props;
 

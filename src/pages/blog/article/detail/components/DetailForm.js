@@ -32,6 +32,12 @@ export default class DetailForm extends React.PureComponent {
     visible: false,
   };
 
+  componentWillUnmount() {
+    const {form: {resetFields}} = this.props;
+
+    resetFields();
+  }
+
   handleAddDetail() {
     const {form, dispatch} = this.props;
     form.validateFieldsAndScroll((err, values) => {
@@ -136,7 +142,6 @@ export default class DetailForm extends React.PureComponent {
     };
 
     let uploadProps = {
-      initialDataImage: initialData.image,
       accept: 'image/*',
       listType: 'picture-card',
       beforeUpload: (file) => {
