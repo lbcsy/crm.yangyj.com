@@ -214,7 +214,7 @@ export default class DetailForm extends React.PureComponent {
                     rules: [
                       {required: true, message: '请输入标题'},
                     ],
-                  })(<Input disabled={action === 'view'}/>)
+                  })(<Input readOnly={action === 'view'} />)
                 }
               </Form.Item>
               <Form.Item
@@ -253,7 +253,7 @@ export default class DetailForm extends React.PureComponent {
                   getFieldDecorator('intro', {
                     initialValue: initialData.intro,
                   })(<Input.TextArea autosize={{minRows: 3, maxRows: 6}}
-                                     disabled={action === 'view'}/>)
+                                     readOnly={action === 'view'}/>)
                 }
               </Form.Item>
               <Form.Item
@@ -267,7 +267,7 @@ export default class DetailForm extends React.PureComponent {
                       {required: true, message: '请输入内容'},
                     ],
                   })(action === 'view'
-                      ? <div className="ant-input ant-input-disabled"
+                      ? <div className="show-braft-content"
                              style={{height: 'auto', padding: '10px 15px'}}
                              dangerouslySetInnerHTML={{__html: initialData.content}}/>
                       : <CustomEditor editorProps={editorProps}/>)
