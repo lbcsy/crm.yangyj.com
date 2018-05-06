@@ -26,13 +26,8 @@ function checkStatus(response) {
     return response;
   }
   const errorText = codeMessage[response.status] || response.statusText;
-  notification.error({
-    message: `请求错误 ${response.status}`,
-    description: errorText,
-  });
   const error = new Error(errorText);
   error.name = response.status;
-  error.response = response;
   throw error;
 }
 
@@ -85,11 +80,16 @@ export default function request(url, options) {
           message: e.message,
         };
         const status = e.name;
+
+        notification.error({
+          message: `请求错误`,
+          description: e.message,
+        });
+
         if (status === 401) {
           dispatch({
             type: 'global/logout',
           });
-          return res;
         }
 
         return res;

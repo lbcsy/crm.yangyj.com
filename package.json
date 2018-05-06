@@ -16,10 +16,8 @@
     "deploy": "npm run deploy:test && npm run deploy:prod"
   },
   "dependencies": {
-    "antd": "^3.4.3",
     "autobind": "^1.0.3",
     "braft-editor": "^1.8.10",
-    "dva-loading": "^2.0.1",
     "enquire-js": "^0.2.1",
     "lodash-decorators": "^5.0.0",
     "moment": "^2.22.1",
@@ -27,8 +25,8 @@
     "qs": "^6.5.1",
     "rc-drawer-menu": "^0.5.5",
     "react-container-query": "^0.11.0",
-    "umi": "^1.2.4",
-    "umi-plugin-dva": "^0.6.3",
+    "umi": "^1.2.6",
+    "umi-plugin-dva": "^0.6.4",
     "umi-plugin-routes": "^0.1.2",
     "url-polyfill": "^1.0.11"
   }
